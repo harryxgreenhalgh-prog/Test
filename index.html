@@ -581,7 +581,7 @@ body.lobbying .chat-btn { right: auto; left: calc(14px + var(--safe-l)); top: ca
 .h-target .bar i { display: block; height: 100%; background: linear-gradient(90deg, #ff4d6d, #ffbf1f); transition: width .1s linear; }
 .h-target.show { animation: bump .5s; } .h-target.drop { background: #ffe9a8; } .h-target.wait b { color: var(--purple); }
 .duel-board:not(.hide) ~ .h-target { top: calc(150px + var(--safe-t)); }
-.h-objective.warn { color: #9dff6a; animation: bump2 .6s ease-in-out infinite; }
+.h-objective.warn { color: #9dff6a; animation: pillPulse .6s ease-in-out infinite; }
 /* ---------- cosmetics: rendered thumbnails & rarity cards ---------- */
 .grid.items { grid-template-columns: repeat(auto-fill, minmax(104px, 1fr)); }
 .item { overflow: hidden; justify-content: flex-start; padding: 4px 4px 6px; gap: 0; aspect-ratio: auto; }
@@ -633,6 +633,114 @@ body.lobbying .chat-btn { right: auto; left: calc(14px + var(--safe-l)); top: ca
 .item.r-exclusive { --rc: #0fb48a; background: radial-gradient(120% 90% at 50% 30%, #f4fffb 0 32%, #b8f5df 66%, #6fe3bd); box-shadow: inset 0 -5px 0 rgba(0,0,0,.1), 0 4px 0 var(--ink), 0 0 14px rgba(20,201,154,.55); }
 .item.r-exclusive .shine::before { content: ''; position: absolute; top: -50%; left: -60%; width: 40%; height: 200%; background: linear-gradient(90deg, transparent, rgba(255,255,255,.8), transparent); transform: rotate(20deg); animation: shine 3s ease-in-out infinite; }
 
+/* Crown Peak: unmissable "grab the crown" reminder */
+.ic-warn { margin: 12px auto 0; max-width: 560px; background: linear-gradient(180deg,#ffe25a,#ffb31f); color: var(--ink); border: 4px solid var(--ink); border-radius: 18px; padding: 8px 16px; font-family: var(--font); font-size: 21px; line-height: 1.15; box-shadow: 0 5px 0 var(--ink); animation: crownPulse 1s ease-in-out infinite; }
+.ic-warn small { display: block; font-family: inherit; font-size: 14px; opacity: .85; margin-top: 2px; }
+.intro-card.spinning .ic-warn { opacity: 0; }
+.h-crown { position: absolute; left: 50%; top: calc(118px + var(--safe-t)); transform: translateX(-50%); background: linear-gradient(180deg,#ffe25a,#ffb31f); color: var(--ink); border: 4px solid var(--ink); border-radius: 99px; padding: 5px 18px; font-family: var(--font); font-size: 17px; white-space: nowrap; box-shadow: 0 4px 0 var(--ink); pointer-events: none; }
+.h-crown.near { font-size: 22px; animation: crownPulse .5s ease-in-out infinite; }
+@keyframes crownPulse { 0%,100% { transform: translateX(var(--tx,0)) scale(1); filter: brightness(1); } 50% { transform: translateX(var(--tx,0)) scale(1.07); filter: brightness(1.18); } }
+.h-crown { --tx: -50%; }
+@media (max-width: 640px) { .h-crown { font-size: 14px; top: calc(110px + var(--safe-t)); } .h-crown.near { font-size: 17px; } .ic-warn { font-size: 17px; } }
+.rk-tip { font-size: 11.5px; line-height: 1.3; opacity: .85; margin: 6px 2px 2px; text-align: center; }
+/* ---------- CranPass (free reward roadmap) ---------- */
+.tab { position: relative; }
+.tab .badge { position: absolute; top: -8px; right: -8px; min-width: 24px; height: 24px; padding: 0 6px; border-radius: 99px; background: var(--pink, #ff2e88); color: #fff; border: 3px solid var(--ink); font-style: normal; font-size: 13px; line-height: 18px; text-align: center; animation: bump2 1.2s ease-in-out infinite; }
+.tab .badge.hide { display: none; }
+.pass-free { background: var(--mint, #40e0a8); border: 3px solid var(--ink); border-radius: 99px; padding: 2px 12px; font-family: var(--font); font-size: 15px; color: var(--ink); box-shadow: 0 3px 0 var(--ink); transform: rotate(-3deg); }
+.passwrap { position: absolute; top: calc(84px + var(--safe-t)); bottom: calc(14px + var(--safe-b)); right: calc(14px + var(--safe-r)); width: min(640px, 62vw); overflow-y: auto; padding: 4px 6px 24px; touch-action: pan-y; -webkit-overflow-scrolling: touch; }
+.ps-head { position: sticky; top: 0; z-index: 3; display: grid; grid-template-columns: auto 1fr; gap: 8px 14px; align-items: center; padding: 12px 14px; margin-bottom: 12px; background: linear-gradient(180deg, #fff, #efe4ff); }
+.ps-lv { display: grid; place-items: center; width: 74px; height: 74px; border-radius: 50%; background: radial-gradient(circle at 40% 30%, #9df3ff, #22a8ff); border: 4px solid var(--ink); box-shadow: 0 4px 0 var(--ink); color: #fff; }
+.ps-lv small { font-size: 10px; font-weight: 900; letter-spacing: 1px; margin-bottom: -10px; }
+.ps-lv b { font-family: var(--font); font-weight: 400; font-size: 32px; -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; }
+.ps-mid { display: flex; flex-direction: column; gap: 5px; min-width: 0; }
+.ps-t { font-size: 13px; font-weight: 800; line-height: 1.25; }
+.ps-mid small { font-size: 12px; font-weight: 800; opacity: .7; }
+.ps-claim { grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; gap: 1px; font-size: 20px; padding: 8px 12px; }
+.ps-claim small { font-family: 'Nunito', sans-serif; font-size: 12px; font-weight: 800; opacity: .8; }
+.ps-claim:not(:disabled) { animation: bump2 1s ease-in-out infinite; }
+.ps-claim:disabled { filter: saturate(.3); opacity: .85; }
+.ps-road { position: relative; display: flex; flex-direction: column; gap: 10px; padding-left: 4px; }
+.ps-road::before { content: ''; position: absolute; left: 31px; top: 20px; bottom: 20px; width: 10px; border-radius: 9px; background: repeating-linear-gradient(180deg, #fff 0 14px, #d9c8ff 14px 28px); border: 3px solid var(--ink); }
+.prow { position: relative; display: grid; grid-template-columns: 62px 1fr 64px; align-items: center; gap: 10px; background: rgba(255,255,255,.93); border: 4px solid var(--ink); border-radius: 18px; padding: 6px 8px 6px 4px; box-shadow: 0 4px 0 var(--ink); }
+.prow .pnode { position: relative; z-index: 1; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: #fff; border: 4px solid var(--ink); }
+.prow .pnode b { font-family: var(--font); font-weight: 400; font-size: 21px; }
+.prow.big .pnode { background: var(--yellow); }
+.prow.got { background: rgba(225,255,240,.93); }
+.prow.got .pnode { background: var(--mint, #40e0a8); }
+.prow.locked { opacity: .78; }
+.prow.locked .pnode { background: #e6e0f2; }
+.prow.ready { background: linear-gradient(90deg, #fff6c4, #fff); cursor: pointer; box-shadow: 0 4px 0 var(--ink), 0 0 16px rgba(255,200,40,.8); animation: prowGlow 1.3s ease-in-out infinite; }
+.prow.ready .pnode { background: var(--yellow); }
+@keyframes prowGlow { 50% { box-shadow: 0 4px 0 var(--ink), 0 0 26px rgba(255,200,40,1); } }
+.prow.here { outline: 4px dashed #22a8ff; outline-offset: 3px; }
+.prow .phere { position: absolute; left: -2px; top: -12px; background: #22a8ff; color: #fff; font-size: 10px; font-weight: 900; letter-spacing: 1px; padding: 1px 7px; border-radius: 99px; border: 2px solid var(--ink); z-index: 2; }
+.prew { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; min-width: 0; }
+.pchip { display: inline-flex; align-items: center; gap: 5px; padding: 3px 10px 3px 6px; border-radius: 99px; border: 3px solid var(--ink); background: #fff; font-weight: 900; font-size: 14px; white-space: nowrap; }
+.pchip.b { background: #ffe0ec; } .pchip.c { background: #fff1b8; } .pchip.c .ico { color: #f0a400; }
+.pchip.it { cursor: pointer; padding: 2px 10px 2px 3px; background: #e5f6ff; position: relative; }
+.pchip.it.r-pass { background: linear-gradient(90deg, #d6f2ff, #f2e6ff); box-shadow: 0 0 10px rgba(34,168,255,.6); }
+.pchip.it.r-legendary { background: #ffe38a; } .pchip.it.r-epic { background: #ffd6ea; }
+.pchip .pth { position: relative; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #fff; overflow: hidden; }
+.pchip .pth .ic { width: 28px; height: 28px; }
+.pchip .pth.ready > *:not(.thimg) { visibility: hidden; }
+.pchip em { font-style: normal; font-size: 9px; font-weight: 900; letter-spacing: .5px; color: #fff; background: #22a8ff; border-radius: 99px; padding: 1px 6px; border: 2px solid var(--ink); }
+.pchip.trying { outline: 3px solid var(--yellow); }
+.prow .pst { font-family: var(--font); font-size: 15px; text-align: center; }
+.prow.ready .pst { background: var(--yellow); border: 3px solid var(--ink); border-radius: 12px; padding: 4px 0; box-shadow: 0 3px 0 var(--ink); }
+.prow.got .pst { color: #0f9a6c; } .prow.got .pst .ico, .prow.locked .pst .ico { width: 22px; height: 22px; }
+.item.r-pass { --rc: #22a8ff; background: radial-gradient(120% 90% at 50% 30%, #f2fbff 0 32%, #c8ecff 66%, #8fd6ff); box-shadow: inset 0 -5px 0 rgba(0,0,0,.1), 0 4px 0 var(--ink), 0 0 14px rgba(34,168,255,.55); }
+@media (max-width: 900px), (max-height: 560px) {
+  .passwrap { width: min(560px, 62vw); }
+  .tab { width: 62px; padding: 8px 0 6px; font-size: 12px; }
+  .tabs-main { gap: 8px; }
+}
+@media (max-width: 640px) {
+  .passwrap { left: 10px; right: 10px; width: auto; top: 46%; }
+  .ps-head { grid-template-columns: auto 1fr; padding: 8px 10px; }
+  .ps-lv { width: 58px; height: 58px; } .ps-lv b { font-size: 25px; }
+  .ps-t { display: none; }
+  .prow { grid-template-columns: 52px 1fr 52px; }
+  .prow .pnode { width: 44px; height: 44px; } .prow .pnode b { font-size: 17px; }
+  .pchip { font-size: 12px; } .pchip b { max-width: 90px; overflow: hidden; text-overflow: ellipsis; }
+}
+.rw-up small { display: block; font-size: 10px; font-weight: 900; line-height: 1.1; } .rw-up { text-align: center; }
+/* global leaderboard: most crowns */
+.lb-sub { margin: -6px 0 6px; font-weight: 800; font-size: 14px; color: var(--purple); }
+.lb.crowns { max-height: 52vh; overflow-y: auto; padding-right: 2px; }
+.lb.crowns div b { width: 38px; text-align: center; }
+.lb.crowns div span:not(.lbw) { display: flex; align-items: center; gap: 4px; min-width: 0; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.lb.crowns div span .rank-badge { flex: none; }
+.lb.crowns div em { font-style: normal; font-size: 10px; font-weight: 900; background: var(--yellow); border: 2px solid var(--ink); border-radius: 99px; padding: 0 6px; }
+.lb.crowns .lbw { flex: none; font-family: var(--font); font-size: 17px; }
+.lb.crowns .lbw .ico { color: #f0a400; }
+.lb.crowns div.top { background: linear-gradient(90deg, #fff1b8, #f4ecff); }
+.lb-me { margin-top: 10px; text-align: center; font-weight: 800; font-size: 14px; }
+
+/* Red Light Rush traffic light */
+.h-light { position: absolute; left: 50%; top: calc(122px + var(--safe-t)); transform: translateX(-50%); display: flex; align-items: center; gap: 10px; padding: 6px 20px 6px 8px; border: 4px solid var(--ink); border-radius: 99px; font-family: var(--font); font-size: 24px; color: #fff; -webkit-text-stroke: 3px var(--ink); paint-order: stroke fill; box-shadow: 0 5px 0 var(--ink); pointer-events: none; white-space: nowrap; }
+.h-light .lamp { width: 34px; height: 34px; border-radius: 50%; border: 4px solid var(--ink); background: #333; }
+.h-light.green { background: #2fd27a; } .h-light.green .lamp { background: #b8ffcf; box-shadow: 0 0 18px #6dffa6; }
+.h-light.turn, .h-light.red { background: #ff3b52; } .h-light.turn .lamp, .h-light.red .lamp { background: #ffd0d6; box-shadow: 0 0 22px #ff4d64; }
+.h-light.turn { animation: lightFlash .18s steps(2) infinite; }
+.h-light.red { animation: pillPulse .8s ease-in-out infinite; }
+@keyframes pillPulse { 50% { transform: translateX(-50%) scale(1.08); } }
+@keyframes lightFlash { 50% { background: #ffd23f; } }
+@media (max-width: 640px) { .h-light { font-size: 17px; top: calc(112px + var(--safe-t)); } .h-light .lamp { width: 24px; height: 24px; } }
+.duel-board:not(.hide) ~ .h-light, .duel-board:not(.hide) ~ .h-crown { top: calc(170px + var(--safe-t)); }
+.pchip .pth .thimg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.25); pointer-events: none; }
+.ps-claim { color: var(--ink); -webkit-text-stroke: 0; }
+.ps-claim small { color: var(--ink); opacity: .75; }
+@media (max-height: 560px) {
+  body.subscreen .tabs-main { display: none; } /* phones: the sub-screens use their back button instead */
+  .ps-t { display: none; }
+  .ps-head { padding: 7px 10px; gap: 6px 10px; margin-bottom: 8px; }
+  .ps-lv { width: 52px; height: 52px; } .ps-lv b { font-size: 23px; } .ps-lv small { font-size: 8px; margin-bottom: -6px; }
+  .ps-claim { font-size: 16px; padding: 5px 10px; } .ps-claim small { font-size: 11px; }
+  .passwrap { top: calc(70px + var(--safe-t)); bottom: calc(8px + var(--safe-b)); }
+  .prow { padding: 3px 6px 3px 3px; }
+}
+
 </style>
 </head>
 <body>
@@ -662,6 +770,8 @@ body.lobbying .chat-btn { right: auto; left: calc(14px + var(--safe-l)); top: ca
       <button class="tab on" data-go="menu"><i class="fa-solid fa-house"></i><span>Home</span></button>
       <button class="tab" data-go="locker"><i class="fa-solid fa-shirt"></i><span>Locker</span></button>
       <button class="tab" data-go="shop"><i class="fa-solid fa-store"></i><span>Shop</span></button>
+      <button class="tab pass-tab" data-go="pass"><i class="fa-solid fa-ticket"></i><span>Pass</span><i class="badge hide">0</i></button>
+      <button class="tab" data-act="leaderboard"><i class="fa-solid fa-trophy"></i><span>Top</span></button>
       <button class="tab promo-tab" data-act="promo"><i class="fa-solid fa-gift"></i><span>Codes</span></button>
     </nav>
     <div class="nameplate" data-act="rename"><span class="nm">Bean</span><i class="fa-solid fa-pen"></i></div>
@@ -674,6 +784,7 @@ body.lobbying .chat-btn { right: auto; left: calc(14px + var(--safe-l)); top: ca
       <div class="rk-top"><div class="rk-badge" id="rkBadge"></div><div class="rk-info"><small>YOUR RANK</small><b id="rkName">Bronze I</b><div class="rk-bar"><i id="rkBar"></i></div><span id="rkRp">0 RP</span></div></div>
       <div class="rk-stats" id="rkStats"></div>
       <div class="rk-ladder" id="rkLadder"></div>
+      <div class="rk-tip" id="rkTip">⚔ Duels are <b>first to 3</b> vs anyone · wins pay big, losses barely sting · you can’t drop out of a tier you’ve reached</div>
       <button class="btn small rk-lb" id="rkLb"><i class="fa-solid fa-trophy"></i> Global leaderboard</button>
     </div>
     <div class="playwrap">
@@ -700,6 +811,18 @@ body.lobbying .chat-btn { right: auto; left: calc(14px + var(--safe-l)); top: ca
     <div class="shopwrap"><div id="shopFeatured"></div><div class="grid shopgrid" id="shopGrid"></div></div>
   </section>
 
+  <section id="pass" class="screen sub">
+    <div class="subhead"><button class="back" data-go="menu"><i class="fa-solid fa-chevron-left"></i></button><h2>CranPass</h2><span class="pass-free">FREE</span><div class="spacer"></div><div class="cur berries"><span class="ico-berry"></span><b>0</b></div><div class="cur crowns"><i class="fa-solid fa-crown"></i><b>0</b></div></div>
+    <div class="passwrap" id="passWrap">
+      <div class="ps-head card">
+        <div class="ps-lv"><small>LEVEL</small><b id="psLvl">1</b></div>
+        <div class="ps-mid"><div class="ps-t">Every level pays out — Cranberries every level, Crowns every 5, and items you can only get here.</div><div class="xpbar big"><i id="psXp"></i></div><small id="psXpT"></small></div>
+        <button class="btn yellow ps-claim" id="psClaim"></button>
+      </div>
+      <div class="ps-road" id="psRoad"></div>
+    </div>
+  </section>
+
   <section id="lobby" class="screen game">
     <div class="lobby-top">
       <div class="lt-title">WAITING ROOM</div>
@@ -719,12 +842,14 @@ body.lobbying .chat-btn { right: auto; left: calc(14px + var(--safe-l)); top: ca
     <div class="hud-real hide" id="hudReal"><div class="hr-head"><i class="fa-solid fa-star"></i> REAL PLAYERS</div><div id="hudRealList"></div></div>
     <div class="h-round"><b id="hRoundN">ROUND 1</b><span id="hRoundName">Whirl Way</span></div>
     <div class="duel-board hide" id="duelBoard"></div>
+    <div class="h-light hide" id="hLight"><i class="lamp"></i><b id="hlTxt">GREEN LIGHT</b></div>
     <div class="h-target hide" id="hTarget"><span class="sw" id="htSw"></span><b id="htName">GET READY…</b><i class="bar"><i id="htBar"></i></i></div>
     <div class="h-counter" id="hCounter"><span class="k">QUALIFIED</span><b>0 / 30</b></div>
     <div class="h-timer"><i class="fa-regular fa-clock"></i> <b id="hTimer">2:30</b></div>
     <button class="iconbtn h-menu" data-act="leaveAsk" title="Leave show"><i class="fa-solid fa-right-from-bracket"></i></button>
     <div class="h-feed" id="hFeed"></div>
     <div class="h-objective" id="hObjective"></div>
+    <div class="h-crown hide" id="hCrown"></div>
     <div class="spectate hide" id="spectate"><button class="iconbtn" data-act="specPrev"><i class="fa-solid fa-chevron-left"></i></button><div><small>SPECTATING</small><b id="specName">–</b></div><button class="iconbtn" data-act="specNext"><i class="fa-solid fa-chevron-right"></i></button><button class="btn small pink" data-act="leave"><i class="fa-solid fa-door-open"></i> Leave</button></div>
     <div class="fps hide" id="fps"></div>
   </section>
@@ -737,6 +862,7 @@ body.lobbying .chat-btn { right: auto; left: calc(14px + var(--safe-l)); top: ca
       <p class="ic-desc" id="icDesc">Race to the finish!</p>
       <p class="ic-tip" id="icTip"></p>
       <div class="ic-q" id="icQ"></div>
+      <div class="ic-warn hide" id="icWarn"></div>
     </div>
   </section>
   <div id="countdown"></div>
@@ -803,7 +929,7 @@ body.lobbying .chat-btn { right: auto; left: calc(14px + var(--safe-l)); top: ca
   <div id="nogl" class="screen"><div class="card"><h2>WebGL2 needed</h2><p>CranGuys needs WebGL2. Please open it in Safari 15+, Chrome or Firefox.</p></div></div>
 </div>
 <script>
-/* CranGuys bundle — 44 modules */
+/* CranGuys bundle — 47 modules */
 (() => {
 'use strict';
 const __m = {};
@@ -1590,7 +1716,10 @@ const RARITY = {
   epic: { name: 'Epic', price: { b: 1800 }, col: '#ff5fa2' },
   legendary: { name: 'Legendary', price: { c: 4 }, col: '#ffc83d' },
   exclusive: { name: 'Exclusive', price: {}, col: '#14c99a' }, // promo codes only: never in the shop, never on bots
+  pass: { name: 'CranPass', price: {}, col: '#22a8ff' },       // earned on the free CranPass roadmap only
 };
+// rarities you can't buy (and bots never wear)
+const UNBUYABLE = new Set(['exclusive', 'pass']);
 
 const colors = [
   ['bubblegum', 'Bubblegum', '#ff7ab8', 'common'], ['sky', 'Sky', '#5cc8ff', 'common'], ['lime', 'Lime', '#8fe34d', 'common'],
@@ -1599,6 +1728,9 @@ const colors = [
   ['cranberry', 'Cranberry', '#d6195a', 'rare'], ['teal', 'Teal', '#14b8b0', 'rare'], ['lilac', 'Lilac', '#c9a6ff', 'rare'],
   ['peach', 'Peach', '#ffb38a', 'rare'], ['ink', 'Ink', '#2b2350', 'epic'], ['cherry', 'Cherry', '#ff2e4d', 'epic'],
   ['gold', 'Gold', '#ffc83d', 'legendary'], ['rainbow', 'Rainbow', 'rainbow', 'legendary'],
+  // CranPass colours
+  ['neon', 'Neon', '#c6ff1a', 'pass'], ['electric', 'Electric', '#2d6bff', 'pass'], ['magenta', 'Magenta', '#ff1fc8', 'pass'],
+  ['midnight', 'Midnight', '#241a5c', 'pass'], ['glacier', 'Glacier', '#9ff3ff', 'pass'],
 ];
 const patterns = [
   ['solid', 'Solid', 0, 'common'], ['stripes', 'Stripes', 1, 'common'], ['polka', 'Polka Dots', 2, 'common'], ['zigzag', 'Zigzag', 3, 'rare'],
@@ -1647,9 +1779,9 @@ function sanitizeLoadout(lo, owned) {
 function randomLoadout(rng) {
   const by = (s) => CATALOG.filter((i) => i.slot === s);
   const pick = (arr) => arr[Math.floor(rng() * arr.length) % arr.length].id;
-  const hats = by('hat').filter((i) => i.rarity !== 'exclusive');
+  const hats = by('hat').filter((i) => !UNBUYABLE.has(i.rarity)), cols = by('color').filter((i) => !UNBUYABLE.has(i.rarity));
   return {
-    color: pick(by('color')), color2: pick(by('color')), pattern: pick(by('pattern')), face: pick(by('face')),
+    color: pick(cols), color2: pick(cols), pattern: pick(by('pattern')), face: pick(by('face')),
     hat: rng() < 0.45 ? 'h_none' : pick(hats),
   };
 }
@@ -1658,7 +1790,7 @@ function randomLoadout(rng) {
 function dailyShop(date = new Date()) {
   const day = date.toISOString().slice(0, 10);
   const rng = mulberry32(hashStr('cranguys-shop-' + day));
-  const pool = CATALOG.filter((i) => !DEFAULT_OWNED.includes(i.id) && i.rarity !== 'legendary' && i.rarity !== 'exclusive' && i.id !== 'h_none');
+  const pool = CATALOG.filter((i) => !DEFAULT_OWNED.includes(i.id) && i.rarity !== 'legendary' && !UNBUYABLE.has(i.rarity) && i.id !== 'h_none');
   const legend = CATALOG.filter((i) => i.rarity === 'legendary');
   const picks = [];
   while (picks.length < 6) { const it = pool[Math.floor(rng() * pool.length)]; if (!picks.includes(it.id)) picks.push(it.id); }
@@ -1668,17 +1800,18 @@ function dailyShop(date = new Date()) {
 }
 
 // Rewards are computed only on the authority (server, or the offline local server).
-function computeRewards({ rounds = 0, won = false, totalRounds = 3, eliminated = false }) {
+function computeRewards({ rounds = 0, won = false, totalRounds = 3, eliminated = false, duel = false, duelWon = false }) {
   let berries = 40 + rounds * 90, xp = 60 + rounds * 120, crowns = 0;
   if (rounds >= totalRounds - 1) berries += 60;          // made the final
-  if (won) { berries += 400; xp += 400; crowns += 1; }
+  if (won && !duel) { berries += 400; xp += 400; crowns += 1; } // crowns only come from winning a show, never a duel
+  if (duel && duelWon) { berries += 200; xp += 250; }
   return { berries, crowns, xp };
 }
 const XP_PER_LEVEL = 1000;
 const levelForXp = (xp) => 1 + Math.floor(xp / XP_PER_LEVEL);
-const LEVEL_UP_BONUS = 150;
+const LEVEL_UP_BONUS = 0; // levels now pay out through the CranPass (shared/pass.js)
 
-return { RARITY, CATALOG, itemById, SLOTS, slotCategory, DEFAULT_OWNED, DEFAULT_LOADOUT, START_BALANCE, sanitizeLoadout, randomLoadout, dailyShop, computeRewards, XP_PER_LEVEL, levelForXp, LEVEL_UP_BONUS };
+return { RARITY, UNBUYABLE, CATALOG, itemById, SLOTS, slotCategory, DEFAULT_OWNED, DEFAULT_LOADOUT, START_BALANCE, sanitizeLoadout, randomLoadout, dailyShop, computeRewards, XP_PER_LEVEL, levelForXp, LEVEL_UP_BONUS };
 })();
 
 // ---- client/js/util.js ----
@@ -2181,6 +2314,7 @@ function decorShape(mb, d, out, mn, mx) {
   const I = [1, 0, 0, 0, 1, 0, 0, 0, 1], p = d.p;
   const grow = (x0, y0, z0, x1, y1, z1) => { mn[0] = Math.min(mn[0], x0); mn[1] = Math.min(mn[1], y0); mn[2] = Math.min(mn[2], z0); mx[0] = Math.max(mx[0], x1); mx[1] = Math.max(mx[1], y1); mx[2] = Math.max(mx[2], z1); };
   if (d.shape === 'sph') { mb.xf(I, p); sphere(mb, d.r, { c, mat: MAT.plain }, 18); grow(p[0] - d.r, p[1] - d.r, p[2] - d.r, p[0] + d.r, p[1] + d.r, p[2] + d.r); }
+  else if (d.shape === 'box') { mb.xf(I, p); roundBox(mb, d.h, Math.min(0.02, d.h[1] * 0.5), { c, mat: MAT.plain }); grow(p[0] - d.h[0], p[1] - d.h[1], p[2] - d.h[2], p[0] + d.h[0], p[1] + d.h[1], p[2] + d.h[2]); } // painted lines
   else if (d.shape === 'gate' || d.shape === 'arch') {
     const w = d.w / 2, h = d.h;
     for (const s of [-1, 1]) { mb.xf(I, [p[0] + s * (w + 0.6), p[1] + h / 2, p[2]]); roundBox(mb, [0.6, h / 2, 0.6], 0.25, { c, c2, mat: MAT.stripes }); }
@@ -2340,7 +2474,7 @@ const TIMING = {
   countdown: 3.4,
   roundEnd: 2.6,
   results: 6,
-  podium: 10,
+  podium: 4,          // short and sweet
   disconnectGrace: 25,
   duelStart: 6,        // ranked duel: both players in -> short countdown
   rankedStart: 20,     // ranked show: 5 real players in -> last call for others
@@ -2372,6 +2506,7 @@ class BeanVis {
     this.hitT = 0; this.expr = 0; this.seed = Math.random() * 100;
     this.params = { sq: [1, 1, 0, 0], wob: [0, 0, 0], colA: look.colA, colB: look.colB, pat: look.pat, face: look.face, expr: 0, blink: 1, rainbow: look.rainbow, metal: look.metal, fx: look.fx, hit: 0, tint: [1, 1, 1, 1] };
     this.events = [];
+    this.scale = 1; // giant mascots
   }
   setLook(look) { this.look = look; Object.assign(this.params, { colA: look.colA, colB: look.colB, pat: look.pat, face: look.face, rainbow: look.rainbow, metal: look.metal, fx: look.fx }); }
 
@@ -2467,16 +2602,19 @@ class BeanVis {
       ease(4, sw * 0.85 * run); ease(5, -sw * 0.85 * run);
     }
 
+    // scripted arm/leg poses (giant mascots cranking a rope, waving…)
+    if (o.pose) for (let i = 0; i < 6; i++) L[i] += (o.pose[i] - L[i]) * Math.min(1, dt * 18);
     // ---- blink & expression ----
     this.blinkT -= dt; if (this.blinkT < 0) { this.blink = 0; if (this.blinkT < -0.12) { this.blink = 1; this.blinkT = 1.5 + Math.random() * 3.5; } }
     let expr = 0;
     if (mode === MODE.RAG || mode === MODE.GETUP) expr = 1;
     else if (o.celebrate) expr = 2;
     else if (!grounded && v[1] < -15) expr = 3;
+    if (o.expr !== undefined) expr = o.expr;
     this.hitT = Math.max(0, this.hitT - dt);
 
     // ---- matrices ----
-    m4.trs(s.p, this.q, [1, 1, 1], this.root);
+    const sc = this.scale; m4.trs(s.p, this.q, [sc, sc, sc], this.root);
     this.bones.set(this.root, 0);
     const wob = this.wob, sq = this.sy;
     const limb = (i, side, pivot, swing, spread, slot) => {
@@ -2553,6 +2691,7 @@ function poseAt(c, t, P, M) {
     case 'spin': ang = (k.ph || 0) + k.w * t; break;
     case 'spinAcc': ang = kinAngle(k, t); break;
     case 'pend': ang = (k.base || 0) + k.amp * Math.sin(k.w * t + (k.ph || 0)); break;
+    case 'fnA': ang = k.fa(t); break;                 // level-scripted angle about k.axis through k.c (jump rope)
     case 'osc': {
       const s = Math.sin(k.w * t + (k.ph || 0));
       P[0] = c.p[0] + k.d[0] * s; P[1] = c.p[1] + k.d[1] * s; P[2] = c.p[2] + k.d[2] * s;
@@ -2863,6 +3002,8 @@ const { Kit, C, T_PLAY } = __m["shared/levels/kit.js"];
 const { SURF } = __m["shared/config.js"];
 const slopeY = (z, z0, y0, z1, y1) => y0 + ((z - z0) / (z1 - z0)) * (y1 - y0);
 
+// one cannon per boulder lane: each flashes twice (≈0.9 s and 0.45 s) before it fires
+const CANNON_XS = [-8.5, -4.2, 0, 4.2, 8.5];
 const CROWN = { c: [0, 29.0, 135], rx: 6.5, rz: 4.2, period: 14, bob: 0.3 };
 function crownAt(t) {
   const a = ((t - T_PLAY) / CROWN.period) * Math.PI * 2;
@@ -2897,15 +3038,14 @@ function buildCrownPeak(seed) {
   K.box([0, 25, 135], [12, 1, 11], { vis: S(C.hotpink, C.bubble) });
   for (const s of [-1, 1]) K.cyl([s * 8.5, 26.9, 129], 0.85, 0.9, { surf: SURF.BUMPER, bump: 10, vis: { c: C.yellow, c2: C.white, m: 'bumper' } });
   // boulder cannons + crown pedestal (decor)
-  for (const x of [-8, -2.5, 3, 8.5]) K.deco({ shape: 'cannon', p: [x, 26, 125.8], vis: { c: C.navy, c2: C.yellow, m: 'plain' } });
+  for (const x of CANNON_XS) K.deco({ shape: 'cannon', p: [x, 26, 125.8], vis: { c: C.navy, c2: C.yellow, m: 'plain' } });
   K.deco({ shape: 'ring', p: [0, 26.05, 135], r: 7.5, vis: { c: C.gold, m: 'plain' } });
-  for (const z of [8, 40, 52, 84, 104, 124]) for (const s of [-1, 1]) K.deco({ shape: 'flag', p: [s * 12, slopeY(z, 0, 0, 1, 0) + (z <= 8 ? 0 : z <= 40 ? 9 : z <= 52 ? 9 : z <= 84 ? 18 : z <= 104 ? 19.9 : 26), z], vis: { c: s < 0 ? C.yellow : C.hotpink } });
 
   return {
     id: 'crownpeak', type: 'final', name: 'Crown Peak', desc: 'Grab the crown at the summit to win!', tip: 'Boulders roll down the mountain. Hold GRAB at the terrace wall to climb, then leap for the crown.',
     colliders: K.cols, triggers: K.trigs, decor: K.decor, ndyn: K.ndyn, hazards: K.hazards,
     timeLimit: 210, slimeY: -9, theme: 'sunset', crown: CROWN,
-    boulders: { every: 1.05, r: 1.3, z: 122.5, y: 27.9, xs: [-8.5, -4.2, 0, 4.2, 8.5], start: T_PLAY + 3 },
+    boulders: { every: 1.05, r: 1.3, z: 122.5, y: 27.9, xs: CANNON_XS, start: T_PLAY + 1.7, lead: 1.3 },
     rules: {
       killY: -6, respawn: true,
       checkpoints: [
@@ -2934,7 +3074,7 @@ function buildCrownPeak(seed) {
   };
 }
 
-return { CROWN, crownAt, buildCrownPeak };
+return { CANNON_XS, CROWN, crownAt, buildCrownPeak };
 })();
 
 // ---- client/js/scene.js ----
@@ -3074,6 +3214,7 @@ class Scene {
       if (L.m.dyn) R.draw(L.m.dyn, null, { dyn: true });
       for (const k of L.m.kin) R.draw(k.mesh, m4.fromRM(k.c.wm, k.c.wp));
       for (const b of beans) if (Math.hypot(b.p[0] - focus[0], b.p[2] - focus[2]) < 40) R.drawBean(this.bean, b.vis.bones, b.vis.params);
+      for (const b of d.mascots || []) if (Math.hypot(b.p[0] - focus[0], b.p[2] - focus[2]) < 60) R.drawBean(this.bean, b.vis.bones, b.vis.params);
       for (const b of d.balls) R.draw(this.boulder, m4.trs(b.p, b.q || [0, 0, 0, 1]));
       R.endShadow();
     }
@@ -3083,7 +3224,7 @@ class Scene {
     if (L.m.props) R.draw(L.m.props, null, {});
     for (const c of L.m.chunks) if (this.visible(c.mn, c.mx)) R.draw(c.mesh);
     if (L.m.dyn) R.draw(L.m.dyn, null, { dyn: true });
-    for (const k of L.m.kin) if (k.c.wp[1] > -1000) R.draw(k.mesh, m4.fromRM(k.c.wm, k.c.wp), d.kinTint && k.c.vis && (k.c.vis.cm !== undefined || k.c.vis.cmScreen || k.c.vis.wb) ? { tint: d.kinTint(k.c), emit: k.c.vis.cmScreen ? 0.55 : 0 } : undefined);
+    for (const k of L.m.kin) if (k.c.wp[1] > -1000) R.draw(k.mesh, m4.fromRM(k.c.wm, k.c.wp), d.kinTint && k.c.vis && (k.c.vis.cm !== undefined || k.c.vis.cmScreen || k.c.vis.wb || k.c.vis.tk) ? { tint: d.kinTint(k.c), emit: k.c.vis.cmScreen ? 0.55 : k.c.vis.tk === 'rope' ? 0.45 : k.c.vis.tk === 'spot' ? 1 : 0 } : undefined);
     for (const b of d.balls) R.draw(this.boulder, m4.trs(b.p, b.q || [0, 0, 0, 1]));
     if (d.hoops) for (const o of d.hoops) { // Hoop Hunt: upright rings turning slowly where they float
       const h = o.h, q = qt.mul(qt.axis([0, 1, 0], h.yaw + this.time * 0.9), qt.axis([1, 0, 0], Math.PI / 2));
@@ -3092,6 +3233,7 @@ class Scene {
     for (const db of d.debris || []) R.draw(this.door, m4.trs(db.p, qt.axis([1, 0, 0], db.rx)), { tint: [...rgb(db.c), Math.max(0, 1 - db.t / 2.5)] });
     if (d.crown) { R.draw(this.crown, m4.trs(d.crown, qt.axis([0, 1, 0], this.time * 1.6), [1.15, 1.15, 1.15]), { emit: 0.15 }); }
     this.drawBeans(beans, cam);
+    if (d.mascots) this.drawBeans(d.mascots, cam); // giant mascots (Rope Rumble, Red Light Rush)
     R.drawSlime(d.slimeY !== undefined ? d.slimeY : L.level.slimeY);
     // lasers (emissive, additive)
     R.cur = null;
@@ -3263,6 +3405,12 @@ class Sound {
       case 'tile': this.noiseHit(0.08, 0.06 * v, 'highpass', 2500); this.osc('sine', 980 * p, 760 * p, 0.08, 0.04 * v); break;
       case 'tiledrop': this.noiseHit(0.25, 0.08 * v, 'lowpass', 1400, 200); break;
       case 'door': this.noiseHit(0.5, 0.35 * v, 'lowpass', 2400, 160); this.osc('sine', 90, 40, 0.3, 0.4 * v); break;
+      case 'warn': this.osc('square', 1180 * p, 1180 * p, 0.09, 0.07 * v, { filter: { type: 'lowpass', f: 2600 } }); this.osc('sine', 590 * p, 590 * p, 0.12, 0.08 * v); break;
+      case 'rope': this.noiseHit(0.32, 0.22 * v, 'bandpass', 260, 2400, { q: 1.2 }); this.osc('sine', 120 * p, 55, 0.18, 0.3 * v); break;
+      case 'tease': [0, 0.09, 0.18, 0.27, 0.36, 0.45].forEach((at, i) => this.noiseHit(0.05, (0.05 + i * 0.012) * v, 'bandpass', 900, 900, { at, q: 3 })); break;
+      case 'scratch': this.noiseHit(0.22, 0.2 * v, 'bandpass', 2600, 300, { q: 2 }); this.osc('sawtooth', 600, 90, 0.2, 0.06 * v, { filter: { type: 'lowpass', f: 1500 } }); break;
+      case 'scan': this.osc('sine', 300, 1300, 0.45, 0.12 * v, { vib: 25 }); this.osc('triangle', 150, 650, 0.45, 0.08 * v); break;
+      case 'buzzer': this.osc('square', 140 * p, 120 * p, 0.45, 0.12 * v, { filter: { type: 'lowpass', f: 1200 } }); this.osc('sawtooth', 70, 60, 0.45, 0.08 * v); break;
       case 'doorthud': this.osc('sine', 120 * p, 70, 0.1, 0.22 * v); break;
       case 'cp': this.osc('sine', 880, 880, 0.35, 0.12 * v); this.osc('sine', 1320, 1320, 0.35, 0.08 * v, { at: 0.06 }); break;
       case 'respawn': this.osc('sine', 300, 900, 0.2, 0.15 * v); break;
@@ -3335,6 +3483,9 @@ const TRACKS = {
   final: { bpm: 142, key: 60, prog: [0, 8, 3, 10], minor: [1, 0, 0, 0], scale: [0, 3, 5, 7, 10], seed: 31,
     kick: 'x..x..x.x..x..x.', snare: '....x.......x.x.', hat: 'x.xxx.xxx.xxx.xx', bass: 'xx.xx.xx.xx.xx.x', chord: 'x.....x.....x...',
     density: [0.9, 0.3, 0.6, 0.3, 0.8, 0.2, 0.6, 0.3, 0.9, 0.3, 0.6, 0.3, 0.8, 0.2, 0.6, 0.4] },
+  rlgl: { bpm: 150, key: 67, prog: [0, 0, 5, 7], minor: [0, 0, 0, 0], scale: [0, 2, 4, 7, 9], seed: 404,
+    kick: 'x...x...x...x...', snare: '....x.......x...', hat: 'x.x.x.x.x.x.x.x.', bass: 'x..x..x.x..x..x.', chord: '..x...x...x...x.',
+    density: [1, 0, 0.8, 0, 1, 0, 0.8, 0, 1, 0, 0.8, 0.4, 1, 0, 0.6, 0] },
   podium: { bpm: 120, key: 67, prog: [0, 5, 0, 7], minor: [0, 0, 0, 0], scale: [0, 2, 4, 7, 9, 11], seed: 77,
     kick: 'x.......x.......', snare: '....x.......x...', hat: '..x...x...x...x.', bass: 'x...x...x...x...', chord: 'x...x...x...x...',
     density: [0.9, 0, 0.5, 0, 0.9, 0, 0.5, 0, 0.9, 0, 0.5, 0, 0.9, 0, 0.7, 0.3] },
@@ -3604,7 +3755,6 @@ function buildWhirlWay(seed) {
   K.deco({ shape: 'arch', p: [0, 3, 208], w: 26, h: 8, vis: { c: C.yellow, c2: C.hotpink, m: 'plain', text: 'FINISH' } });
 
   // decorative flags & backdrop
-  for (const z of [10, 44, 88, 126, 150, 196]) for (const s of [-1, 1]) K.deco({ shape: 'flag', p: [s * 13.6, z < 40 ? 0 : z < 126 ? 4 : 3, z], vis: { c: s < 0 ? C.yellow : C.hotpink } });
 
   const level = {
     id: 'whirlway', type: 'race', name: 'Whirl Way', desc: 'Race to the finish line!', tip: 'Dive under the high sweepers, jump the low ones. Not every door breaks…',
@@ -3798,7 +3948,6 @@ function buildHammerHills(seed) {
   for (const s of [-1, 1]) for (const z of [110.5, 119.5]) K.cyl([s * 8.6, 6.9, z], 0.85, 0.9, { surf: 4, bump: 10, vis: { c: C.hotpink, c2: C.white, m: 'bumper' } });
   K.deco({ shape: 'arch', p: [0, 6, 130], w: 22, h: 8, vis: { c: C.yellow, c2: C.hotpink, m: 'plain', text: 'FINISH' } });
 
-  for (const [z, y] of [[10, 0], [47, 6], [71, 6], [100, 6]]) for (const s of [-1, 1]) K.deco({ shape: 'flag', p: [s * 10.6, y, z], vis: { c: s < 0 ? C.lime : C.hotpink } });
 
   return {
     id: 'hammerhills', type: 'race', name: 'Hammer Hills', desc: 'Race to the finish line!', tip: 'Time your run past the hammers, hop log to log and lean into the wind on the fan bridge.',
@@ -3881,7 +4030,6 @@ function buildTrustTiles(seed) {
   K.deco({ shape: 'gate', p: [0, 0, 10.2], w: 20, h: 7, vis: { c: C.purple, c2: C.yellow, m: 'plain', text: 'GO!' } });
   // tile frame posts (decor)
   const zEnd = trustZ(TRUST.rows - 1) + hs;
-  for (const s of [-1, 1]) for (let r = 0; r <= TRUST.rows; r += 3) K.deco({ shape: 'flag', p: [s * 9.2, -0.2, trustZ(r) - hs], vis: { c: s < 0 ? C.yellow : C.hotpink } });
 
   // 2) landing (z 47.25..53, top 0)
   K.box([0, -1, (zEnd + 0.25 + 53) / 2], [10, 1, (53 - zEnd - 0.25) / 2], { vis: S(C.sky, C.white) });
@@ -3963,7 +4111,6 @@ function buildJumpRing(seed) {
   K.cap([0, RING.high.y, 0], RING.high.r, hl, { knock: 7, knockSV: 0.45, kin: high, vis: { c: C.orange, c2: C.white, m: 'arm' } });
   K.hazards.push({ type: 'arm', c: high.c, hl, k: high, high: true, over: true, r: RING.high.r });
 
-  for (let i = 0; i < 10; i++) { const a = (i / 10) * Math.PI * 2; K.deco({ shape: 'flag', p: [Math.cos(a) * (RING.R + 2.4), -0.6, Math.sin(a) * (RING.R + 2.4)], vis: { c: i % 2 ? C.yellow : C.mint } }); }
 
   return {
     id: 'jumpring', type: 'survival', name: 'Jump Ring', desc: 'Survive until enough beans are knocked off!', descFinal: 'Last bean on the ring wins the crown!',
@@ -4028,14 +4175,15 @@ return { buildLobby };
 
 // ---- shared/levels/slimesurge.js ----
 __m["shared/levels/slimesurge.js"] = (() => {
-// Round type: RACE — "Slime Surge". The slime is rising and it does NOT give you a second chance: fall in (or
-// get caught by it) and you're out. Punching ramp, a bounce-pad wall, a spinning-bar deck, a staircase of
-// turning discs, a downhill conveyor full of bumpers, sliding platforms and a sweeper deck before the summit.
+// Round type: RACE — "Slime Surge". A climb out of rising slime: punching ramp, a bounce-pad wall, a spinning-bar
+// deck, a staircase of turning discs, a downhill conveyor full of bumpers, sliding platforms and a sweeper deck
+// before the summit. Fall in and you respawn at your last checkpoint. The slime floods the start area early on;
+// after that, anyone who falls back down there is carried up to the first dry checkpoint.
 const { Kit, C, T_PLAY } = __m["shared/levels/kit.js"];
 const { SURF } = __m["shared/config.js"];
 const slopeY = (z, z0, y0, z1, y1) => y0 + ((z - z0) / (z1 - z0)) * (y1 - y0);
 // the slime: starts a little after GO and climbs steadily; by the end it swallows the whole course
-const SURGE = { t0: T_PLAY + 3, y0: -3, rate: 0.235, max: 31.5 };
+const SURGE = { t0: T_PLAY + 3, y0: -3, rate: 0.15, max: 3 };
 
 function buildSlimeSurge(seed) {
   const K = new Kit();
@@ -4097,15 +4245,23 @@ function buildSlimeSurge(seed) {
   K.box([0, 29, 221], [8, 1, 7], { vis: S(C.yellow, C.cream) });
   K.deco({ shape: 'arch', p: [0, 30, 220], w: 16, h: 7, vis: { c: C.yellow, c2: C.mint, m: 'plain', text: 'FINISH' } });
 
-  // slime-level markers along the course (decor): tall striped poles with height bands
-  for (const [z, y] of [[8, 0], [44, 7], [57, 12], [104, 16.5], [142, 24], [171, 24], [216, 30]]) for (const s of [-1, 1]) K.deco({ shape: 'flag', p: [s * 8.6, y, z], vis: { c: s < 0 ? C.lime : C.hotpink } });
 
   return {
-    id: 'slimesurge', type: 'race', name: 'Slime Surge', desc: 'Race up before the rising slime gets you!', tip: 'The slime never stops rising — and falling in knocks you out. Keep to the middle of the punching ramp!',
+    id: 'slimesurge', type: 'race', name: 'Slime Surge', desc: 'Climb out of the rising slime and race to the top!', tip: 'Keep to the middle of the punching ramp. Fall in and you go back to your last checkpoint.',
     colliders: K.cols, triggers: K.trigs, decor: K.decor, ndyn: K.ndyn, hazards: K.hazards, plats, punchers,
     timeLimit: 150, slimeY: SURGE.y0, theme: 'mint', surge: SURGE,
     finish: [-8, 29.5, 220, 8, 40, 228],
-    rules: { killY: -99, respawn: false, rise: SURGE, checkpoints: [{ spawn: [0, 0, 2], spread: [14, 8], yaw: 0, box: [0, 0, 0, 0, 0, 0] }] },
+    rules: {
+      killY: -99, respawn: true, rise: SURGE,
+      checkpoints: [
+        { spawn: [0, 0, 2], spread: [14, 8], yaw: 0, box: [0, 0, 0, 0, 0, 0] },
+        { spawn: [0, 7, 46], spread: [12, 4], yaw: 0, box: [-8, 6.5, 42, 8, 12, 50] },
+        { spawn: [0, 12, 58], spread: [12, 3], yaw: 0, box: [-8, 11.5, 55, 8, 16, 76] },
+        { spawn: [0, 16.5, 105.5], spread: [12, 4], yaw: 0, box: [-8, 16, 102, 8, 20, 109] },
+        { spawn: [0, 24, 142.5], spread: [12, 4], yaw: 0, box: [-8, 23.5, 139, 8, 28, 146] },
+        { spawn: [0, 24, 166.5], spread: [12, 4], yaw: 0, box: [-8, 23.5, 163.2, 8, 28, 170] },
+      ],
+    },
     spawns(n) {
       const out = [];
       for (let i = 0; i < n; i++) { const col = i % 9, row = Math.floor(i / 9); out.push([-8 + col * 2, 0, 8.5 - row * 2.2, 0]); }
@@ -4236,75 +4392,246 @@ function buildWallRush(seed, variant) {
 return { WALL, GAP, STAGE2, wallPlan, slotWave, stageTimes, wallZ, buildWallRush };
 })();
 
-// ---- shared/levels/hoophunt.js ----
-__m["shared/levels/hoophunt.js"] = (() => {
-// Round type: HUNT — "Hoop Hunt". Hoops keep popping up all over a round arena: jump through them for points
-// (gold hoops, high above the bounce pads, are worth 5). Hoops vanish when someone takes them and reappear
-// somewhere else. When the clock runs out, the highest scorers qualify. A sweeper keeps everyone hopping.
+// ---- shared/levels/jumprope.js ----
+__m["shared/levels/jumprope.js"] = (() => {
+// Round type: RACE — "Rope Rumble". An endurance race along one extra-long inflatable bridge while two giant
+// mascots at either end crank a huge glowing foam jump rope round and round over it. The rope sweeps the whole
+// bridge at once, so everyone has to jump it together; its shadow slides across the floor to help with timing.
+// Now and then the mascots stall the rope at the top of its arc (a fake-out) and then whip it down fast.
+// Halfway along, the walkway narrows; slippery patches and side fans (that only push beans in mid-air) shove
+// jumpers toward the unguarded edges. Get clipped and the rope flings you off — and a fall means starting over.
 const { Kit, C, T_PLAY } = __m["shared/levels/kit.js"];
-const { SURF, TICK_HZ } = __m["shared/config.js"];
-const { mulberry32 } = __m["shared/math.js"];
-const HUNT = { slots: 8, life: 10, gap: 1.3, reach: 1.25, R: 17 };
+const { SURF } = __m["shared/config.js"];
+const { qt, mulberry32 } = __m["shared/math.js"];
+// R: rope radius around the axis; H: axis height (rope bottom skims the bridge at y≈0.5)
+const ROPE = { R: 9, H: 9.5, r: 0.36, z0: -15, z1: 177, start: T_PLAY + 1.2, wide: 4.5, narrow: 2.5, mid: 84, end: 160 };
+const TAU = Math.PI * 2;
 
-// every place a hoop can appear: {p: centre, yaw: facing, v: points, pad: the bounce pad under it}
-function makeSpots() {
-  const spots = [];
-  for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2 + 0.26; spots.push({ p: [Math.cos(a) * 9.6, 2.1, Math.sin(a) * 9.6], yaw: a, v: 1 }); }
-  for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2 + 0.2; spots.push({ p: [Math.cos(a) * 14, 2.1, Math.sin(a) * 14], yaw: a + Math.PI / 2, v: 1 }); }
-  for (let i = 0; i < 4; i++) { const a = (i / 4) * Math.PI * 2 + Math.PI / 4; spots.push({ p: [Math.cos(a) * 11.5, 3.25, Math.sin(a) * 11.5], yaw: a, v: 2, terrace: true }); }
-  for (let i = 0; i < 4; i++) { const a = (i / 4) * Math.PI * 2; spots.push({ p: [Math.cos(a) * 5.6, 4.35, Math.sin(a) * 5.6], yaw: a + Math.PI / 2, v: 5, pad: true }); }
-  return spots;
+// The rope's whole performance, decided by the seed (identical on every machine): a list of segments
+// {t, d, a0, a1, kind}. Angle 0 = rope at the bottom, π = straight up. Revolutions speed up over the round;
+// fake-outs stall at the top for a moment and then come down much faster than normal.
+function ropePlan(seed, dur = 240) {
+  const r = mulberry32((seed ^ 0x51ed) >>> 0), out = [];
+  let t = ROPE.start, a = Math.PI, k = 0;
+  while (t < T_PLAY + dur) {
+    const prog = Math.min(1, (t - ROPE.start) / 110);
+    const T = 3.0 - 0.95 * prog + (r() - 0.5) * 0.25;            // one turn: ~3 s, down to ~2 s
+    const fake = k >= 3 && r() < 0.16 + 0.24 * prog;
+    if (fake) { const d = 0.6 + r() * 0.9; out.push({ t, d, a0: a, a1: a, kind: 'stall' }); t += d; }
+    const down = (fake ? 0.3 : 0.5) * T, up = 0.5 * T;
+    out.push({ t, d: down, a0: a, a1: a + Math.PI, kind: fake ? 'whip' : 'down' }); t += down; a += Math.PI;
+    out.push({ t, d: up, a0: a, a1: a + Math.PI, kind: 'up' }); t += up; a += Math.PI;
+    k++;
+  }
+  return out;
 }
-const SPOTS = makeSpots();
-// the hoop a slot shows in its gen-th appearance (pure function of the level seed)
-function hoopAt(seed, slot, gen) {
-  const r = mulberry32(((seed * 31 + slot * 7919 + gen * 104729) ^ 0x51f15e) >>> 0);
-  r(); let i = Math.floor(r() * SPOTS.length);
-  if (SPOTS[i].pad && r() < 0.45) i = Math.floor(r() * 20);   // gold hoops are rarer than their share of spots
-  return SPOTS[i];
+function ropeSeg(plan, t) {
+  if (t < plan[0].t) return -1;
+  let lo = 0, hi = plan.length - 1;
+  while (lo < hi) { const m = (lo + hi + 1) >> 1; if (plan[m].t <= t) lo = m; else hi = m - 1; }
+  return lo;
 }
-// is the slot's hoop out right now? (state = {hg: gens, ht: ticks each appears at})
-function hoopLive(st, slot, tick) { const t0 = st.ht[slot]; return tick >= t0 && tick < t0 + HUNT.life * TICK_HZ; }
-function huntStart(n = HUNT.slots) { return { hg: new Array(n).fill(0), ht: Array.from({ length: n }, (_, k) => Math.round((T_PLAY + 0.4 + k * 0.35) * TICK_HZ)) }; }
+// rope angle at time t: swinging down it speeds up toward the bottom, swinging up it slows toward the top
+function ropeAngle(plan, t) {
+  const i = ropeSeg(plan, t); if (i < 0) return Math.PI;
+  const s = plan[i], u = Math.min(1, (t - s.t) / s.d);
+  if (s.kind === 'stall') return s.a0 + Math.sin(u * TAU * 1.5) * 0.09 * (1 - u); // a little tease at the top
+  if (s.kind === 'up') return s.a0 + Math.PI * Math.sin(u * Math.PI / 2);
+  return s.a0 + Math.PI * (1 - Math.cos(u * Math.PI / 2));
+}
+// When will the rope next sweep through x (in the lower half)? Used by bots and the UI hint.
+function ropeNextHit(plan, t, x = 0) {
+  const off = Math.asin(Math.max(-1, Math.min(1, x / ROPE.R)));
+  for (let i = Math.max(0, ropeSeg(plan, t)); i < plan.length; i++) {
+    const s = plan[i]; if (s.kind === 'up' || s.kind === 'stall') continue;
+    // down segment ends at the bottom (a1 ≡ 0 mod 2π); the rope reaches x a hair before/after that
+    const tb = s.t + s.d, w = Math.PI * Math.PI / (2 * s.d);   // angular speed at the bottom
+    const th = tb + off / w;
+    if (th > t) return { t: th, fast: s.kind === 'whip', seg: i };
+  }
+  return null;
+}
 
-function buildHoopHunt(seed) {
-  const K = new Kit();
-  const R = HUNT.R;
-  K.cyl([0, -0.6, 0], R, 0.6, { vis: { c: C.mint, c2: C.lime, m: 'rings' } });
-  K.deco({ shape: 'ring', p: [0, -0.3, 0], r: R + 0.4, vis: { c: C.yellow, m: 'plain' } });
-  K.deco({ shape: 'pillar', p: [0, -18, 0], r: 3, h: 17, vis: { c: C.teal, c2: C.white, m: 'stripes' } });
-  // centre: a sweeper that keeps the middle lively
-  K.sweeper([0, 0, 0], { w: 0.75, hl: R - 0.4, arms: [{ y: 0.55, ph: 0 }], col: C.purple, poleH: 3.4 });
-  // four bounce pads (gold hoops float above them) and four terraces (2-point hoops)
-  for (let i = 0; i < 4; i++) {
-    const a = (i / 4) * Math.PI * 2, x = Math.cos(a) * 5.6, z = Math.sin(a) * 5.6;
-    K.cyl([x, 0.08, z], 1.35, 0.1, { surf: SURF.BOUNCY, bounce: 14.2, vis: { c: C.yellow, c2: C.orange, m: 'bouncy' } });
+function buildJumpRope(seed) {
+  const K = new Kit(), R = ROPE;
+  const plan = ropePlan(seed), fa = (t) => ropeAngle(plan, t);
+  const S = (c, c2 = C.white) => ({ c, c2, m: 'stripes' });
+  const panelCols = [[C.hotpink, C.bubble], [C.sky, C.white], [C.yellow, C.cream], [C.mint, C.white]];
+
+  // start pad sits low, so the rope swings harmlessly over the waiting beans; a ramp leads up onto the bridge
+  K.box([0, -3.5, -2], [12, 1, 8], { vis: S(C.purple, C.violet) });
+  K.ramp(-6, 6, 6, -2.5, 12, 0, 1.2, { vis: S(C.lilac, C.white) });
+  K.deco({ shape: 'gate', p: [0, -2.5, 4.6], w: 24, h: 6, vis: { c: C.purple, c2: C.yellow, m: 'plain', text: 'JUMP!' } });
+
+  // the bridge: inflatable panels, wide then narrow from the halfway mark; some panels are slippery
+  const ice = [[34, 41], [56, 63], [96, 102], [124, 131], [146, 152]];
+  const isIce = (z0, z1) => ice.some(([a, b]) => z0 >= a && z1 <= b);
+  let i = 0;
+  const cuts = [12, 20, 27, 34, 41, 48, 56, 63, 70, 77, R.mid, 90, 96, 102, 109, 117, 124, 131, 139, 146, 152, R.end];
+  for (let j = 0; j < cuts.length - 1; j++, i++) {
+    const z0 = cuts[j], z1 = cuts[j + 1], hw = z0 >= R.mid ? R.narrow : R.wide, slick = isIce(z0, z1);
+    const [c, c2] = panelCols[i % panelCols.length];
+    K.box([0, -0.6, (z0 + z1) / 2], [hw, 0.6, (z1 - z0) / 2], slick ? { surf: SURF.ICE, vis: { c: C.ice, c2: C.white, m: 'ice' } } : { vis: { c, c2, m: 'bouncy' } });
+    // puffy inflatable side tubes under the edge (decor only: the edges are unguarded)
+    for (const sd of [-1, 1]) K.deco({ shape: 'sph', p: [sd * (hw + 0.1), -0.75, (z0 + z1) / 2], r: 0.7, vis: { c: c2 === C.white ? c : c2 } });
   }
-  for (let i = 0; i < 4; i++) {
-    const a = (i / 4) * Math.PI * 2 + Math.PI / 4, x = Math.cos(a) * 11.5, z = Math.sin(a) * 11.5;
-    K.box([x, 0.6, z], [1.9, 0.6, 1.9], { q: [0, Math.sin(-a / 2), 0, Math.cos(-a / 2)], vis: { c: [C.pink, C.blue, C.orange, C.violet][i], c2: C.white, m: 'stripes' } });
+  // finish pad beyond the end of the bridge
+  K.box([0, -0.6, R.end + 9], [8, 0.6, 9], { vis: S(C.yellow, C.cream) });
+  K.deco({ shape: 'arch', p: [0, 0, R.end + 1.5], w: 14, h: 8, vis: { c: C.yellow, c2: C.hotpink, m: 'plain', text: 'FINISH' } });
+
+  // side fans: crosswinds that only push beans who are in the air, blowing toward the open edge
+  const fans = [];
+  [[30, 1], [50, -1], [68, 1], [92, -1], [108, 1], [120, -1], [136, 1], [150, -1]].forEach(([fz, dir], k) => {
+    const hw = fz >= R.mid ? R.narrow : R.wide, cyc = { period: 4.6, on: 2.6, ph: k * 1.37 };
+    K.trig({ shape: 'box', p: [0, 2.2, fz], h: [hw + 3, 2.6, 4.2], kind: 'wind', wind: [dir * 3.6, 0, 0], air: true, cyc });
+    const fx = -dir * 9.8, hub = [fx, 2.6, fz]; // outside the rope's circle, so it never swings through them
+    K.box([fx, -2.2, fz], [0.4, 4.6, 0.4], { vis: S(C.navy, C.violet) });
+    K.deco({ shape: 'fan', p: hub, dir, r: 2.2, vis: { c: C.white, c2: C.blue } });
+    for (const ph of [0, Math.PI / 2]) K.cap(hub, 0.24, 1.7, { ghost: true, q: qt.axis([0, 1, 0], Math.PI / 2), kin: { type: 'spin', c: hub, axis: [1, 0, 0], w: 9 * dir, ph }, vis: { c: C.sky, c2: C.white, m: 'arm' } });
+    fans.push({ z: fz, dir, hub, cyc, force: 3.6 });
+  });
+
+  // THE ROPE: one long glowing foam bar circling the bridge's centre line. Hits fling you sideways.
+  const zc = (R.z0 + R.z1) / 2, axisC = [0, R.H, zc];
+  K.cap([0, R.H - R.R, zc], R.r, (R.z1 - R.z0) / 2, {
+    q: qt.axis([0, 1, 0], Math.PI / 2), knock: 13, knockSV: 0.62, knockAny: true,
+    kin: { type: 'fnA', fa, c: axisC, axis: [0, 0, 1] }, vis: { c: C.yellow, c2: C.hotpink, m: 'arm', tk: 'rope' },
+  });
+  // its shadow: a dark stripe straight below the rope, on the wide and the narrow part
+  for (const [z0, z1, hw] of [[12, R.mid, R.wide], [R.mid, R.end, R.narrow]]) {
+    K.box([0, 0.02, (z0 + z1) / 2], [0.55, 0.02, (z1 - z0) / 2 - 0.05], {
+      ghost: true, kin: { type: 'fn', fn: (t) => { const x = R.R * Math.sin(fa(t)); return Math.abs(x) < hw - 0.3 ? [x, 0, 0] : null; } },
+      vis: { c: '#2a1d55', m: 'plain', tk: 'shadow' },
+    });
   }
-  // a ring of bumpers around the rim
-  for (let i = 0; i < 10; i++) { const a = (i / 10) * Math.PI * 2 + 0.31; K.cyl([Math.cos(a) * (R - 0.9), 0.75, Math.sin(a) * (R - 0.9)], 0.6, 0.75, { surf: SURF.BUMPER, bump: 9, vis: { c: C.hotpink, c2: C.white, m: 'bumper' } }); }
-  for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2; K.deco({ shape: 'flag', p: [Math.cos(a) * (R + 1.6), -0.6, Math.sin(a) * (R + 1.6)], vis: { c: i % 2 ? C.yellow : C.hotpink } }); }
+  // the mascots' towers and the crank arms they turn (the mascots themselves are drawn by the client)
+  for (const [tz, face] of [[R.z0, 1], [R.z1, -1]]) {
+    K.box([0, -3.5, tz - face * 5.5], [3.6, 6.2, 3.6], { vis: S(C.navy, C.purple) });
+    K.cyl([0, R.H, tz], 1.1, 0.5, { ghost: true, q: qt.axis([1, 0, 0], Math.PI / 2), kin: { type: 'fnA', fa, c: [0, R.H, tz], axis: [0, 0, 1] }, vis: { c: C.white, c2: C.hotpink, m: 'stripes' } });
+    K.cap([0, R.H - R.R / 2, tz], 0.42, R.R / 2, { ghost: true, q: qt.axis([0, 0, 1], Math.PI / 2), kin: { type: 'fnA', fa, c: [0, R.H, tz], axis: [0, 0, 1] }, vis: { c: C.white, c2: C.purple, m: 'stripes' } });
+  }
 
   return {
-    id: 'hoophunt', type: 'hunt', name: 'Hoop Hunt', desc: 'Jump through hoops for points — top scorers qualify!', tip: 'Gold hoops float above the bounce pads and are worth 5. Hoops on the terraces are worth 2.',
-    goal: 'Jump through the hoops!',
-    colliders: K.cols, triggers: K.trigs, decor: K.decor, ndyn: K.ndyn, hazards: K.hazards, hunt: HUNT,
-    timeLimit: 80, slimeY: -4, theme: 'mint',
-    rules: { killY: -3, respawn: true, checkpoints: [{ spawn: [0, 0, -8], spread: [12, 6], yaw: 0, box: [0, 0, 0, 0, 0, 0] }] },
+    id: 'jumprope', type: 'race', name: 'Rope Rumble', desc: 'Jump the giant rope all the way across the bridge!', tip: 'Watch the rope’s shadow and jump as it sweeps in. It sometimes stops at the top — wait for it! Fall off and you start again.',
+    colliders: K.cols, triggers: K.trigs, decor: K.decor, ndyn: K.ndyn, hazards: K.hazards, fans,
+    timeLimit: 210, slimeY: -8, theme: 'sunset', rope: { ...ROPE, plan, fa, mascots: [[0, 2.7, ROPE.z0 - 5.5, 0], [0, 2.7, ROPE.z1 + 5.5, Math.PI]] },
+    finish: [-9, -1, R.end + 0.5, 9, 9, R.end + 16],
+    rules: {
+      killY: -5.5, respawn: true,
+      // only one checkpoint: a fall sends you all the way back to the start
+      checkpoints: [{ spawn: [0, -2.5, -1], spread: [16, 7], yaw: 0, box: [0, 0, 0, 0, 0, 0] }],
+    },
     spawns(n) {
       const out = [];
-      for (let i = 0; i < n; i++) { const r = 7.5 + 6.5 * ((i * 0.618) % 1), a = i * 2.39996; const x = Math.cos(a) * r, z = Math.sin(a) * r; out.push([x, 0, z, Math.atan2(-x, -z)]); }
+      for (let i = 0; i < n; i++) { const col = i % 10, row = Math.floor(i / 10); out.push([-10.35 + col * 2.3, -2.5, 4.5 - row * 2.1, 0]); }
       return out;
     },
-    bot: { hunt: true },
-    cam: [{ e: [0, 34, -38], l: [0, 0, 0] }, { e: [26, 12, 6], l: [0, 2, 0] }, { e: [-8, 8, -18], l: [0, 2, 0] }, { e: [0, 9, -22], l: [0, 2, 0] }],
+    bot: {
+      rope: true,
+      route: [
+        { p: [0, -2.5, 7], w: 4 }, { p: [0, 0, 14], w: 3.2, act: 'rope' }, { p: [0, 0, 45], w: 2.8, act: 'rope' }, { p: [0, 0, R.mid - 2], w: 2.2, act: 'rope' },
+        { p: [0, 0, R.mid + 6], w: 0.9, act: 'rope' }, { p: [0, 0, 125], w: 0.8, act: 'rope' }, { p: [0, 0, R.end + 4], w: 1, act: 'rope' },
+      ],
+    },
+    cam: [
+      { e: [0, 16, R.end + 26], l: [0, 4, R.end - 4] }, { e: [17, 11, 128], l: [0, 2, 114] }, { e: [-18, 13, 92], l: [0, 2, 80] }, { e: [17, 12, 54], l: [0, 2, 44] },
+      { e: [16, 9, 22], l: [0, 2, 26] }, { e: [0, 6, -22], l: [0, 1, 4] },
+    ],
   };
 }
 
-return { HUNT, SPOTS, hoopAt, hoopLive, huntStart, buildHoopHunt };
+return { ROPE, ropePlan, ropeSeg, ropeAngle, ropeNextHit, buildJumpRope };
+})();
+
+// ---- shared/levels/redlight.js ----
+__m["shared/levels/redlight.js"] = (() => {
+// Round type: RACE — "Red Light Rush". A wide open courtyard, a finish line at the far end and a giant mascot
+// standing behind it. While the mascot faces away and the music plays: RUN. When the music cuts it whips
+// around and a spotlight sweeps the field — anyone still moving flashes red and is sent back to the start line;
+// everyone frozen glows green and is safe. Bouncy beans don't stop on a dime here (braking is slow), and
+// there's nothing to hide behind — so bumping a rival just before the scan is very much allowed.
+const { Kit, C, T_PLAY } = __m["shared/levels/kit.js"];
+const { mulberry32 } = __m["shared/math.js"];
+// z0: start line, line: finish line, turn: how long the whip-around takes (your time to stop), sweep: spotlight
+const RL = { z0: 7, line: 116, turn: 0.8, sweep: 0.45, half: 17.5, still: 0.03 };
+
+// Green/red timings for the whole round, decided by the seed (identical on every machine).
+// Greens vary a lot (including some sneaky short ones); reds hold for a few seconds.
+function rlPlan(seed, dur = 240) {
+  const r = mulberry32((seed ^ 0x7ed1) >>> 0), out = [];
+  let t = T_PLAY, k = 0;
+  while (t < T_PLAY + dur) {
+    const prog = Math.min(1, k / 10);
+    const g = k === 0 ? 3.4 + r() * 1.4 : r() < 0.2 + prog * 0.1 ? 1.1 + r() * 0.8 : 2.0 + r() * 3.2 - prog * 0.6;
+    const red = 2.5 + r() * 1.7;
+    out.push({ k, t, g, r: red }); t += g + red; k++;
+  }
+  return out;
+}
+// Where the light is at time t: 'wait' (before GO), 'green', 'turn' (music cut, mascot turning: stop now!),
+// 'scan' (anyone moving gets caught). `left` = seconds left in this phase, `seg` = the green+red segment.
+function rlState(plan, t) {
+  if (t < plan[0].t) return { phase: 'wait', left: plan[0].t - t, seg: plan[0], k: -1 };
+  let lo = 0, hi = plan.length - 1;
+  while (lo < hi) { const m = (lo + hi + 1) >> 1; if (plan[m].t <= t) lo = m; else hi = m - 1; }
+  const s = plan[lo], u = t - s.t;
+  if (u < s.g) return { phase: 'green', left: s.g - u, seg: s, k: lo, u };
+  if (u < s.g + RL.turn) return { phase: 'turn', left: s.g + RL.turn - u, seg: s, k: lo, u: u - s.g };
+  return { phase: 'scan', left: s.g + s.r - u, seg: s, k: lo, u: u - s.g - RL.turn };
+}
+
+function buildRedLight(seed) {
+  const K = new Kit(), plan = rlPlan(seed), H = RL.half;
+  const S = (c, c2 = C.white) => ({ c, c2, m: 'stripes' });
+  // the courtyard: one big open floor, start strip, distance bands and the finish zone
+  K.box([0, -1, -1], [H, 1, 8], { vis: S(C.purple, C.violet) });                       // start area (z -9..7)
+  const bands = [C.cream, C.peach];
+  for (let z = RL.z0, i = 0; z < RL.line; z += 10, i++) { const z1 = Math.min(RL.line, z + 10); K.box([0, -1, (z + z1) / 2], [H, 1, (z1 - z) / 2], { vis: { c: bands[i % 2], c2: C.white, m: 'plain' } }); }
+  K.box([0, -1, RL.line + 10], [H, 1, 10], { vis: S(C.mint, C.white) });                  // safe zone (20 m past the line)
+  // painted lines (thin raised strips, flush enough to run over)
+  K.deco({ shape: 'box', p: [0, 0.01, RL.z0], h: [H, 0.02, 0.3], vis: { c: C.white, m: 'plain' } });
+  for (let x = -H + 1; x < H; x += 2) K.deco({ shape: 'box', p: [x, 0.012, RL.line], h: [0.5, 0.02, 0.5], vis: { c: (Math.round(x) & 2) ? C.white : '#2a1d55', m: 'plain' } });
+  // walls all round (no cover inside — just a fence to keep everyone in)
+  for (const sd of [-1, 1]) K.box([sd * (H + 0.6), 0.7, (RL.line + 10) / 2], [0.6, 1.7, (RL.line + 30) / 2], { vis: S(C.hotpink, C.bubble) });
+  K.box([0, 0.7, -9.6], [H + 1.2, 1.7, 0.6], { vis: S(C.hotpink, C.bubble) });
+  K.box([0, 3, RL.line + 20.6], [H + 1.2, 4, 0.6], { vis: S(C.purple, C.violet) });
+  // the mascot's pedestal (the mascot itself is drawn by the client and turns with the lights)
+  K.cyl([0, 1, RL.line + 11], 2.6, 1, { vis: { c: C.yellow, c2: C.hotpink, m: 'stripes' } });
+  K.deco({ shape: 'arch', p: [0, 0, RL.line + 0.4], w: 2 * H, h: 9, vis: { c: C.yellow, c2: C.hotpink, m: 'plain', text: 'SAFE ZONE' } });
+  // trees along the walls (outside)
+  for (const sd of [-1, 1]) for (let z = 4; z < RL.line + 18; z += 12) {
+    K.deco({ shape: 'pillar', p: [sd * (H + 3.4), -1, z], r: 0.45, h: 4.2, vis: { c: C.peach, c2: C.cream } });
+    K.deco({ shape: 'sph', p: [sd * (H + 3.4), 4.2, z], r: 2.1, vis: { c: (z / 12) & 1 ? C.mint : C.lime } });
+  }
+  // the spotlight: a bright bar of light that sweeps across the field as each scan starts
+  K.box([0, 0.04, (RL.z0 + RL.line) / 2], [1.4, 0.03, (RL.line - RL.z0) / 2], {
+    ghost: true,
+    kin: { type: 'fn', fn: (t) => { const s = rlState(plan, t); if (s.phase !== 'scan' || s.u > RL.sweep) return null; return [-H + 1.4 + (2 * H - 2.8) * (s.u / RL.sweep), 0, 0]; } },
+    vis: { c: '#fff6a0', m: 'plain', tk: 'spot' },
+  });
+
+  return {
+    id: 'redlight', type: 'race', name: 'Red Light Rush', desc: 'Run on green, FREEZE on red — reach the safe zone!', tip: 'When the music stops, stop! Anyone still moving when the mascot looks is sent back to the start. Braking takes a moment…',
+    colliders: K.cols, triggers: K.trigs, decor: K.decor, ndyn: K.ndyn, hazards: K.hazards,
+    timeLimit: 180, slimeY: -9, theme: 'day', rl: { ...RL, plan, mascot: [0, 2, RL.line + 11] },
+    finish: [-H, -1, RL.line, H, 10, RL.line + 20],
+    rules: {
+      killY: -5, respawn: true, brake: 17,
+      checkpoints: [{ spawn: [0, 0, 0.5], spread: [30, 9], yaw: 0, box: [0, 0, 0, 0, 0, 0] }],
+    },
+    spawns(n) {
+      const out = [];
+      for (let i = 0; i < n; i++) { const col = i % 12, row = Math.floor(i / 12); out.push([-15.4 + col * 2.8, 0, 5 - row * 2.3, 0]); }
+      return out;
+    },
+    bot: { rlgl: true },
+    cam: [
+      { e: [0, 15, RL.line + 26], l: [0, 4, RL.line + 6] }, { e: [20, 10, 92], l: [0, 1, 78] }, { e: [-20, 11, 44], l: [0, 1, 50] }, { e: [0, 8, -16], l: [0, 1, 10] },
+    ],
+  };
+}
+
+return { RL, rlPlan, rlState, buildRedLight };
 })();
 
 // ---- shared/levels/colormatch.js ----
@@ -4319,15 +4646,16 @@ const CM_COLORS = [
   { name: 'PINK', hex: '#ff5fa2' }, { name: 'BLUE', hex: '#36b9ff' }, { name: 'YELLOW', hex: '#ffd23f' },
   { name: 'GREEN', hex: '#40e0a8' }, { name: 'PURPLE', hex: '#9b5cff' }, { name: 'ORANGE', hex: '#ff8a3d' },
 ];
-const CM = { size: 4.1, gap: 0.35, sink: 6.5, ready: 1.2, drop: 2.6, back: 0.8, start: T_PLAY + 1.5 };
+const CM = { size: 4.1, gap: 0.35, sink: 6.5, drop: 2.4, back: 0.8, start: T_PLAY + 1.5 };
 
-// The schedule: cycle c starts at plan[c].t; `show` seconds of looking (the colour appears after CM.ready),
-// then CM.drop seconds with the wrong tiles sunk, then CM.back seconds rising again.
+// The schedule: cycle c starts at plan[c].t; `show` seconds of looking (the colour appears after `ready`),
+// then CM.drop seconds with the wrong tiles sunk, then CM.back seconds rising again. The countdown gets
+// quicker every single cycle: 6 s at first, under 2 s by the end.
 function cmPlan(seed, ntiles) {
   const out = []; let t = CM.start;
   for (let c = 0; c < 120; c++) {
     const k = Math.min(1, c / 9), r = mulberry32(((seed ^ 0xc01042) + c * 7919) >>> 0);
-    const show = 6.2 - k * 3.0;
+    const show = Math.max(1.8, 6.4 * Math.pow(0.87, c)), ready = Math.min(1.2, show * 0.25);
     const ncol = c < 2 ? 4 : c < 5 ? 5 : 6;
     const target = Math.floor(r() * ncol);
     const safe = Math.max(1, Math.round((ntiles / ncol) * (1.15 - k * 0.65)));
@@ -4336,7 +4664,7 @@ function cmPlan(seed, ntiles) {
     const idx = Array.from({ length: ntiles }, (_, i) => i); // Fisher-Yates (sort() with a random comparator differs between browsers)
     for (let i = ntiles - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); const tmp = idx[i]; idx[i] = idx[j]; idx[j] = tmp; }
     for (let i = 0; i < safe; i++) col[idx[i]] = target;
-    out.push({ t, show, target, col, end: t + show + CM.drop + CM.back });
+    out.push({ t, show, ready, target, col, end: t + show + CM.drop + CM.back });
     t += show + CM.drop + CM.back;
   }
   return out;
@@ -4351,7 +4679,7 @@ function cmCycle(plan, t) {
 function cmPhase(P, t) {
   if (!P) return 'wait';
   const u = t - P.t;
-  return u < CM.ready ? 'ready' : u < P.show ? 'show' : u < P.show + CM.drop ? 'drop' : 'back';
+  return u < P.ready ? 'ready' : u < P.show ? 'show' : u < P.show + CM.drop ? 'drop' : 'back';
 }
 // how far tile i is sunk (0 = level, 1 = fully under) at time t
 function cmSink(plan, i, t) {
@@ -4365,7 +4693,7 @@ function cmSink(plan, i, t) {
 
 function buildColorMatch(seed, variant) {
   const K = new Kit();
-  const fin = variant === 'final', N = fin ? 4 : 5, step = CM.size + CM.gap, half = ((N - 1) * step) / 2;
+  const fin = variant === 'final', N = fin ? 5 : 7, step = CM.size + CM.gap, half = ((N - 1) * step) / 2; // a big 7x7 grid (5x5 in a final)
   const plan = cmPlan(seed, N * N), cells = [];
   for (let r = 0; r < N; r++) for (let c = 0; c < N; c++) {
     const i = cells.length, x = -half + c * step, z = -half + r * step;
@@ -4377,10 +4705,11 @@ function buildColorMatch(seed, variant) {
   K.deco({ shape: 'ring', p: [0, -0.9, 0], r: half + step * 0.75, vis: { c: C.yellow, m: 'plain' } });
   K.deco({ shape: 'pillar', p: [0, -20, 0], r: 2.5, h: 18, vis: { c: C.violet, c2: C.white, m: 'stripes' } });
   const sz = half + step + 4;
-  for (const s of [-1, 1]) K.deco({ shape: 'pillar', p: [s * 7.5, -8, sz + 0.4], r: 0.7, h: 16, vis: { c: C.navy, c2: C.violet, m: 'stripes' } });
-  K.box([0, 10.5, sz + 0.9], [8.6, 3.4, 0.25], { ghost: true, vis: { c: C.navy, m: 'plain' } });                         // screen frame
-  K.box([0, 10.5, sz + 0.6], [7.8, 2.8, 0.1], { ghost: true, kin: { type: 'fn', fn: () => [0, 0, 0] }, vis: { c: C.white, m: 'plain', cmScreen: 1 } }); // the colour itself
-  for (const s of [-1, 1]) K.deco({ shape: 'sph', p: [s * 8.6, 14.2, sz + 0.9], r: 0.8, vis: { c: C.yellow } });
+  for (const s of [-1, 1]) K.deco({ shape: 'pillar', p: [s * 7.5 * (fin ? 1 : 1.35), -8, sz + 0.4], r: 0.7, h: 16 * (fin ? 1 : 1.2), vis: { c: C.navy, c2: C.violet, m: 'stripes' } });
+  const sw = fin ? 1 : 1.35; // the screen grows with the grid
+  K.box([0, 10.5 * sw, sz + 0.9], [8.6 * sw, 3.4 * sw, 0.25], { ghost: true, vis: { c: C.navy, m: 'plain' } });                         // screen frame
+  K.box([0, 10.5 * sw, sz + 0.6], [7.8 * sw, 2.8 * sw, 0.1], { ghost: true, kin: { type: 'fn', fn: () => [0, 0, 0] }, vis: { c: C.white, m: 'plain', cmScreen: 1 } }); // the colour itself
+  for (const s of [-1, 1]) K.deco({ shape: 'sph', p: [s * 8.6 * (fin ? 1 : 1.35), 14.2 * (fin ? 1 : 1.35), sz + 0.9], r: 0.8, vis: { c: C.yellow } });
 
   return {
     id: 'colormatch', type: 'survival', name: 'Colour Clash', desc: 'Stand on the colour on the big screen!', descFinal: 'Last bean standing wins the crown!',
@@ -4395,7 +4724,8 @@ function buildColorMatch(seed, variant) {
       return out;
     },
     bot: { colors: true },
-    cam: [{ e: [0, 30, -30], l: [0, 0, 2] }, { e: [20, 12, -8], l: [0, 1, 2] }, { e: [0, 12, -24], l: [0, 2, 6] }],
+    cam: fin ? [{ e: [0, 30, -30], l: [0, 0, 2] }, { e: [20, 12, -8], l: [0, 1, 2] }, { e: [0, 12, -24], l: [0, 2, 6] }]
+      : [{ e: [0, 40, -40], l: [0, 0, 3] }, { e: [28, 15, -10], l: [0, 1, 2] }, { e: [0, 14, -30], l: [0, 2, 8] }],
   };
 }
 
@@ -4427,7 +4757,6 @@ function buildBoulderBash(seed, variant) {
   const posts = fin ? [[0, 0]] : [[3.6, 0], [-3.6, 0]];
   for (const [ox, oz] of posts) K.cyl([ox, 0.9, oz], 0.9, 0.9, { surf: SURF.BUMPER, bump: 11, kin: { type: 'spin', c: [0, 0.9, 0], axis: [0, 1, 0], w: 0.55 }, vis: { c: C.hotpink, c2: C.white, m: 'bumper' } });
   if (!fin) K.cyl([0, 0.7, 0], 1.3, 0.7, { surf: SURF.BUMPER, bump: 10, vis: { c: C.yellow, c2: C.white, m: 'bumper' } });
-  for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2 + 0.6; K.deco({ shape: 'flag', p: [Math.cos(a) * (R + 1.2), -0.6, Math.sin(a) * (R + 1.2)], vis: { c: i % 2 ? C.yellow : C.orange } }); }
 
   return {
     id: 'boulderbash', type: 'survival', name: 'Boulder Bash', desc: 'Dodge the boulders — don’t get bowled off!', descFinal: 'Last bean in the arena wins the crown!',
@@ -4464,7 +4793,8 @@ const { buildJumpRing } = __m["shared/levels/jumpring.js"];
 const { buildLobby } = __m["shared/levels/lobby.js"];
 const { buildSlimeSurge } = __m["shared/levels/slimesurge.js"];
 const { buildWallRush } = __m["shared/levels/wallrush.js"];
-const { buildHoopHunt } = __m["shared/levels/hoophunt.js"];
+const { buildJumpRope } = __m["shared/levels/jumprope.js"];
+const { buildRedLight } = __m["shared/levels/redlight.js"];
 const { buildColorMatch } = __m["shared/levels/colormatch.js"];
 const { buildBoulderBash } = __m["shared/levels/boulderbash.js"];
 const LEVELS = {
@@ -4476,15 +4806,15 @@ const LEVELS = {
   jumpring: { build: buildJumpRing, type: 'survival', name: 'Jump Ring', icon: 'fa-rotate' },
   crownpeak: { build: buildCrownPeak, type: 'final', name: 'Crown Peak', icon: 'fa-crown' },
   slimesurge: { build: buildSlimeSurge, type: 'race', name: 'Slime Surge', icon: 'fa-droplet' },
-  hoophunt: { build: buildHoopHunt, type: 'hunt', name: 'Hoop Hunt', icon: 'fa-bullseye' },
+  jumprope: { build: buildJumpRope, type: 'race', name: 'Rope Rumble', icon: 'fa-rotate' },
+  redlight: { build: buildRedLight, type: 'race', name: 'Red Light Rush', icon: 'fa-hand' },
   wallrush: { build: buildWallRush, type: 'survival', name: 'Wall Rush', icon: 'fa-wall' },
   colormatch: { build: buildColorMatch, type: 'survival', name: 'Colour Clash', icon: 'fa-palette' },
   boulderbash: { build: buildBoulderBash, type: 'survival', name: 'Boulder Bash', icon: 'fa-bowling-ball' },
 };
-// Round pools for the random show: a race, a race or hunt, a survival round, then a final.
+// Round pools for the random show: two different races, a survival round, then a final.
 const POOLS = {
-  race: ['whirlway', 'hammerhills', 'trusttiles', 'slimesurge'],
-  hunt: ['hoophunt'],
+  race: ['whirlway', 'hammerhills', 'trusttiles', 'slimesurge', 'jumprope', 'redlight'],
   survival: ['tiletumble', 'jumpring', 'wallrush', 'colormatch', 'boulderbash'],
   final: ['crownpeak', 'tiletumble:final', 'jumpring:final', 'wallrush:final', 'colormatch:final', 'boulderbash:final'],
 };
@@ -4493,11 +4823,13 @@ const SHOW = ['whirlway', 'tiletumble', 'crownpeak'];
 const baseId = (id) => String(id).split(':')[0];
 const levelMeta = (id) => LEVELS[baseId(id)];
 
-// Random show: a race, then a different race (or a hoop hunt), a survival round, then a final that isn't the
-// survival map again. Crown Peak, the classic final, comes up a bit more often than the others.
+// Random show: a race, then a different race, a survival round, then a final that isn't the survival map
+// again. The newest races (Rope Rumble, Red Light Rush) come up a bit more often in round 2; Crown Peak, the
+// classic final, comes up a bit more often than the other finals.
+const NEW_RACES = ['jumprope', 'redlight'];
 function pickShow(rng = Math.random) {
   const pick = (a) => a[Math.floor(rng() * a.length) % a.length];
-  const r1 = pick(POOLS.race), r2 = pick([...POOLS.race.filter((x) => x !== r1), ...POOLS.hunt, ...POOLS.hunt]);
+  const r1 = pick(POOLS.race), r2 = pick([...POOLS.race, ...NEW_RACES].filter((x) => x !== r1));
   const sv = pick(POOLS.survival);
   const fins = POOLS.final.filter((x) => baseId(x) !== sv);
   const fin = rng() < 0.3 ? 'crownpeak' : pick(fins);
@@ -4506,13 +4838,14 @@ function pickShow(rng = Math.random) {
 
 // A ranked 1v1 duel: up to five different maps, mixing races, survival and finals (first to two round wins).
 const DUEL_POOLS = {
-  race: ['whirlway', 'hammerhills', 'trusttiles', 'slimesurge'],
+  race: ['whirlway', 'hammerhills', 'trusttiles', 'slimesurge', 'jumprope', 'redlight'],
   survival: ['tiletumble:final', 'jumpring:final', 'wallrush:final', 'colormatch:final', 'boulderbash:final'],
-  final: ['crownpeak', 'hoophunt'],
+  final: ['crownpeak'],
 };
-function pickDuel(rng = Math.random, n = 5) {
+// first to 3 round wins: up to 7 rounds (draws can stretch it), alternating race / survival with a final mixed in
+function pickDuel(rng = Math.random, n = 7) {
   const pick = (a) => a[Math.floor(rng() * a.length) % a.length];
-  const order = ['race', 'survival', rng() < 0.5 ? 'final' : 'race', 'survival', 'race'];
+  const order = ['race', 'survival', rng() < 0.5 ? 'final' : 'race', 'survival', 'race', rng() < 0.5 ? 'final' : 'survival', 'race'];
   const used = new Set(), out = [];
   for (const k of order.slice(0, n)) {
     let opts = DUEL_POOLS[k].filter((x) => !used.has(x));
@@ -4536,7 +4869,7 @@ function freshLevel(id, seed = 1) {
   return L;
 }
 
-return { LEVELS, POOLS, SHOW, baseId, levelMeta, pickShow, DUEL_POOLS, pickDuel, buildLevel, freshLevel, crownAt };
+return { LEVELS, POOLS, SHOW, baseId, levelMeta, NEW_RACES, pickShow, DUEL_POOLS, pickDuel, buildLevel, freshLevel, crownAt };
 })();
 
 // ---- shared/ranks.js ----
@@ -4562,7 +4895,8 @@ const DIV_RP = 100;
 const RANK_COUNT = TIERS.reduce((n, t) => n + t.divs, 0); // 18 ranks
 const UNREAL_RP = TIERS[TIERS.length - 1].min;
 const MIN_SHOW_HUMANS = 5;  // a ranked show needs at least this many real players
-const DUEL_ROUNDS = 5;      // first to 2 round wins (draws can stretch it, never past 5)
+const DUEL_WINS = 3;        // a duel is first to 3 round wins...
+const DUEL_ROUNDS = 7;      // ...and draws can stretch it, never past 7 rounds
 
 // Every rank in order, with the RP where it starts and where the next one starts.
 const RANKS = (() => {
@@ -4589,28 +4923,32 @@ const isUnreal = (rp) => (rp | 0) >= UNREAL_RP;
 // Elo-style: beating someone better than you is worth more than beating someone worse.
 const expect = (me, them) => 1 / (1 + Math.pow(10, (them - me) / 400));
 
-// A 1v1 duel. score: 1 win, 0.5 draw, 0 loss.
+// A 1v1 duel. score: 1 win, 0.5 draw, 0 loss. Climbing is meant to feel quick: wins are worth a lot,
+// losses only sting a little, and the rank you are in protects you (see applyDelta).
 function duelDelta(me, opp, score) {
-  const K = 40, d = K * (score - expect(me, opp));
-  let v = Math.round(d);
-  if (score === 1) v = Math.max(8, v);           // a win always counts
-  if (score === 0) v = Math.min(-6, v);          // ...and so does a loss
-  return v;
+  const d = 70 * (score - expect(me, opp));
+  if (score === 1) return clamp(Math.round(d) + 10, 28, 60); // every win is a big step (about 3 wins a division)
+  if (score === 0) return clamp(Math.round(d * 0.4), -15, -5); // a loss costs far less than a win gives
+  return Math.max(4, Math.round(d * 0.5));                    // a draw nudges you up
 }
 // A ranked show: place among the real players (1 = crown). Bots don't count.
 function showDelta(me, avgOthers, place, of, crowned = false) {
   if (of < 2) return 0;
-  const S = (of - place) / (of - 1), K = 50;
-  let v = Math.round(K * (S - expect(me, avgOthers)));
-  if (crowned) v += 10;                          // won the whole show
-  if (place <= Math.ceil(of / 2)) v = Math.max(4, v); // top half never loses RP
+  const S = (of - place) / (of - 1);
+  let v = Math.round(80 * (S - expect(me, avgOthers)));
+  if (place <= Math.ceil(of / 2)) v = Math.max(15 + Math.round(25 * S), v); // top half always climbs, the higher the better
+  else v = clamp(Math.round(v * 0.4), -12, -3);                           // bottom half: a small dip
+  if (crowned) v += 25;                                                    // won the whole show
   return v;
 }
-// Bronze is gentle: you only lose half.
+// Gentle on the way down: Bronze and Silver only lose half, and a loss never knocks you out of the
+// tier you've reached (Gold stays Gold, Diamond stays Diamond — you can only slip back a division).
 function applyDelta(rp, delta) {
   rp = Math.max(0, rp | 0);
-  if (delta < 0 && rp < TIERS[1].min) delta = Math.trunc(delta / 2);
-  return Math.max(0, rp + delta);
+  if (delta >= 0) return rp + delta;
+  if (rp < TIERS[2].min) delta = Math.trunc(delta / 2);
+  const floor = rankOf(rp).tierIdx ? TIERS[rankOf(rp).tierIdx].min : 0;
+  return Math.max(floor, rp + delta);
 }
 
 // What the host tells each player about a ranked result (checked again on the receiving end).
@@ -4622,8 +4960,12 @@ function cleanRanked(r) {
   return null;
 }
 // The player's own device: fold a ranked result into their profile. Returns the change for the rewards screen.
-function rankedUpdate(profile, r) {
+// If a provisional loss was booked for this match when it started (see rankedBook), it is undone first.
+function rankedUpdate(profile, r, mid) {
   r = cleanRanked(r); if (!r) return null;
+  const pend = profile.rkPending;
+  if (pend && (!mid || pend.mid === mid)) { profile.rp = Math.max(0, pend.from | 0); profile.rkPending = null; }
+  if (mid) profile.rkLast = String(mid).slice(0, 40);
   const from = Math.max(0, profile.rp | 0);
   const delta = r.kind === 'duel' ? duelDelta(from, r.opp, r.res) : showDelta(from, r.avg, r.place, r.of, !!r.w);
   const to = applyDelta(from, delta);
@@ -4635,7 +4977,29 @@ function rankedUpdate(profile, r) {
   return { kind: r.kind, from, to, delta: to - from, rankFrom: a.name, rankTo: b.name, up: b.idx > a.idx, down: b.idx < a.idx, unreal: b.tier === 'unreal' && a.tier !== 'unreal', place: r.place, of: r.of, res: r.res, score: r.score, oppName: r.oppName };
 }
 
-return { TIERS, DIV_RP, RANK_COUNT, UNREAL_RP, MIN_SHOW_HUMANS, DUEL_ROUNDS, RANKS, rankOf, isUnreal, duelDelta, showDelta, applyDelta, cleanRanked, rankedUpdate };
+// Anti rage-quit: the moment a ranked match really starts, the device books it as a loss. Finishing the
+// match (win, lose or draw) replaces that with the real result; closing or refreshing the page mid-match
+// just leaves the loss in place. Returns true if something was booked.
+function rankedBook(profile, mid, kind, oppRp) {
+  mid = String(mid || '').slice(0, 40);
+  if (!mid || profile.rkLast === mid || (profile.rkPending && profile.rkPending.mid === mid)) return false; // already booked / already decided
+  rankedSettle(profile);                                       // an older match that never finished counts as lost
+  const from = Math.max(0, profile.rp | 0);
+  const loss = kind === 'duel' ? duelDelta(from, oppRp | 0, 0) : showDelta(from, oppRp | 0, 2, 2, false);
+  profile.rkPending = { mid, from, kind: kind === 'duel' ? 'duel' : 'show', at: Date.now() };
+  profile.rp = applyDelta(from, loss);
+  return true;
+}
+// A booked match whose result never came back (the page was closed or refreshed): make the loss official.
+function rankedSettle(profile) {
+  const pend = profile.rkPending; if (!pend) return null;
+  profile.rkPending = null;
+  profile.rkPlayed = (profile.rkPlayed | 0) + 1;
+  if (pend.kind === 'duel') profile.duelL = (profile.duelL | 0) + 1;
+  return { from: pend.from | 0, to: profile.rp | 0 };
+}
+
+return { TIERS, DIV_RP, RANK_COUNT, UNREAL_RP, MIN_SHOW_HUMANS, DUEL_WINS, DUEL_ROUNDS, RANKS, rankOf, isUnreal, duelDelta, showDelta, applyDelta, cleanRanked, rankedUpdate, rankedBook, rankedSettle };
 })();
 
 // ---- client/js/rankbadge.js ----
@@ -4707,6 +5071,47 @@ function rankBadge(rpOrRank, size = 64, extraClass = '') {
 return { rankBadge };
 })();
 
+// ---- shared/pass.js ----
+__m["shared/pass.js"] = (() => {
+// CranPass — the free reward roadmap. Every level you reach (XP from playing) pays Cranberries; every 5th level
+// adds Crowns, and milestones hand out items — including colours you can only get here. Rewards are claimed on
+// the CranPass screen; claiming is idempotent (offline: profile.passClaimed, online: ledger refs 'pass:<level>').
+const { itemById, RARITY, levelForXp } = __m["shared/cosmetics.js"];
+const PASS_SHOWN = 100;             // the roadmap shows 100 levels (rewards keep coming after that)
+const PASS_ITEMS = {
+  3: 'f_wink', 6: 'p_polka', 10: 'c_neon', 15: 'p_stars', 20: 'c_electric', 25: 'h_halo', 30: 'c_magenta',
+  35: 'f_starry', 40: 'c_midnight', 45: 'p_hearts', 50: 'c_glacier', 60: 'h_viking', 75: 'h_pirate', 100: 'c_rainbow',
+};
+
+// What level `lv` pays. `owned` (a Set) turns an item you already have into Cranberries (or Crowns) instead.
+function passReward(lv, owned = null) {
+  lv |= 0; if (lv < 2) return null;
+  const r = { lv, berries: Math.min(600, 140 + lv * 10), crowns: 0, item: null };
+  if (lv % 5 === 0) { r.crowns = lv % 25 === 0 ? 3 : 1; r.berries += 100; }
+  const id = PASS_ITEMS[lv], it = id && itemById(id);
+  if (it) {
+    if (owned && owned.has(id)) { const pr = RARITY[it.rarity].price; r.berries += pr.b ? Math.round(pr.b / 2) : pr.c ? 0 : 300; r.crowns += pr.c ? Math.ceil(pr.c / 2) : 0; r.dupe = id; } // already have it: half its value instead
+    else r.item = id;
+  }
+  return r;
+}
+
+// Everything between `claimed` (exclusive) and the level for `xp` (inclusive), summed, plus the item list.
+function passClaimable(xp, claimed, owned) {
+  const lv = levelForXp(xp | 0), from = Math.max(1, claimed | 0) + 1;
+  const out = { from, to: lv, berries: 0, crowns: 0, items: [], levels: [] };
+  const have = new Set(owned || []);
+  for (let l = from; l <= lv; l++) {
+    const r = passReward(l, have); if (!r) continue;
+    out.berries += r.berries; out.crowns += r.crowns; out.levels.push(r);
+    if (r.item) { out.items.push(r.item); have.add(r.item); }
+  }
+  return out;
+}
+
+return { PASS_SHOWN, PASS_ITEMS, passReward, passClaimable };
+})();
+
 // ---- client/js/ui.js ----
 __m["client/js/ui.js"] = (() => {
 // CranGuys — UI controller (DOM): menu, locker, shop, settings, account, lobby, HUD, banners, results, podium, rewards.
@@ -4714,16 +5119,21 @@ const { $, $$, el, esc, fmt, clock, settings, saveSettings, beanLook, isTouch } 
 const { CATALOG, itemById, RARITY, slotCategory, XP_PER_LEVEL, levelForXp } = __m["shared/cosmetics.js"];
 const { LEVELS, POOLS, DUEL_POOLS, levelMeta } = __m["shared/levels/index.js"];
 const { PHASE } = __m["shared/config.js"];
-const { rankOf, RANKS, TIERS, isUnreal, UNREAL_RP, MIN_SHOW_HUMANS } = __m["shared/ranks.js"];
+const { rankOf, RANKS, TIERS, isUnreal, UNREAL_RP, MIN_SHOW_HUMANS, DUEL_WINS } = __m["shared/ranks.js"];
 const { rankBadge } = __m["client/js/rankbadge.js"];
 const { cmCycle, cmPhase, CM_COLORS } = __m["shared/levels/colormatch.js"];
+const { crownAt } = __m["shared/levels/crownpeak.js"];
+const { PASS_ITEMS, PASS_SHOWN, passReward, passClaimable } = __m["shared/pass.js"];
+const passLevelOf = (id) => +(Object.keys(PASS_ITEMS).find((k) => PASS_ITEMS[k] === id) || 0);
+
 const HAT_EMOJI = ['⛔', '🥳', '👑', '🐰', '🧢', '😇', '🎩', '🚧', '🪖', '👨‍🍳', '🍒', '📡', '🌼', '🧶', '🏴‍☠️', '🎧', '👷'];
-const TYPE = { race: { label: 'RACE', icon: 'fa-flag-checkered', col: '#22c8ff' }, hunt: { label: 'HUNT', icon: 'fa-bullseye', col: '#22c48a' }, race2: { label: 'RACE · HUNT', icon: 'fa-bullseye', col: '#1fb5c9' }, survival: { label: 'SURVIVAL', icon: 'fa-shapes', col: '#ff2e88' }, final: { label: 'FINAL', icon: 'fa-crown', col: '#ffb300' }, lobby: { label: 'LOBBY', icon: 'fa-umbrella-beach', col: '#a66bff' } };
+const TYPE = { race: { label: 'RACE', icon: 'fa-flag-checkered', col: '#22c8ff' }, hunt: { label: 'HUNT', icon: 'fa-bullseye', col: '#22c48a' }, race2: { label: 'RACE', icon: 'fa-rotate', col: '#1fb5c9' }, survival: { label: 'SURVIVAL', icon: 'fa-shapes', col: '#ff2e88' }, final: { label: 'FINAL', icon: 'fa-crown', col: '#ffb300' }, lobby: { label: 'LOBBY', icon: 'fa-umbrella-beach', col: '#a66bff' } };
 const TIPS = [
   'Dive (Ctrl / DIVE) to belly-flop under high sweepers.', 'Hold GRAB at a wall’s edge to climb up ledges.', 'Not every door breaks — follow the crowd!',
+  'Red Light Rush: start braking the moment the music stops — beans don’t stop on a dime.', 'Rope Rumble: watch the rope’s shadow, and don’t fall for the stall at the top!',
   'Hop between tiles in Tile Tumble: running wastes floor.', 'Trust Tiles: follow the beans who made it across!', 'Jump Ring: never jump while the high bar is coming.', 'Hammers swing in a rhythm — wait for the gap.', 'Bumpers bounce you — use them, or avoid them.',
   'Grab other beans to slow them down (it’s allowed!).', 'Win a show to unlock the Royal Crown hat!', 'Bouncy pads launch you over gaps — keep your speed up.',
-  'Slime Surge: the slime keeps rising — and falling in knocks you out!', 'Hoop Hunt: gold hoops over the bounce pads are worth 5 points.', 'Wall Rush: look for the gap, or hop the short blocks.',
+  'Slime Surge: the slime keeps rising — and falling in knocks you out!', 'Wall Rush: look for the gap, or hop the short blocks.',
   'Colour Clash: get onto the colour on the big screen before the countdown ends.', 'Boulder Bash: sidestep the boulders and stay away from the edge.',
 ];
 
@@ -4782,6 +5192,7 @@ class UI {
     });
     $$('#rankKind button').forEach((b) => b.addEventListener('click', () => { this.app.sound.play('click'); this.app.setRankKind(b.dataset.k); }));
     $('#rkLb').addEventListener('click', () => { this.app.sound.play('click'); this.leaderboardModal(); });
+    $('#psClaim').addEventListener('click', () => this.app.claimPass());
     $$('#colorSlot button').forEach((b) => b.addEventListener('click', () => { this.colorSlot = b.dataset.slot; $$('#colorSlot button').forEach((x) => x.classList.toggle('on', x === b)); this.renderLocker(); }));
     this.renderShowCard();
   }
@@ -4793,6 +5204,7 @@ class UI {
       case 'account': return this.accountModal();
       case 'rename': return this.renameModal();
       case 'promo': return this.promoModal();
+      case 'leaderboard': return this.leaderboardModal();
       case 'closeModal': return this.closeModal();
       case 'leave': return app.leaveShow();
       case 'leaveAsk': return this.confirm('Leave this show?', 'You’ll still get rewards for the rounds you’ve qualified from.', 'Leave', () => app.leaveShow());
@@ -4808,10 +5220,12 @@ class UI {
     if (id !== this.screen && this.app.preview) this.app.clearPreview();
     this.screen = id;
     for (const s of $$('.screen')) s.classList.toggle('show', s.id === id);
+    document.body.classList.toggle('subscreen', id === 'locker' || id === 'shop' || id === 'pass');
     $$('.tabs-main .tab').forEach((t) => t.classList.toggle('on', t.dataset.go === id));
-    if (id === 'menu' || id === 'locker' || id === 'shop') { $('#menu').classList.add('show'); for (const x of $$('#menu > *')) x.style.visibility = id === 'menu' ? '' : 'hidden'; $('#menu .tabs-main').style.visibility = ''; }
+    if (id === 'menu' || id === 'locker' || id === 'shop' || id === 'pass') { $('#menu').classList.add('show'); for (const x of $$('#menu > *')) x.style.visibility = id === 'menu' ? '' : 'hidden'; $('#menu .tabs-main').style.visibility = ''; }
     if (id === 'locker') this.renderLocker();
     if (id === 'shop') this.renderShop();
+    if (id === 'pass') this.renderPass(true);
   }
   overlay(id, on = true) { $('#' + id).classList.toggle('show', on); }
   hideOverlay(id) { this.overlay(id, false); }
@@ -4834,6 +5248,8 @@ class UI {
     $('.lvl-n').textContent = p.level; $('.topbar .xpbar i').style.width = ((p.xp % XP_PER_LEVEL) / XP_PER_LEVEL) * 100 + '%';
     $('.nameplate .nm').textContent = p.name;
     if (this.screen === 'locker') this.renderLocker();
+    if (this.screen === 'pass') this.renderPass();
+    this.passBadge();
     this.rankCard();
   }
   // ---------------- ranked ----------------
@@ -4848,31 +5264,74 @@ class UI {
     const peak = rankOf(p.rpPeak | 0);
     $('#rkStats').innerHTML = `<span><b>${p.duelW | 0}–${p.duelL | 0}</b> duels</span><span><b>${p.rkPlayed | 0}</b> ranked</span><span><b>${p.rkWins | 0}</b> <i class="fa-solid fa-crown"></i></span><span>Peak <b>${esc(peak.name)}</b></span>`;
     $('#rkLadder').innerHTML = TIERS.map((t, i) => `<span class="${i === r.tierIdx ? 'on' : i < r.tierIdx ? 'done' : ''}" title="${t.name}">${rankBadge(RANKS.find((k) => k.tierIdx === i), 22)}</span>`).join('');
-    const un = isUnreal(r.rp);
-    $('#rkLb').classList.toggle('locked', !un);
-    $('#rkLb').innerHTML = un ? '<i class="fa-solid fa-trophy"></i> Global leaderboard' : '<i class="fa-solid fa-lock"></i> Leaderboard · Unreal only';
+    $('#rkLb').classList.remove('locked');
+    $('#rkLb').innerHTML = '<i class="fa-solid fa-trophy"></i> Crown leaderboard';
   }
   setRankKind(k) {
     $$('#rankKind button').forEach((b) => b.classList.toggle('on', b.dataset.k === k));
     if (this.mode === 'ranked') this.setMode('ranked', true, k);
   }
   async leaderboardModal() {
-    const p = this.app.local.profile, r = rankOf(p.rp | 0);
-    if (!isUnreal(r.rp)) {
-      return this.modal(`<h3><i class="fa-solid fa-lock"></i> Global leaderboard</h3><div class="lb-lock">${rankBadge(UNREAL_RP, 96)}<p>Only <b>Unreal</b> beans can see and join the global leaderboard.</p><p class="note">You’re <b>${esc(r.name)}</b> with ${fmt(r.rp)} RP — reach ${fmt(UNREAL_RP)} RP to unlock it. Win duels and ranked shows to climb!</p></div>`);
-    }
-    this.modal(`<h3><i class="fa-solid fa-trophy"></i> Global leaderboard</h3><p class="note">The best Unreal beans anywhere. Loading…</p><div class="lb" id="glb"></div>`, async (b) => {
+    const p = this.app.local.profile, myW = p.wins | 0;
+    if (!this.app.p2pOK) return this.modal(`<h3><i class="fa-solid fa-trophy"></i> Global leaderboard</h3><p class="note">The leaderboard needs an internet connection — try again when you’re online.</p>`);
+    this.modal(`<h3><i class="fa-solid fa-trophy"></i> Global leaderboard</h3><p class="lb-sub">Most crowns won — everyone’s on it once they win a show.</p><p class="note">Loading…</p><div class="lb crowns" id="glb"></div><div class="lb-me" id="glbMe"></div>`, async (b) => {
+      this.app.syncLeaderboard();
       let rows = [];
-      try { rows = await this.app.leaderboard(); } catch (e) { $('.note', b).textContent = 'Couldn’t reach the leaderboard — check your connection.'; return; }
+      let failed = false;
+      try { rows = await this.app.leaderboard(); } catch (e) { failed = true; }
       const me = this.app.local.lbId();
-      $('.note', b).textContent = rows.length ? `${rows.length} Unreal bean${rows.length > 1 ? 's' : ''} · names are auto-moderated` : 'Nobody here yet — you’re the first!';
-      $('#glb', b).innerHTML = rows.map((x, i) => `<div class="${x.id === me ? 'me' : ''}"><b>#${i + 1}</b><span><i class="lbdot" style="background:${esc(x.c)}"></i>${esc(x.n)}</span><span>${fmt(x.rp)} RP</span></div>`).join('');
+      // our own entry may not have reached the brokers yet: show it anyway
+      if (myW > 0 && !rows.some((x) => x.id === me)) { rows.push({ id: me, n: p.name, w: myW, rp: p.rp | 0, lv: p.level, c: beanLook(p.loadout).css, at: Date.now() }); rows.sort((a, c) => c.w - a.w || c.rp - a.rp || a.at - c.at); }
+      $('.note', b).textContent = failed ? 'Couldn’t reach the leaderboard — check your connection.' : rows.length ? `${rows.length} bean${rows.length > 1 ? 's' : ''} · names are auto-moderated` : 'Nobody has a crown yet — win a show and be the first!';
+      const medal = (i) => (i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : '#' + (i + 1));
+      $('#glb', b).innerHTML = rows.map((x, i) => `<div class="${x.id === me ? 'me' : ''}${i < 3 ? ' top' : ''}"><b>${medal(i)}</b><span>${rankBadge(x.rp, 22)}<i class="lbdot" style="background:${esc(x.c)}"></i>${esc(x.n)}${x.id === me ? ' <em>you</em>' : ''}</span><span class="lbw"><i class="fa-solid fa-crown"></i> ${fmt(x.w)}</span></div>`).join('');
+      const pos = rows.findIndex((x) => x.id === me);
+      $('#glbMe', b).innerHTML = myW > 0 ? (pos >= 0 ? `You’re <b>${medal(pos)}</b> with <b>${myW}</b> crown${myW > 1 ? 's' : ''}` : `You have <b>${myW}</b> crown${myW > 1 ? 's' : ''} — not in the top 100 yet`) : 'Win a show to put your bean on the board!';
+      const mine = $('#glb .me', b); if (mine) mine.scrollIntoView({ block: 'nearest' });
+    });
+  }
+  // ---------------- CranPass: the free reward roadmap ----------------
+  passBadge() {
+    const p = this.profile; if (!p) return;
+    const n = Math.max(0, (p.level | 0) - Math.max(1, p.passClaimed | 0));
+    $$('.tab[data-go="pass"] .badge').forEach((b) => { b.textContent = n > 9 ? '9+' : n; b.classList.toggle('hide', !n); });
+  }
+  renderPass(scroll = false) {
+    const p = this.profile; if (!p) return;
+    const lv = p.level | 0, claimed = Math.max(1, p.passClaimed | 0), owned = new Set(p.owned), look = beanLook(p.loadout);
+    const ready = passClaimable(p.xp, claimed, p.owned), last = Math.max(PASS_SHOWN, lv + 5);
+    $('#psLvl').textContent = lv;
+    $('#psXp').style.width = ((p.xp % XP_PER_LEVEL) / XP_PER_LEVEL) * 100 + '%';
+    $('#psXpT').textContent = `${fmt(p.xp % XP_PER_LEVEL)} / ${fmt(XP_PER_LEVEL)} XP to level ${lv + 1}`;
+    const cb = $('#psClaim'), n = ready.levels.length;
+    cb.disabled = !n;
+    cb.innerHTML = n ? `<i class="fa-solid fa-gift"></i> CLAIM ${n} REWARD${n > 1 ? 'S' : ''}<small>${fmt(ready.berries)} Cranberries${ready.crowns ? ` · ${ready.crowns} Crown${ready.crowns > 1 ? 's' : ''}` : ''}${ready.items.length ? ` · ${ready.items.length} item${ready.items.length > 1 ? 's' : ''}` : ''}</small>` : '<i class="fa-solid fa-circle-check"></i> ALL CLAIMED<small>Play shows to earn XP and reach the next level</small>';
+    const row = (l) => {
+      const r = passReward(l, l <= claimed ? null : owned), st = l <= claimed ? 'got' : l <= lv ? 'ready' : 'locked';
+      const it = r.item || r.dupe ? itemById(r.item || r.dupe) : null;
+      const chips = [`<span class="pchip b"><span class="ico-berry"></span>${fmt(r.berries)}</span>`];
+      if (r.crowns) chips.push(`<span class="pchip c"><i class="fa-solid fa-crown"></i>${r.crowns}</span>`);
+      if (it) chips.push(`<span class="pchip it r-${it.rarity}" data-try="${it.id}" data-pass-item="${it.id}"><span class="pth" data-thumb="${it.id}" data-slot="${it.slot}">${itemIcon(it, look)}</span><b>${esc(it.name)}</b>${it.rarity === 'pass' ? '<em>PASS ONLY</em>' : ''}</span>`);
+      return `<div class="prow ${st}${l === lv ? ' here' : ''}${l % 5 === 0 ? ' big' : ''}" data-lv="${l}"><div class="pnode"><b>${l}</b></div><div class="prew">${chips.join('')}</div><div class="pst">${st === 'got' ? '<i class="fa-solid fa-check"></i>' : st === 'ready' ? 'CLAIM' : '<i class="fa-solid fa-lock"></i>'}</div>${l === lv ? '<span class="phere">YOU</span>' : ''}</div>`;
+    };
+    const key = [lv, claimed, p.owned.length, p.loadout.color, p.loadout.hat].join();
+    if (key !== this._psKey) {
+      this._psKey = key;
+      let html = ''; for (let l = 2; l <= last; l++) html += row(l);
+      const road = $('#psRoad'); road.innerHTML = html;
+      $$('[data-pass-item]', road).forEach((x) => x.addEventListener('click', () => { const it = itemById(x.dataset.passItem); if (it) this.app.tryOn(it, 'shop'); }));
+      $$('.prow.ready', road).forEach((x) => x.addEventListener('click', (e) => { if (!e.target.closest('[data-pass-item]')) this.app.claimPass(); }));
+      this.queueThumbs(road);
+    }
+    if (scroll) requestAnimationFrame(() => {
+      const at = $(`#psRoad .prow[data-lv="${Math.max(2, Math.min(claimed + 1, lv))}"]`), w = $('#passWrap');
+      if (at && w) w.scrollTop = Math.max(0, at.offsetTop - w.clientHeight * 0.45);
     });
   }
   renderShowCard() {
     const slots = [['race', 'Round 1'], ['race2', 'Round 2'], ['survival', 'Round 3'], ['final', 'Round 4']];
     $('.sc-rounds').innerHTML = slots.map(([type, lbl]) => {
-      const T = TYPE[type], ids = type === 'race2' ? [...POOLS.race, ...POOLS.hunt] : POOLS[type], names = ids.map((id) => levelMeta(id).name).filter((n, i, a) => a.indexOf(n) === i);
+      const T = TYPE[type], ids = type === 'race2' ? POOLS.race : POOLS[type], names = ids.map((id) => levelMeta(id).name).filter((n, i, a) => a.indexOf(n) === i);
       return `<div class="sc-round" style="background:${T.col}" title="${esc(names.join(' · '))}"><i class="fa-solid ${T.icon}"></i><b>${T.label}</b><small>${lbl}</small><small><i class="fa-solid fa-dice"></i> ${names.length} maps</small></div>`;
     }).join('');
   }
@@ -4975,6 +5434,8 @@ class UI {
     const buy = $('#toBuy');
     if (owned) { buy.innerHTML = '<i class="fa-solid fa-check"></i> Equip'; buy.disabled = false; buy.onclick = () => { const s = this.app.preview.slot; this.app.clearPreview(); this.app.equip(s, it.id); }; $('#toNote').textContent = 'You own this!'; }
     else if (inShop) { buy.innerHTML = priceHTML(it.price); buy.disabled = false; buy.onclick = () => this.app.buy(it.id); $('#toNote').textContent = RARITY[it.rarity].name + (slot === 'color2' ? ' · pattern colour' : ''); }
+    else if (passLevelOf(it.id)) { buy.innerHTML = `<i class="fa-solid fa-lock"></i> CranPass Lv ${passLevelOf(it.id)}`; buy.disabled = true; buy.onclick = null; $('#toNote').textContent = 'Free on the CranPass — level up to unlock it!'; }
+    else if (it.rarity === 'exclusive') { buy.innerHTML = '<i class="fa-solid fa-gift"></i> Promo code only'; buy.disabled = true; buy.onclick = null; $('#toNote').textContent = 'Only from a special code.'; }
     else { buy.innerHTML = '<i class="fa-solid fa-lock"></i> Not in shop today'; buy.disabled = true; buy.onclick = null; $('#toNote').textContent = 'Check back when the shop refreshes!'; }
     $('#toOff').onclick = () => { this.app.sound.play('click'); this.app.clearPreview(); };
     bar.classList.remove('hide');
@@ -5135,7 +5596,7 @@ class UI {
     if (game.kind && game.hold) { // ranked: waiting for enough real players
       let h = 0; for (const r of game.roster.values()) if (!r.bot && r.status !== 'gone') h++;
       $('#lobbyTimer').textContent = game.duel ? 'SEARCHING' : `${h} / ${game.need || MIN_SHOW_HUMANS}`;
-      $('#lobbyWhen').textContent = game.duel ? 'looking for an opponent near your rank…' : 'real players needed to start the ranked show';
+      $('#lobbyWhen').textContent = game.duel ? 'waiting for an opponent — anyone can take you on…' : 'real players needed to start the ranked show';
     } else if (game.kind) { $('#lobbyTimer').textContent = clock(game.timeLeft()); $('#lobbyWhen').textContent = game.duel ? 'opponent found! duel starts in' : 'ranked show starts in'; }
     else if (game.hold) {
       const host = !!(this.app.conn && this.app.conn.isHost);
@@ -5162,7 +5623,7 @@ class UI {
     const ds = [...game.roster.values()].filter((r) => !r.bot && r.status !== 'gone').sort((a, b) => (a.slot === game.you ? -1 : b.slot === game.you ? 1 : 0));
     const side = (r) => (r ? `<div class="db-p${r.slot === game.you ? ' me' : ''}">${r.rp != null ? rankBadge(r.rp, 26) : ''}<span class="bn" style="background:${r.look.css}"></span><b>${esc(r.slot === game.you ? 'You' : r.name)}</b></div>` : '<div class="db-p"><b>…</b></div>');
     const w = (r) => (r ? game.dw[r.slot] | 0 : 0);
-    const html = `${side(ds[0])}<div class="db-score"><b>${w(ds[0])}</b><i>:</i><b>${w(ds[1])}</b><small>FIRST TO 2</small></div>${side(ds[1])}`;
+    const html = `${side(ds[0])}<div class="db-score"><b>${w(ds[0])}</b><i>:</i><b>${w(ds[1])}</b><small>FIRST TO ${DUEL_WINS}</small></div>${side(ds[1])}`;
     if (html !== this._dbHTML) { this._dbHTML = html; box.innerHTML = html; }
   }
   hud(game, spectName) {
@@ -5189,16 +5650,42 @@ class UI {
     this.colourTarget(game);
     // Slime Surge: how close the rising slime is
     const rise = L.rules && L.rules.rise;
-    if (rise && game.phase === PHASE.PLAY && game.meActive && performance.now() - (this.objT || 0) > 4000) {
-      const y = Math.min(rise.max, rise.y0 + rise.rate * Math.max(0, game.serverTick() / 30 - rise.t0)), gap = game.me.p[1] - 0.78 - y;
+    const sy = rise ? Math.min(rise.max, rise.y0 + rise.rate * Math.max(0, game.serverTick() / 30 - rise.t0)) : 0, sgap = rise && game.meActive ? game.me.p[1] - 0.78 - sy : 99;
+    if (rise && game.phase === PHASE.PLAY && game.meActive && sy < rise.max && sgap < 9 && performance.now() - (this.objT || 0) > 4000) {
+      const y = sy, gap = sgap;
       const tag = gap < 3 ? `🟢 THE SLIME IS RIGHT BEHIND YOU! (${Math.max(0, gap).toFixed(1)} m)` : `🟢 Slime rising · ${gap.toFixed(0)} m below you`;
       $('#hObjective').textContent = tag; $('#hObjective').classList.toggle('warn', gap < 3);
-    } else if (!rise) $('#hObjective').classList.remove('warn');
+    } else if ($('#hObjective').classList.contains('warn')) { $('#hObjective').classList.remove('warn'); $('#hObjective').textContent = ''; }
+    this.crownHint(game);
     const sp = $('#spectate');
     sp.classList.toggle('hide', !spectName);
     if (spectName) $('#specName').textContent = spectName;
   }
   objective(text) { $('#hObjective').textContent = text || ''; this.objT = performance.now(); }
+  // Red Light Rush: the big traffic light at the top of the screen
+  lightHud(phase) {
+    const box = $('#hLight');
+    if (!phase || phase === 'wait') { if (!box.classList.contains('hide')) box.classList.add('hide'); return; }
+    const k = phase === 'green' ? 'green' : phase === 'turn' ? 'turn' : 'red';
+    if (box.dataset.k === k && !box.classList.contains('hide')) return;
+    box.dataset.k = k; box.classList.remove('hide');
+    box.className = 'h-light ' + k;
+    $('#hlTxt').textContent = k === 'green' ? 'GREEN LIGHT — RUN!' : k === 'turn' ? 'RED LIGHT — STOP!' : 'FREEZE! DON’T MOVE!';
+  }
+  // Crown Peak: a pill that stays up the whole duel round, and gets loud near the summit for everyone
+  crownHint(game) {
+    const box = $('#hCrown'), L = game.level;
+    let near = false, show = false;
+    if (L && L.type === 'final' && L.id === 'crownpeak' && game.phase === PHASE.PLAY && game.meActive) {
+      const c = crownAt(game.serverTick() / 30), p = game.me.p;
+      near = Math.hypot(p[0] - c[0], p[2] - c[2]) < 11 && p[1] > c[1] - 7;
+      show = near || !!game.duel;
+    }
+    box.classList.toggle('hide', !show); box.classList.toggle('near', near);
+    if (!show) return;
+    const key = isTouch() ? 'GRAB' : 'GRAB (E)', txt = near ? `👑 JUMP & HOLD ${key} ON THE CROWN!` : '👑 Grab the crown at the top to win!';
+    if (box.textContent !== txt) box.textContent = txt;
+  }
   // Colour Clash: the colour to stand on, with a countdown bar, mirrored from the big screen
   colourTarget(game) {
     const box = $('#hTarget'), cm = game.level && game.level.cm;
@@ -5208,7 +5695,7 @@ class UI {
     if (!P || ph === 'ready' || ph === 'back') { box.className = 'h-target wait'; $('#htName').textContent = 'GET READY…'; $('#htSw').style.background = '#fff'; $('#htBar').style.width = '0%'; return; }
     const col = CM_COLORS[P.target];
     box.className = 'h-target ' + ph; $('#htName').textContent = ph === 'drop' ? `${col.name}!` : `STAND ON ${col.name}`; $('#htSw').style.background = col.hex;
-    $('#htBar').style.width = ph === 'show' ? Math.max(0, Math.min(100, (1 - (t - P.t - 1.2) / (P.show - 1.2)) * 100)) + '%' : '0%';
+    $('#htBar').style.width = ph === 'show' ? Math.max(0, Math.min(100, (1 - (t - P.t - P.ready) / (P.show - P.ready)) * 100)) + '%' : '0%';
     if (ph === 'show' && this._cmBeep !== Math.ceil(P.t + P.show - t) && P.t + P.show - t < 3.2) { this._cmBeep = Math.ceil(P.t + P.show - t); this.app.sound.play('tick', 0.7); }
   }
   feed(text, kind = '') {
@@ -5239,6 +5726,10 @@ class UI {
     $('#icQ').textContent = m.duel ? (level.type === 'race' ? '⚔ First over the line takes the round' : level.type === 'final' ? '⚔ First to grab the crown takes the round' : level.type === 'hunt' ? '⚔ Most points takes the round' : '⚔ Outlast your opponent to take the round')
       : level.type === 'hunt' ? `🎯 Top ${m.Q} of ${m.count} beans qualify` : level.type === 'race' ? (fin ? '👑 First bean over the line wins!' : `🏁 ${m.Q} of ${m.count} beans qualify`)
       : level.type === 'survival' ? (fin ? `👑 ${m.count} finalists · last bean standing wins` : `💥 Survive until only ${m.Q} remain`) : `👑 ${m.count} finalists · 1 crown`;
+    // duels on Crown Peak: reaching the summit isn't enough — make that impossible to miss
+    const cw = $('#icWarn'), crownDuel = m.duel && level.type === 'final';
+    cw.classList.toggle('hide', !crownDuel);
+    if (crownDuel) cw.innerHTML = `👑 REMEMBER: GRAB THE CROWN AT THE VERY TOP! 👑<small>Standing on the summit doesn't count — jump up and hold ${isTouch() ? 'the GRAB button' : 'GRAB (E / Shift)'} on the floating crown.</small>`;
     const pool = (m.duel ? Object.values(DUEL_POOLS).flat() : fin ? POOLS.final : POOLS[level.type] || []).map((id) => levelMeta(id).name);
     this.reel([...new Set(pool.length ? pool : [level.name])], level.name);
     this.overlay('intro', true);
@@ -5293,6 +5784,10 @@ class UI {
     this.overlay('results', true);
   }
   podium(m, game) {
+    // duels crown nobody: the winner gets crossed swords and the final score instead
+    const duel = !!(game && game.duel), sc = duel && m.dw ? Object.values(m.dw).map((x) => x | 0).sort((a, b) => b - a) : null;
+    $('#podium .pod-crown').innerHTML = duel ? '<i class="fa-solid fa-swords"></i>' : '<i class="fa-solid fa-crown"></i>';
+    $('#podium .pod-title').textContent = duel ? (m.winner ? `DUEL WON ${sc[0] || 0}–${sc[1] || 0}!` : 'DUEL DRAWN') : 'WINNER!';
     $('#podName').textContent = m.winner ? m.winner.n : 'Nobody';
     $('#podPlaces').innerHTML = (m.top || []).slice(1).map((s, i) => { const r = game.roster.get(s); return r ? `<div>${i === 0 ? '🥈' : '🥉'} ${esc(r.name)}</div>` : ''; }).join('');
   }
@@ -5306,6 +5801,7 @@ class UI {
     $$('#rwRows .rw-row').forEach((r, i) => setTimeout(() => { r.classList.add('in'); this.app.sound.play('pop'); }, 350 + i * 280));
     if (profile) { $('#rwLvl').textContent = profile.level; setTimeout(() => ($('#rwXp').style.width = ((profile.xp % XP_PER_LEVEL) / XP_PER_LEVEL) * 100 + '%'), 600); }
     $('#rwUp').classList.toggle('hide', !(rw.levelUp > 0));
+    if (rw.levelUp > 0) $('#rwUp').innerHTML = `LEVEL ${rw.levelUp}! <small>🎁 CranPass reward ready to claim</small>`;
     const rk = rw.rank, box = $('#rwRank'); box.classList.toggle('hide', !rk);
     if (rk) {
       if (rk.kind === 'duel') { $('#rwHead').textContent = rk.res === 1 ? 'DUEL WON!' : rk.res === 0.5 ? 'DUEL DRAWN' : 'DUEL LOST'; $('#rwSub').textContent = `${rk.score[0]} – ${rk.score[1]}${rk.oppName ? ' vs ' + rk.oppName : ''}`; }
@@ -5554,7 +6050,7 @@ function charSub(s, I, W, tick, ctx) {
     }
     const tx = wishing ? I.mx * max : 0, tz = wishing ? I.mz * max : 0;
     let rate;
-    if (s.gr) rate = wishing ? (ice ? P.ICE_ACC : P.ACC) : (ice ? P.ICE_DEC : P.DEC);
+    if (s.gr) rate = wishing ? (ice ? P.ICE_ACC : P.ACC) : (ice ? P.ICE_DEC : (ctx && ctx.rules && ctx.rules.brake) || P.DEC); // some maps make stopping harder
     else { rate = wishing ? P.AIR_ACC : P.AIR_DEC; if (wishing && Math.hypot(rx, rz) > max + 0.5) rate *= 0.45; }
     const dx = tx - rx, dz = tz - rz, dl = Math.hypot(dx, dz), st = rate * dt;
     if (dl <= st) { rx = tx; rz = tz; } else { rx += (dx / dl) * st; rz += (dz / dl) * st; }
@@ -5623,7 +6119,7 @@ function charEnd(s, W, tick, ctx) {
   if (s.mode !== M.LEDGE && s.mode !== M.CLIMB && W.hasWind) {
     const r = charShape(s, A, B);
     const t = tick * DT; // fans blow beans sideways (a drift you can walk against)
-    W.trigAt('wind', A, B, r, tick, (c) => { if (!windOn(c, t)) return; s.p[0] += c.wind[0] * DT; s.p[1] += c.wind[1] * DT; s.p[2] += c.wind[2] * DT; });
+    W.trigAt('wind', A, B, r, tick, (c) => { if (!windOn(c, t) || (c.air && s.gr)) return; /* air-only crosswinds only push jumpers */ s.p[0] += c.wind[0] * DT; s.p[1] += c.wind[1] * DT; s.p[2] += c.wind[2] * DT; });
   }
   if (s.kt <= 0 && s.mode !== M.LEDGE && s.mode !== M.CLIMB) {
     const r = charShape(s, A, B);
@@ -5642,6 +6138,7 @@ function charEnd(s, W, tick, ctx) {
 const _I = { mx: 0, mz: 0, grab: false, wish: false, b: 0 };
 // single-body helper (client prediction, tests)
 function stepChar(s, inp, W, tick, ctx) {
+  if (ctx) ctx.tick = tick;
   charBegin(s, inp, _I);
   const dts = DT / SUBSTEPS;
   for (let k = 0; k < SUBSTEPS; k++) { W.setTime((tick * SUBSTEPS + k + 1) * dts); charSub(s, _I, W, tick, ctx); }
@@ -5780,7 +6277,10 @@ function climbStep(s) {
 }
 
 function respawn(s, ctx) {
-  const cps = ctx.rules.checkpoints, cp = cps[Math.min(s.cp, cps.length - 1)];
+  const R = ctx.rules, cps = R.checkpoints;
+  // rising slime: if the slime has swallowed your checkpoint, it carries you up to the first dry one
+  if (R.rise) { const y = slimeAt(R.rise, (ctx.tick | 0) * DT); while (s.cp < cps.length - 1 && cps[s.cp].spawn[1] < y + 0.6) s.cp++; }
+  const cp = cps[Math.min(s.cp, cps.length - 1)];
   const i = (((ctx.slot | 0) * 13 + s.rc * 7) % 25 + 25) % 25, gx = (i % 5) - 2, gz = Math.floor(i / 5) - 2;
   s.p[0] = cp.spawn[0] + (gx * cp.spread[0]) / 4; s.p[1] = cp.spawn[1] + P.STAND + 0.05; s.p[2] = cp.spawn[2] + (gz * cp.spread[1]) / 4;
   s.v[0] = s.v[1] = s.v[2] = 0; s.yaw = cp.yaw || 0; s.mode = M.NORMAL; s.mt = 0; s.gr = 0; s.rc++;
@@ -5882,6 +6382,169 @@ function decodeSnap(buf) {
 return { BIN, qAxis, encodeInput, decodeInput, buildSnapBody, encodeSnap, decodeSnap };
 })();
 
+// ---- shared/chat.js ----
+__m["shared/chat.js"] = (() => {
+// CranGuys chat auto-moderation — shared by the host (which decides what gets through) and every player
+// (who filters incoming messages again, so a modified host can't push anything nasty to you).
+// Blocks swearing, slurs and sexual words (with leetspeak/spacing tricks folded away), anything that looks like
+// personal info (links, emails, phone numbers, socials, "how old are you", "where do you live"…), and spam.
+// Word lists are ROT13-encoded so this file stays readable.
+const R13 = (s) => s.replace(/[a-z]/g, (c) => String.fromCharCode(((c.charCodeAt(0) - 97 + 13) % 26) + 97));
+const STRONG = ["shpx", "fuvg", "ovgpu", "phag", "avttre", "avttn", "snttbg", "snt", "juber", "fyhg", "onfgneq", "qvpxurnq", "jnaxre", "gjng", "zbgureshpx", "ergneq", "cbea", "cravf", "intvan", "chffl", "obbof", "qvyqb", "oybjwbo", "unaqwbo", "wvmm", "zbyrfg", "anmv", "uvgyre", "xvyylbhefrys", "fhvpvqr", "ahqr", "frkl", "ubeal", "fcnfgvp", "obyybpx", "nefrubyr", "nffubyr", "ohyyfuvg"].map(R13);
+const WORD = new Set(["nff", "nefr", "qvpx", "gvg", "gvgf", "phz", "frk", "ubr", "ubrf", "cevpx", "xabo", "fynt", "fxnax", "gubg", "fvzc", "fgsh", "jgs", "sx", "spx", "shx", "fzq", "yzsnb", "bzst", "xlf", "pbpx", "encr", "encrq", "encvfg", "crqb", "cnrqb", "fcvp", "pbba", "cnxv", "tbbx", "puvax", "qlxr", "xvxr", "genaal", "jrgonpx", "ornare", "cvff", "cvffrq", "cvffvat"].map(R13));
+const MILD = new Set(["qnza", "penc", "uryy", "sevpx", "urpx", "qnat", "fghcvq", "vqvbg", "qhzo", "ybfre", "htyl", "genfu", "fhpx", "fhpxf", "abbo", "fuhg hc"].map(R13));
+const ALLOW = ["scunthorpe", "shitake", "shiitake", "cocktail", "cockpit", "peacock", "hancock", "pissarro", "penistone", "cassette", "dickens"]; // innocent words that contain a blocked one
+const QUICK = ['GG!', 'Good luck!', 'Nice one!', 'Let’s go!', 'Wait for me!', 'Follow me!', 'Oops!', 'Thanks!', 'So close!', 'Rematch?', '😂', '👑'];
+const CHAT_MAX = 80;
+
+const LEET = { '0': 'o', '1': 'i', '!': 'i', '|': 'i', '3': 'e', '4': 'a', '@': 'a', '5': 's', '$': 's', '7': 't', '+': 't', '8': 'b', '9': 'g', '2': 'z', '€': 'e', '¡': 'i' };
+const fold = (s) => s.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f\u200b-\u200f\u2060\ufeff]/g, '');
+const deleet = (s) => s.replace(/[0-9!|@$+€¡]/g, (c) => LEET[c] || c);
+const squash = (s) => s.replace(/(.)\1+/g, '$1'); // fuuuuck -> fuck
+const STRONG_SQ = STRONG.map(squash);
+
+const PERSONAL = [
+  /\S+@\S+\.[a-z]{2,}/i,                                                  // email
+  /(https?:\/\/|www\.)/i,                                                     // links
+  /\b[a-z0-9-]{2,}\s*(\.|dot)\s*(com|net|org|io|gg|co|uk|me|tv|app|xyz|ly|ru|de|fr)\b/i,
+  /(\d[\s.\-()]*){7,}/,                                                      // phone numbers
+  /(^|\s)@[a-z0-9_.]{3,}/i,                                                   // @handles
+  /\b(snap ?chat|snap|insta(gram)?|discord|tik ?tok|whats ?app|telegram|kik|facebook|fb|twitter|roblox user|xbox gamertag|psn)\b/i,
+  /\b(my|ur|your|you'?r|whats? ?(is )?(ur|your)) ?(phone|number|digits|address|house|postcode|zip ?code|school|real name|surname|last name|age|birthday|location|user ?name|username|pass ?word|password)\b/i,
+  /\b(where (do|d) (you|u) live|where (are|r) (you|u) from|where (are|r) (you|u)|wru|how old|what age|asl|which school|what school|meet (up|me)|irl|dm me|add me|text me|call me|send (me )?(pic|photo)s?)\b/i,
+];
+
+// Returns { ok, text, reason, strike }. reason: 'empty' | 'long' | 'repeat' | 'personal' | 'rude'
+function moderate(raw, o = {}) {
+  let text = String(raw ?? '').replace(/[\u0000-\u001f\u007f<>]/g, '').replace(/\s+/g, ' ').trim();
+  if (!text) return { ok: false, reason: 'empty' };
+  if (text.length > CHAT_MAX) text = text.slice(0, CHAT_MAX).trim();
+  const f = fold(text);
+  if (o.last && fold(o.last) === f) return { ok: false, reason: 'repeat' };
+  for (const re of PERSONAL) if (re.test(f) || re.test(deleet(f))) return { ok: false, reason: 'personal' };
+  const d = deleet(f);
+  const rawTokens = d.split(/[^a-z]+/).filter(Boolean);
+  let glued = squash(d.replace(/[^a-z]/g, '')); // f u c k / f.u.c.k
+  for (const a of ALLOW) glued = glued.split(squash(a)).join('_');
+  if (STRONG_SQ.some((w) => glued.includes(w))) return { ok: false, reason: 'rude', strike: true };
+  const isWord = (t) => WORD.has(t) || WORD.has(t.replace(/(.)\1{2,}/g, '$1$1')) || (squash(t).length >= 4 && WORD.has(squash(t)));
+  if (rawTokens.some(isWord)) return { ok: false, reason: 'rude', strike: true };
+  // spelled out letter by letter: "a s s", "k y s"
+  const parts = d.split(/[^a-z]+/).filter(Boolean); let run = '';
+  for (const x of [...parts, '##']) { if (x.length === 1) run += x; else { if (run.length >= 2 && (isWord(run) || STRONG_SQ.some((w) => squash(run).includes(w)))) return { ok: false, reason: 'rude', strike: true }; run = ''; } }
+  // mild words are just starred out
+  text = text.replace(/[a-z0-9!@$|+]+/gi, (w) => (MILD.has(squash(deleet(fold(w)))) || MILD.has(deleet(fold(w))) ? '★'.repeat(Math.min(4, w.length)) : w));
+  // SHOUTING -> calm
+  const letters = text.replace(/[^a-z]/gi, ''); if (letters.length > 6 && letters.replace(/[^A-Z]/g, '').length / letters.length > 0.7) text = text.toLowerCase();
+  return { ok: true, text };
+}
+const CHAT_REASON = {
+  rude: 'Message blocked — keep it friendly!', personal: 'Message blocked — never share personal info (socials, links, numbers, age, where you live).',
+  repeat: 'You just said that!', slow: 'Slow down a little!', muted: 'You’re muted for the rest of this show.', empty: '', long: '',
+};
+
+// Gamertags get the same auto-moderation as chat, but stricter: a name that would need any word starred out,
+// looks like personal info, or pretends to be staff is refused outright (names are shown to everyone, and on
+// the global leaderboard). Returns { ok, name } or { ok: false, reason, msg }.
+const NAME_MSG = {
+  short: 'Names need 2–16 letters or numbers',
+  rude: 'That name isn’t allowed — pick something friendly!',
+  personal: 'Names can’t include personal info (socials, numbers, where you live…).',
+  staff: 'Names can’t pretend to be CranGuys staff.',
+};
+const STAFF = /\b(admin|administrator|moderator|mod|official|staff|dev|developer|support|cranguys ?team|owner)\b/i;
+function cleanName(raw) {
+  const name = String(raw ?? '').replace(/[^\p{L}\p{N}_ .-]/gu, '').replace(/\s+/g, ' ').trim().slice(0, 16);
+  if (name.replace(/[^\p{L}\p{N}]/gu, '').length < 2) return { ok: false, reason: 'short', msg: NAME_MSG.short };
+  const bad = (m) => ({ ok: false, reason: m.reason === 'personal' ? 'personal' : 'rude', msg: m.reason === 'personal' ? NAME_MSG.personal : NAME_MSG.rude });
+  const whole = moderate(name); if (!whole.ok && whole.reason === 'personal') return bad(whole);
+  // plain numbers (Bean2012, mochi4555) are numbers, not leetspeak; the letters around them are what get checked
+  const words = name.replace(/\p{N}{3,}/gu, ' ').replace(/\s+/g, ' ').trim();
+  const spaced = words.replace(/[_.-]+/g, ' ').replace(/(\p{Ll})(\p{Lu})/gu, '$1 $2').replace(/(\p{L})(\p{N})/gu, '$1 $2').trim(); // JellyBean -> Jelly Bean
+  for (const w of [words, spaced]) {
+    if (!w) continue;
+    const m = moderate(w); if (!m.ok) return bad(m);
+    if (m.text.toLowerCase() !== w.toLowerCase()) return { ok: false, reason: 'rude', msg: NAME_MSG.rude }; // something got starred out
+  }
+  if (STAFF.test(spaced) || STAFF.test(name.replace(/[^a-z]/gi, ' '))) return { ok: false, reason: 'staff', msg: NAME_MSG.staff };
+  return { ok: true, name };
+}
+// For names arriving from other players (P2P hello, leaderboard): never throw, just fall back to a safe name.
+const safeName = (raw, fallback = 'Bean') => { const c = cleanName(raw); return c.ok ? c.name : fallback; };
+
+return { QUICK, CHAT_MAX, moderate, CHAT_REASON, NAME_MSG, cleanName, safeName };
+})();
+
+// ---- shared/levels/hoophunt.js ----
+__m["shared/levels/hoophunt.js"] = (() => {
+// Round type: HUNT — "Hoop Hunt". Hoops keep popping up all over a round arena: jump through them for points
+// (gold hoops, high above the bounce pads, are worth 5). Hoops vanish when someone takes them and reappear
+// somewhere else. When the clock runs out, the highest scorers qualify. A sweeper keeps everyone hopping.
+const { Kit, C, T_PLAY } = __m["shared/levels/kit.js"];
+const { SURF, TICK_HZ } = __m["shared/config.js"];
+const { mulberry32 } = __m["shared/math.js"];
+const HUNT = { slots: 8, life: 10, gap: 1.3, reach: 1.25, R: 17 };
+
+// every place a hoop can appear: {p: centre, yaw: facing, v: points, pad: the bounce pad under it}
+function makeSpots() {
+  const spots = [];
+  for (let i = 0; i < 12; i++) { const a = (i / 12) * Math.PI * 2 + 0.26; spots.push({ p: [Math.cos(a) * 9.6, 2.1, Math.sin(a) * 9.6], yaw: a, v: 1 }); }
+  for (let i = 0; i < 8; i++) { const a = (i / 8) * Math.PI * 2 + 0.2; spots.push({ p: [Math.cos(a) * 14, 2.1, Math.sin(a) * 14], yaw: a + Math.PI / 2, v: 1 }); }
+  for (let i = 0; i < 4; i++) { const a = (i / 4) * Math.PI * 2 + Math.PI / 4; spots.push({ p: [Math.cos(a) * 11.5, 3.25, Math.sin(a) * 11.5], yaw: a, v: 2, terrace: true }); }
+  for (let i = 0; i < 4; i++) { const a = (i / 4) * Math.PI * 2; spots.push({ p: [Math.cos(a) * 5.6, 4.35, Math.sin(a) * 5.6], yaw: a + Math.PI / 2, v: 5, pad: true }); }
+  return spots;
+}
+const SPOTS = makeSpots();
+// the hoop a slot shows in its gen-th appearance (pure function of the level seed)
+function hoopAt(seed, slot, gen) {
+  const r = mulberry32(((seed * 31 + slot * 7919 + gen * 104729) ^ 0x51f15e) >>> 0);
+  r(); let i = Math.floor(r() * SPOTS.length);
+  if (SPOTS[i].pad && r() < 0.45) i = Math.floor(r() * 20);   // gold hoops are rarer than their share of spots
+  return SPOTS[i];
+}
+// is the slot's hoop out right now? (state = {hg: gens, ht: ticks each appears at})
+function hoopLive(st, slot, tick) { const t0 = st.ht[slot]; return tick >= t0 && tick < t0 + HUNT.life * TICK_HZ; }
+function huntStart(n = HUNT.slots) { return { hg: new Array(n).fill(0), ht: Array.from({ length: n }, (_, k) => Math.round((T_PLAY + 0.4 + k * 0.35) * TICK_HZ)) }; }
+
+function buildHoopHunt(seed) {
+  const K = new Kit();
+  const R = HUNT.R;
+  K.cyl([0, -0.6, 0], R, 0.6, { vis: { c: C.mint, c2: C.lime, m: 'rings' } });
+  K.deco({ shape: 'ring', p: [0, -0.3, 0], r: R + 0.4, vis: { c: C.yellow, m: 'plain' } });
+  K.deco({ shape: 'pillar', p: [0, -18, 0], r: 3, h: 17, vis: { c: C.teal, c2: C.white, m: 'stripes' } });
+  // centre: a sweeper that keeps the middle lively
+  K.sweeper([0, 0, 0], { w: 0.75, hl: R - 0.4, arms: [{ y: 0.55, ph: 0 }], col: C.purple, poleH: 3.4 });
+  // four bounce pads (gold hoops float above them) and four terraces (2-point hoops)
+  for (let i = 0; i < 4; i++) {
+    const a = (i / 4) * Math.PI * 2, x = Math.cos(a) * 5.6, z = Math.sin(a) * 5.6;
+    K.cyl([x, 0.08, z], 1.35, 0.1, { surf: SURF.BOUNCY, bounce: 14.2, vis: { c: C.yellow, c2: C.orange, m: 'bouncy' } });
+  }
+  for (let i = 0; i < 4; i++) {
+    const a = (i / 4) * Math.PI * 2 + Math.PI / 4, x = Math.cos(a) * 11.5, z = Math.sin(a) * 11.5;
+    K.box([x, 0.6, z], [1.9, 0.6, 1.9], { q: [0, Math.sin(-a / 2), 0, Math.cos(-a / 2)], vis: { c: [C.pink, C.blue, C.orange, C.violet][i], c2: C.white, m: 'stripes' } });
+  }
+  // a ring of bumpers around the rim
+  for (let i = 0; i < 10; i++) { const a = (i / 10) * Math.PI * 2 + 0.31; K.cyl([Math.cos(a) * (R - 0.9), 0.75, Math.sin(a) * (R - 0.9)], 0.6, 0.75, { surf: SURF.BUMPER, bump: 9, vis: { c: C.hotpink, c2: C.white, m: 'bumper' } }); }
+
+  return {
+    id: 'hoophunt', type: 'hunt', name: 'Hoop Hunt', desc: 'Jump through hoops for points — top scorers qualify!', tip: 'Gold hoops float above the bounce pads and are worth 5. Hoops on the terraces are worth 2.',
+    goal: 'Jump through the hoops!',
+    colliders: K.cols, triggers: K.trigs, decor: K.decor, ndyn: K.ndyn, hazards: K.hazards, hunt: HUNT,
+    timeLimit: 80, slimeY: -4, theme: 'mint',
+    rules: { killY: -3, respawn: true, checkpoints: [{ spawn: [0, 0, -8], spread: [12, 6], yaw: 0, box: [0, 0, 0, 0, 0, 0] }] },
+    spawns(n) {
+      const out = [];
+      for (let i = 0; i < n; i++) { const r = 7.5 + 6.5 * ((i * 0.618) % 1), a = i * 2.39996; const x = Math.cos(a) * r, z = Math.sin(a) * r; out.push([x, 0, z, Math.atan2(-x, -z)]); }
+      return out;
+    },
+    bot: { hunt: true },
+    cam: [{ e: [0, 34, -38], l: [0, 0, 0] }, { e: [26, 12, 6], l: [0, 2, 0] }, { e: [-8, 8, -18], l: [0, 2, 0] }, { e: [0, 9, -22], l: [0, 2, 0] }],
+  };
+}
+
+return { HUNT, SPOTS, hoopAt, hoopLive, huntStart, buildHoopHunt };
+})();
+
 // ---- client/js/play.js ----
 __m["client/js/play.js"] = (() => {
 // CranGuys — ClientGame: everything that happens inside a show on the client.
@@ -5898,6 +6561,7 @@ const { encodeInput, decodeSnap, qAxis } = __m["shared/protocol.js"];
 const { clamp, angLerp } = __m["shared/math.js"];
 const { BeanVis } = __m["client/js/bean.js"];
 const { beanLook } = __m["client/js/util.js"];
+const { safeName } = __m["shared/chat.js"];
 const { huntStart, hoopAt, HUNT } = __m["shared/levels/hoophunt.js"];
 const ZERO = Object.freeze({ mx: 0, mz: 0, b: 0 });
 const nowTicks = () => (performance.now() / 1000) * TICK_HZ;
@@ -5937,7 +6601,7 @@ class ClientGame {
 
   addRoster(p) {
     const look = beanLook(p.c);
-    const r = { slot: p.s, name: p.n, cos: p.c, bot: !!p.b, status: p.st || 'in', look, vis: new BeanVis(look), userId: p.u, rp: p.r == null ? null : p.r | 0 };
+    const r = { slot: p.s, name: safeName(p.n), /* re-checked here too, so a modified host can't show a rude name */ cos: p.c, bot: !!p.b, status: p.st || 'in', look, vis: new BeanVis(look), userId: p.u, rp: p.r == null ? null : p.r | 0 };
     this.roster.set(p.s, r);
     return r;
   }
@@ -5947,7 +6611,7 @@ class ClientGame {
     for (const p of m.players) this.addRoster(p);
     this.you = m.you; this.round = m.round; this.showN = m.show.length; this.show = m.show; this.Q = m.Q;
     this.hold = !!m.hold; this.room = m.room || null;
-    this.kind = m.kind || null; this.need = m.need | 0; this.dw = m.dw || {};
+    this.kind = m.kind || null; this.need = m.need | 0; this.dw = m.dw || {}; this.mid = m.id || null;
     this.off = null; this.lead = 4; // a (new) host: re-learn its clock from scratch
     this.loadLevel(m.level, m.seed, m.epoch);
     for (const [id, t] of m.tiles || []) this.touchTile(id, t, true);
@@ -6044,6 +6708,8 @@ class ClientGame {
         if (e[4] >= 0) { const r = this.roster.get(e[4]); if (r) r.score = e[5]; this.app.onHoop(e[4], h); }
       }
       else if (k === 'boom') this.app.onBoom(a);
+      else if (k === 'warn') this.app.onCannonWarn(a, b);
+      else if (k === 'red') this.app.onRedLight(a, b, e[3], e[4]);
     }
   }
   applyResults(m) { for (const s of m.qualified) { const r = this.roster.get(s); if (r) r.status = 'q'; } for (const s of m.eliminated) { const r = this.roster.get(s); if (r) r.status = 'x'; } }
@@ -6200,6 +6866,8 @@ const { kinAngle, kinW } = __m["shared/collide.js"];
 const { WALL, GAP, LOW, DUCK } = __m["shared/levels/wallrush.js"];
 const { hoopAt, hoopLive } = __m["shared/levels/hoophunt.js"];
 const { cmCycle, cmPhase } = __m["shared/levels/colormatch.js"];
+const { ropeNextHit } = __m["shared/levels/jumprope.js"];
+const { rlState } = __m["shared/levels/redlight.js"];
 const { TICK_HZ } = __m["shared/config.js"];
 const PI = Math.PI;
 
@@ -6239,6 +6907,7 @@ class BotBrain {
     else if (L.bot && L.bot.walls) ({ tx, tz, throttle, wantJump, wantDive } = this.walls(m, s, tick));
     else if (L.bot && L.bot.hunt) ({ tx, tz, throttle, wantJump } = this.hunt(m, s, tick));
     else if (L.bot && L.bot.colors) ({ tx, tz, throttle } = this.colors(m, s, tick));
+    else if (L.bot && L.bot.rlgl) ({ tx, tz, throttle, selfJump, wantGrab } = this.rlgl(m, s, tick));
     else if (L.bot && L.bot.dodge) ({ tx, tz, throttle } = this.dodge(m, s));
     else if (L.type === 'survival') { let hop; ({ tx, tz, throttle, hop } = this.survival(m, s, tick)); if (hop) wantJump = true; }
     else ({ tx, tz, wantGrab, wantJump, throttle, act, selfJump } = this.route(m, s, tick));
@@ -6311,6 +6980,7 @@ class BotBrain {
     if (nd.act === 'doors') tx = this.pickDoor(m, nd.row, s, tick);
     else if (nd.act === 'trust') { const o = this.trust(m, s, tick); if (o) { tx = o.x; tz = o.z; throttle = o.th; selfJump = true; } }
     else if (nd.act === 'plat') { const o = this.plat(m, s, tick, nd); tx = o.x; tz = o.z; throttle = o.th; wantJump = o.jump; selfJump = true; }
+    else if (nd.act === 'rope') { selfJump = true; if (this.ropeJump(m, s, tick)) wantJump = true; }
     else if (nd.act === 'disc' && s.gr && nd.p[1] - (p[1] - 0.78) > 0.4 && Math.hypot(nd.p[0] - p[0], nd.p[2] - p[2]) < 4.4 && r() < 0.3 + this.skill * 0.5) wantJump = true; // step up to the next disc
     if (nd.act === 'crown' || (L.type === 'final' && p[1] > 25 && p[2] > 123)) {
       const c = crownAt((tick + 10) * DT);
@@ -6327,6 +6997,31 @@ class BotBrain {
       }
     }
     return { tx, tz, wantGrab, wantJump, throttle, act: nd.act, selfJump };
+  }
+
+  // Rope Rumble: jump just before the rope sweeps through. Bots read its rhythm with skill-based error, and
+  // weaker bots get fooled by fake-outs (they jump at the normal time while the rope is still stalled).
+  ropeJump(m, s, tick) {
+    const L = m.level, t = tick * DT; if (!s.gr || s.p[2] < 7.5 || s.p[2] > L.rope.end + 1) return false;
+    const h = ropeNextHit(L.rope.plan, t, s.p[0]); if (!h) return false;
+    if (this.ropeSeg !== h.seg) { this.ropeSeg = h.seg; this.ropeErr = (this.rng() - 0.5) * (0.05 + (1 - this.skill) * 0.32); this.ropeFool = h.fast && this.rng() < 0.6 * (1 - this.skill) + 0.04; }
+    const eta = h.t - t - (this.ropeFool ? 0.5 : 0), lead = 0.32 + this.ropeErr;
+    return eta > 0 && eta <= lead && eta > lead - DT * 1.6;
+  }
+  // Red Light Rush: run on green, stop for red. Careful bots stop a little early; the rest react to the music
+  // cutting out, some too slowly. A few troublemakers grab whoever is next to them just before the scan.
+  rlgl(m, s, tick) {
+    const L = m.level, t = tick * DT, st = rlState(L.rl.plan, t), r = this.rng, p = s.p;
+    if (st.phase === 'wait') return { tx: p[0], tz: p[2] + 5, throttle: 0, selfJump: true, wantGrab: false };
+    if (this.rlK !== st.k) {
+      this.rlK = st.k; const redAt = st.seg.t + st.seg.g;
+      const careful = r() < 0.18 + 0.5 * this.skill;
+      this.rlStop = careful ? redAt - (0.12 + r() * 0.55) : redAt + this.react * 0.8 + r() * (0.12 + (1 - this.skill) * 0.7);
+      this.rlX = clamp(p[0] + (r() - 0.5) * 7, -L.rl.half + 1.5, L.rl.half - 1.5);
+      this.rlSab = this.aggro && r() < 0.6;
+    }
+    const go = st.phase === 'green' ? t < this.rlStop : t < this.rlStop && st.phase === 'turn';
+    return { tx: this.rlX, tz: p[2] + 20, throttle: go ? 1 : 0, selfJump: true, wantGrab: this.rlSab && go && this.rlStop - t < 0.45 };
   }
 
   // Trust Tiles: step tile to tile, preferring tiles others have proven solid and avoiding revealed fakes.
@@ -6453,7 +7148,7 @@ class BotBrain {
     const C = m.level.cm, p = s.p, t = tick * DT, r = this.rng, P = cmCycle(C.plan, t), ph = cmPhase(P, t);
     if (P && (ph === 'show' || ph === 'drop')) {
       if (this.cmT !== P.t) {
-        this.cmT = P.t; this.cmGo = P.t + 1.2 + this.react + (1 - this.skill) * 1.1 + r() * 0.5;
+        this.cmT = P.t; this.cmGo = P.t + P.ready + this.react * 0.6 + (1 - this.skill) * Math.min(1.1, P.show * 0.3) + r() * Math.min(0.5, P.show * 0.12);
         let bi = -1, bd = 1e9;
         const want = r() < (1 - this.skill) * 0.12 ? (P.target + 1) % 6 : P.target; // weaker bots sometimes mix up colours
         for (const c of C.cells) { if (P.col[c.i] !== want && P.col[c.i] !== P.target) continue; const d = Math.hypot(c.x - p[0], c.z - p[2]) + (P.col[c.i] === want ? 0 : 6) + r() * 2 * (1.2 - this.skill); if (d < bd) { bd = d; bi = c.i; } }
@@ -6652,70 +7347,6 @@ function beanName(rng) {
 return { beanName };
 })();
 
-// ---- shared/chat.js ----
-__m["shared/chat.js"] = (() => {
-// CranGuys chat auto-moderation — shared by the host (which decides what gets through) and every player
-// (who filters incoming messages again, so a modified host can't push anything nasty to you).
-// Blocks swearing, slurs and sexual words (with leetspeak/spacing tricks folded away), anything that looks like
-// personal info (links, emails, phone numbers, socials, "how old are you", "where do you live"…), and spam.
-// Word lists are ROT13-encoded so this file stays readable.
-const R13 = (s) => s.replace(/[a-z]/g, (c) => String.fromCharCode(((c.charCodeAt(0) - 97 + 13) % 26) + 97));
-const STRONG = ["shpx", "fuvg", "ovgpu", "phag", "avttre", "avttn", "snttbg", "snt", "juber", "fyhg", "onfgneq", "qvpxurnq", "jnaxre", "gjng", "zbgureshpx", "ergneq", "cbea", "cravf", "intvan", "chffl", "obbof", "qvyqb", "oybjwbo", "unaqwbo", "wvmm", "zbyrfg", "anmv", "uvgyre", "xvyylbhefrys", "fhvpvqr", "ahqr", "frkl", "ubeal", "fcnfgvp", "obyybpx", "nefrubyr", "nffubyr", "ohyyfuvg"].map(R13);
-const WORD = new Set(["nff", "nefr", "qvpx", "gvg", "gvgf", "phz", "frk", "ubr", "ubrf", "cevpx", "xabo", "fynt", "fxnax", "gubg", "fvzc", "fgsh", "jgs", "sx", "spx", "shx", "fzq", "yzsnb", "bzst", "xlf", "pbpx", "encr", "encrq", "encvfg", "crqb", "cnrqb", "fcvp", "pbba", "cnxv", "tbbx", "puvax", "qlxr", "xvxr", "genaal", "jrgonpx", "ornare", "cvff", "cvffrq", "cvffvat"].map(R13));
-const MILD = new Set(["qnza", "penc", "uryy", "sevpx", "urpx", "qnat", "fghcvq", "vqvbg", "qhzo", "ybfre", "htyl", "genfu", "fhpx", "fhpxf", "abbo", "fuhg hc"].map(R13));
-const ALLOW = ["scunthorpe", "shitake", "shiitake", "cocktail", "cockpit", "peacock", "hancock", "pissarro", "penistone", "cassette", "dickens"]; // innocent words that contain a blocked one
-const QUICK = ['GG!', 'Good luck!', 'Nice one!', 'Let’s go!', 'Wait for me!', 'Follow me!', 'Oops!', 'Thanks!', 'So close!', 'Rematch?', '😂', '👑'];
-const CHAT_MAX = 80;
-
-const LEET = { '0': 'o', '1': 'i', '!': 'i', '|': 'i', '3': 'e', '4': 'a', '@': 'a', '5': 's', '$': 's', '7': 't', '+': 't', '8': 'b', '9': 'g', '2': 'z', '€': 'e', '¡': 'i' };
-const fold = (s) => s.toLowerCase().normalize('NFKD').replace(/[\u0300-\u036f\u200b-\u200f\u2060\ufeff]/g, '');
-const deleet = (s) => s.replace(/[0-9!|@$+€¡]/g, (c) => LEET[c] || c);
-const squash = (s) => s.replace(/(.)\1+/g, '$1'); // fuuuuck -> fuck
-const STRONG_SQ = STRONG.map(squash);
-
-const PERSONAL = [
-  /\S+@\S+\.[a-z]{2,}/i,                                                  // email
-  /(https?:\/\/|www\.)/i,                                                     // links
-  /\b[a-z0-9-]{2,}\s*(\.|dot)\s*(com|net|org|io|gg|co|uk|me|tv|app|xyz|ly|ru|de|fr)\b/i,
-  /(\d[\s.\-()]*){7,}/,                                                      // phone numbers
-  /(^|\s)@[a-z0-9_.]{3,}/i,                                                   // @handles
-  /\b(snap ?chat|snap|insta(gram)?|discord|tik ?tok|whats ?app|telegram|kik|facebook|fb|twitter|roblox user|xbox gamertag|psn)\b/i,
-  /\b(my|ur|your|you'?r|whats? ?(is )?(ur|your)) ?(phone|number|digits|address|house|postcode|zip ?code|school|real name|surname|last name|age|birthday|location|user ?name|username|pass ?word|password)\b/i,
-  /\b(where (do|d) (you|u) live|where (are|r) (you|u) from|where (are|r) (you|u)|wru|how old|what age|asl|which school|what school|meet (up|me)|irl|dm me|add me|text me|call me|send (me )?(pic|photo)s?)\b/i,
-];
-
-// Returns { ok, text, reason, strike }. reason: 'empty' | 'long' | 'repeat' | 'personal' | 'rude'
-function moderate(raw, o = {}) {
-  let text = String(raw ?? '').replace(/[\u0000-\u001f\u007f<>]/g, '').replace(/\s+/g, ' ').trim();
-  if (!text) return { ok: false, reason: 'empty' };
-  if (text.length > CHAT_MAX) text = text.slice(0, CHAT_MAX).trim();
-  const f = fold(text);
-  if (o.last && fold(o.last) === f) return { ok: false, reason: 'repeat' };
-  for (const re of PERSONAL) if (re.test(f) || re.test(deleet(f))) return { ok: false, reason: 'personal' };
-  const d = deleet(f);
-  const rawTokens = d.split(/[^a-z]+/).filter(Boolean);
-  let glued = squash(d.replace(/[^a-z]/g, '')); // f u c k / f.u.c.k
-  for (const a of ALLOW) glued = glued.split(squash(a)).join('_');
-  if (STRONG_SQ.some((w) => glued.includes(w))) return { ok: false, reason: 'rude', strike: true };
-  const isWord = (t) => WORD.has(t) || WORD.has(t.replace(/(.)\1{2,}/g, '$1$1')) || (squash(t).length >= 4 && WORD.has(squash(t)));
-  if (rawTokens.some(isWord)) return { ok: false, reason: 'rude', strike: true };
-  // spelled out letter by letter: "a s s", "k y s"
-  const parts = d.split(/[^a-z]+/).filter(Boolean); let run = '';
-  for (const x of [...parts, '##']) { if (x.length === 1) run += x; else { if (run.length >= 2 && (isWord(run) || STRONG_SQ.some((w) => squash(run).includes(w)))) return { ok: false, reason: 'rude', strike: true }; run = ''; } }
-  // mild words are just starred out
-  text = text.replace(/[a-z0-9!@$|+]+/gi, (w) => (MILD.has(squash(deleet(fold(w)))) || MILD.has(deleet(fold(w))) ? '★'.repeat(Math.min(4, w.length)) : w));
-  // SHOUTING -> calm
-  const letters = text.replace(/[^a-z]/gi, ''); if (letters.length > 6 && letters.replace(/[^A-Z]/g, '').length / letters.length > 0.7) text = text.toLowerCase();
-  return { ok: true, text };
-}
-const CHAT_REASON = {
-  rude: 'Message blocked — keep it friendly!', personal: 'Message blocked — never share personal info (socials, links, numbers, age, where you live).',
-  repeat: 'You just said that!', slow: 'Slow down a little!', muted: 'You’re muted for the rest of this show.', empty: '', long: '',
-};
-
-return { QUICK, CHAT_MAX, moderate, CHAT_REASON };
-})();
-
 // ---- shared/game.js ----
 __m["shared/game.js"] = (() => {
 // CranGuys — Match: the authoritative show (lobby -> race -> survival -> final -> podium).
@@ -6725,6 +7356,7 @@ const { World } = __m["shared/world.js"];
 const { freshLevel, pickShow, pickDuel } = __m["shared/levels/index.js"];
 const { trustSecret } = __m["shared/levels/trusttiles.js"];
 const { crownAt } = __m["shared/levels/crownpeak.js"];
+const { rlState } = __m["shared/levels/redlight.js"];
 const { HUNT, hoopAt, huntStart } = __m["shared/levels/hoophunt.js"];
 const { TILE } = __m["shared/levels/tiletumble.js"];
 const { T_PLAY } = __m["shared/levels/kit.js"];
@@ -6736,7 +7368,7 @@ const { mulberry32, clamp } = __m["shared/math.js"];
 const { beanName } = __m["shared/names.js"];
 const { randomLoadout } = __m["shared/cosmetics.js"];
 const { moderate } = __m["shared/chat.js"];
-const { MIN_SHOW_HUMANS } = __m["shared/ranks.js"];
+const { MIN_SHOW_HUMANS, DUEL_WINS } = __m["shared/ranks.js"];
 const TP = Math.round(T_PLAY * TICK_HZ);   // round tick at which PLAY starts
 const NOINP = Object.freeze({ mx: 0, mz: 0, b: 0 });
 const F = new Float32Array(NFIELDS);
@@ -6752,7 +7384,7 @@ class Match {
     this.botFill = o.botFill !== false;
     this.send = o.send || (() => {});
     this.hooks = o.hooks || {};
-    // ranked: 'duel' = two real players, best of the rounds below; 'ranked' = a normal show that needs 5+ real players
+    // ranked: 'duel' = two real players, first to DUEL_WINS round wins; 'ranked' = a normal show that needs 5+ real players
     this.kind = o.kind === 'duel' || o.kind === 'ranked' ? o.kind : null;
     this.duel = this.kind === 'duel';
     if (this.duel) { this.max = 2; this.botFill = false; }
@@ -6842,7 +7474,7 @@ class Match {
     // a duel can't go on with one player: the other wins by forfeit
     if (this.duel && !this.ended && this.phase !== PHASE.PODIUM) {
       const o = this.players.find((p) => !p.bot && !p.left && p.status !== 'gone');
-      if (o) { this.dw[o.slot] = Math.max(2, this.dw[o.slot] | 0); this.flushEvents(); this.podium(o.slot); }
+      if (o) { this.dw[o.slot] = Math.max(DUEL_WINS, this.dw[o.slot] | 0); this.flushEvents(); this.podium(o.slot); }
     }
   }
   removeFromLobby(pl) {
@@ -7171,19 +7803,26 @@ class Match {
     if ((this.phase === PHASE.PLAY || this.phase === PHASE.ROUND_END) && t >= B.start) {
       this.ballT -= DT;
       if (this.ballT <= 0) {
-        this.ballId = (this.ballId + 1) & 255;
-        if (B.cannons) { // Boulder Bash: a random cannon fires at the middle, more and more often
+        if (B.cannons) {
+          this.ballId = (this.ballId + 1) & 255; // Boulder Bash: a random cannon fires at the middle, more and more often
           const k = Math.min(1, (t - B.start) / B.ramp), every = B.every + (B.min - B.every) * k;
           this.ballT = every * (0.7 + this.rng() * 0.6);
           const c = B.cannons[Math.floor(this.rng() * B.cannons.length)], ang = c.yaw + (this.rng() - 0.5) * B.spread, sp = B.speed[0] + (B.speed[1] - B.speed[0]) * (0.4 * k + 0.6 * this.rng() * (0.5 + k * 0.5));
           W.balls.push({ id: this.ballId, p: c.p.slice(), v: [Math.sin(ang) * sp, 0, Math.cos(ang) * sp], r: B.r, age: 0 });
           this.ev('boom', B.cannons.indexOf(c));
-        } else {
+        } else { // Crown Peak: each shot is called out ahead of time so its cannon can flash twice first
           this.ballT = B.every * (0.75 + this.rng() * 0.5);
-          const x = B.xs[Math.floor(this.rng() * B.xs.length)] + (this.rng() - 0.5) * 1.2;
-          W.balls.push({ id: this.ballId, p: [x, B.y, B.z], v: [(this.rng() - 0.5) * 0.8, 0, -3.5], r: B.r, age: 0 });
+          const i = Math.floor(this.rng() * B.xs.length), at = this.tick + Math.round(B.lead / DT);
+          (this.ms.bq || (this.ms.bq = [])).push({ i, at, x: B.xs[i] + (this.rng() - 0.5) * 0.5, vx: (this.rng() - 0.5) * 0.8 });
+          this.ev('warn', i, at);
         }
       }
+    }
+    const bq = this.ms.bq;
+    while (bq && bq.length && bq[0].at <= this.tick) {
+      const s = bq.shift();
+      this.ballId = (this.ballId + 1) & 255;
+      W.balls.push({ id: this.ballId, p: [s.x, B.y, B.z], v: [s.vx, 0, -3.5], r: B.r, age: 0 });
     }
     const dts = DT / SUBSTEPS, SV = [0, 0, 0];
     for (let k = 0; k < SUBSTEPS; k++) {
@@ -7227,11 +7866,29 @@ class Match {
   }
 
   // ---------------- round rules ----------------
+  // Red Light Rush: while the mascot is looking, anyone who moves flashes red and goes back to the start line.
+  // Movement is measured tick to tick (being bumped counts too!), so standing perfectly still is the only way.
+  redLight(ins) {
+    const RLc = this.level.rl, st = rlState(RLc.plan, this.tick * DT), scan = st.phase === 'scan';
+    for (const p of ins) {
+      const s = p.st, q = s.p, last = p.rlp || (p.rlp = [q[0], q[1], q[2]]);
+      if (s.mode === MODE.RESPAWN || s.mode === MODE.OUT) { last[0] = NaN; continue; }
+      const moved = Math.hypot(q[0] - last[0], q[1] - last[1], q[2] - last[2]);
+      if (scan && moved > RLc.still && q[2] > RLc.z0 + 1 && q[2] < RLc.line) {
+        this.ev('red', p.slot, Math.round(q[0] * 10), Math.round(q[1] * 10), Math.round(q[2] * 10));
+        s.v[0] = s.v[1] = s.v[2] = 0; s.mode = MODE.RESPAWN; s.mt = PHYS.RESPAWN_T - 0.45; s.cp = 0; s.held = 0; s.gt = 0;
+        last[0] = NaN; continue;
+      }
+      last[0] = q[0]; last[1] = q[1]; last[2] = q[2];
+    }
+  }
+
   rules() {
     const L = this.level, el = (this.tick - TP) / TICK_HZ;
     const ins = this.players.filter((p) => p.status === 'in' && p.st);
     const humansIn = ins.filter((p) => !p.bot && p.conn).length;
     if (L.type === 'race') {
+      if (L.rl) this.redLight(ins);
       const f = L.finish;
       for (const p of ins) { const q = p.st.p; if (q[0] >= f[0] && q[0] <= f[3] && q[1] >= f[1] && q[1] <= f[4] && q[2] >= f[2] && q[2] <= f[5]) this.qualify(p); }
       if (L.rules.respawn === false) for (const p of ins) if (p.st.mode === MODE.OUT && p.status === 'in') this.eliminate(p); // Slime Surge: no second chances
@@ -7342,7 +7999,7 @@ class Match {
   duelists() { return this.players.filter((p) => !p.bot && p.status !== 'gone'); }
   duelOver() {
     const live = this.duelists().filter((p) => !p.left);
-    return live.length < 2 || this.roundIdx >= this.show.length - 1 || Object.values(this.dw).some((w) => w >= 2);
+    return live.length < 2 || this.roundIdx >= this.show.length - 1 || Object.values(this.dw).some((w) => w >= DUEL_WINS);
   }
   duelLeader() {
     const ds = this.duelists(); if (!ds.length) return -1;
@@ -7393,7 +8050,9 @@ class Match {
   finishPlayer(p, won) {
     if (p.done || p.bot) return;
     p.done = true;
-    const res = { rounds: p.qual, won, totalRounds: this.duel ? 3 : this.show.length, matchId: this.id };
+    // a duel win is not a show win: it moves your rank and pays berries/XP, but never a crown
+    const res = { rounds: p.qual, won: won && !this.duel, totalRounds: this.duel ? DUEL_WINS + 1 : this.show.length, matchId: this.id };
+    if (this.duel) { res.duel = true; res.duelWon = !!won; }
     if (this.kind) res.ranked = this.rankedResult(p, won);
     if (this.hooks.onPlayerDone) this.hooks.onPlayerDone(p, res);
   }
@@ -7558,8 +8217,8 @@ const { sleep } = __m["client/js/util.js"];
 const { TICK_HZ, PROTO, PHASE } = __m["shared/config.js"];
 const { decodeInput } = __m["shared/protocol.js"];
 const { sanitizeLoadout } = __m["shared/cosmetics.js"];
-const { cleanRanked, UNREAL_RP } = __m["shared/ranks.js"];
-const { moderate } = __m["shared/chat.js"];
+const { cleanRanked } = __m["shared/ranks.js"];
+const { safeName } = __m["shared/chat.js"];
 const enc = new TextEncoder(), dec = new TextDecoder();
 const P2P = {
   PREFIX: 'cranguys/v3',
@@ -7774,7 +8433,7 @@ class P2PHost {
       ...this.matchIO(),
     }));
     match.room = this.isPublic ? null : this.code;
-    this.slot = match.addPlayer({ userId: 'p2p:' + this.pid, name: p.name, cos: p.loadout, rk: p.rp | 0 }); // same id scheme as guests, so we can rejoin as one
+    this.slot = match.addPlayer({ userId: 'p2p:' + this.pid, name: safeName(p.name), cos: p.loadout, rk: p.rp | 0 }); // same id scheme as guests, so we can rejoin as one
     match.welcome(this.slot);
   }
   // Host migration: carry on someone else's show from their last backup.
@@ -7832,7 +8491,7 @@ class P2PHost {
   cap() { return this.kind === 'duel' ? 2 : P2P.MAX_HUMANS; }
   announce() {
     const m = this.match; if (!m || m.ended || m.locked || m.phase !== PHASE.LOBBY || this.humans() >= this.cap()) return;
-    this.hub.pub(TOPIC.pub, JSON.stringify({ t: 'room', code: this.code, v: PROTO, n: this.humans(), left: Math.round(m.phaseT / TICK_HZ), at: Date.now(), k: this.kind || '', rp: this.backend.profile.rp | 0 }));
+    this.hub.pub(TOPIC.pub, JSON.stringify({ t: 'room', code: this.code, v: PROTO, n: this.humans(), left: Math.round(m.phaseT / TICK_HZ), at: Date.now(), since: this.since || (this.since = Date.now()), k: this.kind || '', rp: this.backend.profile.rp | 0 }));
   }
   // Two lonely public hosts of the same kind at once? The one with the 'bigger' code hops into the other room.
   onListing(data) {
@@ -7922,7 +8581,7 @@ class P2PHost {
       case 'hello': {
         const pl = e.slot >= 0 ? this.match.players[e.slot] : null;
         if (pl && !pl.left) { e.lost = false; if (!pl.conn) this.match.reconnect(e.slot); return; } // back again (or after a host change)
-        const slot = this.match.addPlayer({ userId: 'p2p:' + e.pid, name: String(m.name || 'Bean').replace(/[<>]/g, '').slice(0, 16) || 'Bean', cos: sanitizeLoadout(m.cos), rk: Math.max(0, Math.min(99999, m.rk | 0)) });
+        const slot = this.match.addPlayer({ userId: 'p2p:' + e.pid, name: safeName(m.name), /* auto-moderated: a modified client can't sneak a rude name in */ cos: sanitizeLoadout(m.cos), rk: Math.max(0, Math.min(99999, m.rk | 0)) });
         if (slot < 0) { this.sendTo(e, { t: 'err', code: 'full', msg: 'That show is full or has already started.' }); return; }
         e.slot = slot; this.bySlot.set(slot, e);
         // someone just found our public show: make sure they get a proper look at the lobby
@@ -8166,16 +8825,18 @@ function findPublicRoom(ms = 2600, kind = '', rp = 0) {
       hub.close();
       const cap = kind === 'duel' ? 2 : P2P.MAX_HUMANS;
       const ok = [...rooms.values()].filter((r) => (r.k || '') === kind && r.n < cap && r.left >= 7 && Date.now() - r.seen < 6000);
-      if (kind === 'duel') ok.sort((a, b) => Math.abs((a.rp | 0) - rp) - Math.abs((b.rp | 0) - rp)); // closest rank first
+      // duels match with anyone at all (rank doesn't matter): take whoever has been waiting longest
+      if (kind === 'duel') ok.sort((a, b) => (a.since || a.at || 0) - (b.since || b.at || 0) || (a.code < b.code ? -1 : 1));
       else ok.sort((a, b) => b.n - a.n || b.left - a.left);
       resolve(ok[0] || null);
     }, ms)).catch((e) => { hub.close(); reject(e); });
   });
 }
 
-// ---------------------------------------------------------------- global leaderboard (Unreal only)
-// No server, so the leaderboard lives on the same public brokers: every Unreal bean keeps one *retained*
-// message at cranguys/v3/lb/<random id> = { n: name, rp, c: colour }. Names go through the chat filter.
+// ---------------------------------------------------------------- global leaderboard (everyone, most crowns)
+// No server, so the leaderboard lives on the same public brokers: every bean that has won at least one crown
+// keeps one *retained* message at cranguys/v3/lb/<random id> = { n: name, w: crowns won, rp, c: colour, lv }.
+// Anyone can read it. Names go through the chat filter again on the way in.
 const LB = (id) => `${P2P.PREFIX}/lb/${id}`;
 const lbClean = (id) => String(id || '').replace(/[^a-z0-9]/g, '').slice(0, 16);
 async function lbPublish(id, entry) { // entry = null takes us off the board
@@ -8183,31 +8844,35 @@ async function lbPublish(id, entry) { // entry = null takes us off the board
   const hub = new Hub(true, () => {});
   try {
     await hub.open(); await sleep(1200); // give the other brokers a moment to connect too
-    hub.pub(LB(id), entry ? JSON.stringify({ v: 1, n: String(entry.n).slice(0, 16), rp: entry.rp | 0, c: String(entry.c || '').slice(0, 9), at: Date.now() }) : new Uint8Array(0), null, true);
+    hub.pub(LB(id), entry ? JSON.stringify({ v: 2, n: String(entry.n).slice(0, 16), w: Math.max(0, Math.min(100000, entry.w | 0)), rp: Math.max(0, Math.min(99999, entry.rp | 0)), lv: Math.max(1, Math.min(9999, entry.lv | 0)), c: String(entry.c || '').slice(0, 9), at: Date.now() }) : new Uint8Array(0), null, true);
     await sleep(500);
   } finally { hub.close(); }
 }
+function lbRow(id, m) {
+  id = lbClean(id);
+  if (!m || m.v !== 2 || !id) return null;
+  const w = m.w | 0; if (w < 1 || w > 100000) return null;
+  return { id, n: safeName(m.n), w, rp: Math.max(0, Math.min(99999, m.rp | 0)), lv: Math.max(1, Math.min(9999, m.lv | 0)), c: /^#[0-9a-f]{3,8}$/i.test(m.c) ? m.c : '#ff7af6', at: +m.at || 0 };
+}
+const lbSort = (a, b) => b.w - a.w || b.rp - a.rp || a.at - b.at;
 function lbFetch(ms = 2600) {
   return new Promise((resolve, reject) => {
     const rows = new Map(), pre = `${P2P.PREFIX}/lb/`;
     const hub = new Hub(true, (topic, data) => {
       if (!topic.startsWith(pre) || !data.length || data[0] !== 0x7b) return;
       let m; try { m = JSON.parse(dec.decode(data)); } catch { return; }
-      const id = lbClean(topic.slice(pre.length));
-      if (!m || m.v !== 1 || !id || !((m.rp | 0) >= UNREAL_RP) || (m.rp | 0) > 99999) return;
-      const n = moderate(String(m.n || ''));
-      const row = { id, n: n.ok ? n.text.slice(0, 16) : 'Bean', rp: m.rp | 0, c: /^#[0-9a-f]{3,8}$/i.test(m.c) ? m.c : '#ff7af6', at: +m.at || 0 };
-      const old = rows.get(id); if (!old || row.at >= old.at) rows.set(id, row);
+      const row = lbRow(topic.slice(pre.length), m); if (!row) return;
+      const old = rows.get(row.id); if (!old || row.at >= old.at) rows.set(row.id, row);
     });
     hub.sub(pre + '+');
     hub.open().then(() => setTimeout(() => {
       hub.close();
-      resolve([...rows.values()].sort((a, b) => b.rp - a.rp || a.at - b.at).slice(0, 100));
+      resolve([...rows.values()].sort(lbSort).slice(0, 100));
     }, ms)).catch((e) => { hub.close(); reject(e); });
   });
 }
 
-return { P2P, brokers, newCode, cleanCode, p2pSupported, MiniMQTT, P2PHost, P2PClient, findPublicRoom, lbPublish, lbFetch };
+return { P2P, brokers, newCode, cleanCode, p2pSupported, MiniMQTT, P2PHost, P2PClient, findPublicRoom, lbPublish, lbRow, lbSort, lbFetch };
 })();
 
 // ---- client/js/chat.js ----
@@ -8328,12 +8993,14 @@ const { store } = __m["client/js/util.js"];
 const { dailyShop, itemById, DEFAULT_OWNED, DEFAULT_LOADOUT, START_BALANCE, sanitizeLoadout, computeRewards, levelForXp, LEVEL_UP_BONUS } = __m["shared/cosmetics.js"];
 const { beanName } = __m["shared/names.js"];
 const { hashStr } = __m["shared/math.js"];
-const { rankedUpdate } = __m["shared/ranks.js"];
+const { rankedUpdate, rankedBook, rankedSettle } = __m["shared/ranks.js"];
 const { promoFor, promoKey } = __m["shared/promo.js"];
+const { passClaimable } = __m["shared/pass.js"];
+const { cleanName } = __m["shared/chat.js"];
 // Save codes let a bean move between devices without a server: CG1-<base64 json>-<checksum>.
 const b64e = (s) => btoa(unescape(encodeURIComponent(s))).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 const b64d = (s) => decodeURIComponent(escape(atob(s.replace(/-/g, '+').replace(/_/g, '/'))));
-const SAVE_FIELDS = ['berries', 'crowns', 'xp', 'wins', 'shows', 'finals', 'rounds', 'rp', 'rpPeak', 'rkPlayed', 'rkWins', 'duelW', 'duelL'];
+const SAVE_FIELDS = ['berries', 'crowns', 'xp', 'wins', 'shows', 'finals', 'rounds', 'rp', 'rpPeak', 'rkPlayed', 'rkWins', 'duelW', 'duelL', 'passClaimed'];
 
 class RemoteBackend {
   constructor(base) { this.kind = 'online'; this.base = base.replace(/\/$/, ''); this.token = store.get('cg.token:' + this.base); this.profile = null; }
@@ -8353,6 +9020,7 @@ class RemoteBackend {
   async equip(loadout) { return (await this.req('POST', '/api/locker/equip', { loadout })).profile; }
   async buy(itemId) { return (await this.req('POST', '/api/shop/buy', { itemId })).profile; }
   async redeem(code) { const j = await this.req('POST', '/api/promo', { code }); return { profile: j.profile, promo: promoFor(code) }; }
+  async passClaim() { const j = await this.req('POST', '/api/pass/claim', {}); return { profile: j.profile, claim: j.claim }; }
   async shop() { return this.req('GET', '/api/shop'); }
   async rename(name) { return (await this.req('POST', '/api/me/name', { name })).profile; }
   async register(username, password) { return (await this.req('POST', '/api/auth/register', { username, password })).profile; }
@@ -8372,13 +9040,22 @@ class LocalBackend {
       p = { id: 'local', name: beanName(Math.random), username: null, guest: true, ...START_BALANCE, xp: 0, wins: 0, shows: 0, finals: 0, rounds: 0, owned: DEFAULT_OWNED.slice(), loadout: { ...DEFAULT_LOADOUT }, refs: [] };
       store.set(KEY, p);
     }
+    if (!cleanName(p.name).ok) { p.name = beanName(Math.random); store.set(KEY, p); } // names set before auto-mod existed
     return p;
   }
-  pub(p) { const { refs, ...rest } = p; return { ...rest, rp: p.rp | 0, level: levelForXp(p.xp), loadout: sanitizeLoadout(p.loadout, new Set(p.owned)) }; }
+  pub(p) { const { refs, ...rest } = p; return { ...rest, rp: p.rp | 0, level: levelForXp(p.xp), passClaimed: Math.max(1, p.passClaimed | 0), loadout: sanitizeLoadout(p.loadout, new Set(p.owned)) }; }
   // a random id for this bean on the global leaderboard (never anything personal)
   lbId() { const p = this.load(); if (!p.lbId) { p.lbId = Math.random().toString(36).slice(2, 12); this.save(p); } return p.lbId; }
   save(p) { store.set(KEY, p); this.profile = this.pub(p); return this.profile; }
-  async init() { this.profile = this.pub(this.load()); return this.profile; }
+  async init() {
+    const p = this.load();
+    // a ranked match that was booked but never reported back (closed / refreshed mid-match) stays a loss
+    this.settled = p.rkPending ? rankedSettle(p) : null;
+    if (this.settled) store.set(KEY, p);
+    this.profile = this.pub(p); return this.profile;
+  }
+  // a ranked match has started: book it as a loss now; the real result replaces it when the match ends
+  rankBook(mid, kind, oppRp) { const p = this.load(); if (rankedBook(p, mid, kind, oppRp)) this.save(p); return this.profile; }
   async status() { return { online: 1, queue: 0, shows: 0, lobbies: 0 }; }
   async equip(lo) {
     const p = this.load(), owned = new Set(p.owned);
@@ -8394,7 +9071,16 @@ class LocalBackend {
     if (p.berries < b || p.crowns < c) throw new Error('Not enough ' + (b ? 'Cranberries' : 'Crowns'));
     p.berries -= b; p.crowns -= c; p.owned.push(id); return this.save(p);
   }
-  async rename(name) { const n = String(name || '').replace(/[^\p{L}\p{N}_ .-]/gu, '').trim().slice(0, 16); if (n.length < 2) throw new Error('Names need 2–16 letters or numbers'); const p = this.load(); p.name = n; return this.save(p); }
+  async rename(name) { const c = cleanName(name); if (!c.ok) throw new Error(c.msg); const p = this.load(); p.name = c.name; return this.save(p); } // auto-moderated
+  // CranPass: claim every level reached since the last claim (see shared/pass.js)
+  async passClaim() {
+    const p = this.load(), c = passClaimable(p.xp, p.passClaimed, p.owned);
+    if (!c.levels.length) throw new Error('Nothing to claim yet — play shows to level up!');
+    p.berries += c.berries; p.crowns += c.crowns;
+    for (const id of c.items) if (!p.owned.includes(id)) p.owned.push(id);
+    p.passClaimed = c.to;
+    return { profile: this.save(p), claim: c };
+  }
   // promo codes (see shared/promo.js): unlock items once, on this device
   async redeem(code) {
     const info = promoFor(code);
@@ -8422,7 +9108,7 @@ class LocalBackend {
     for (const k of SAVE_FIELDS) p[k] = Math.max(0, Math.min(1e9, d[k] | 0));
     p.owned = [...owned];
     p.loadout = sanitizeLoadout({ ...DEFAULT_LOADOUT, ...(d.loadout || {}) }, owned);
-    const n = String(d.name || '').replace(/[^\p{L}\p{N}_ .-]/gu, '').trim().slice(0, 16); if (n.length >= 2) p.name = n;
+    const n = cleanName(d.name); if (n.ok) p.name = n.name;
     return this.save(p);
   }
   async register() { throw new Error('Accounts need an online CranGuys server'); }
@@ -8438,7 +9124,7 @@ class LocalBackend {
     const l1 = levelForXp(p.xp); let levelUp = 0;
     if (l1 > l0) { levelUp = l1; p.berries += LEVEL_UP_BONUS * (l1 - l0); }
     if (res.won && !p.owned.includes('h_crown') && p.wins === 1) p.owned.push('h_crown');
-    const rank = res.ranked ? rankedUpdate(p, res.ranked) : null; // ranked points live on this device too
+    const rank = res.ranked ? rankedUpdate(p, res.ranked, res.matchId) : null; // ranked points live on this device too
     p.refs.push(ref); if (p.refs.length > 50) p.refs.shift();
     this.save(p);
     return { ...r, applied: true, levelUp, bonus: levelUp ? LEVEL_UP_BONUS : 0, rank };
@@ -8563,7 +9249,7 @@ const { UI } = __m["client/js/ui.js"];
 const { ClientGame } = __m["client/js/play.js"];
 const { RemoteConn, LocalServer } = __m["client/js/net.js"];
 const { P2PHost, P2PClient, findPublicRoom, newCode, cleanCode, p2pSupported, lbFetch, lbPublish } = __m["client/js/p2p.js"];
-const { isUnreal } = __m["shared/ranks.js"];
+const { isUnreal, rankOf } = __m["shared/ranks.js"];
 const { Chat } = __m["client/js/chat.js"];
 const { RemoteBackend, LocalBackend } = __m["client/js/api.js"];
 const { BeanVis } = __m["client/js/bean.js"];
@@ -8573,11 +9259,14 @@ const { $, settings, saveSettings, beanLook, isTouch, hex2rgb } = __m["client/js
 const { PHASE, TICK_HZ, DT, MODE, TIMING, INTERP_TICKS, BTN } = __m["shared/config.js"];
 const { crownAt } = __m["shared/levels/crownpeak.js"];
 const { windOn, slimeAt } = __m["shared/world.js"];
+const { ropeAngle, ropeSeg } = __m["shared/levels/jumprope.js"];
+const { rlState } = __m["shared/levels/redlight.js"];
 const { cmCycle, cmPhase, CM_COLORS } = __m["shared/levels/colormatch.js"];
 const { slotWave, LOW, DUCK } = __m["shared/levels/wallrush.js"];
 const { qt, clamp } = __m["shared/math.js"];
 const { itemById } = __m["shared/cosmetics.js"];
-const MENU_STATES = new Set(['menu', 'locker', 'shop']);
+const MENU_STATES = new Set(['menu', 'locker', 'shop', 'pass']);
+const NO_TINT = [1, 1, 1, 1], GLOW_GREEN = [0.55, 1.45, 0.6, 1], GLOW_GREEN2 = [0.7, 1.25, 0.72, 1];
 
 class App {
   constructor() {
@@ -8619,6 +9308,7 @@ class App {
 
     // backends: offline always available; online if a CranGuys server answers
     this.local = new LocalBackend(); await this.local.init();
+    if (this.local.settled) setTimeout(() => this.ui.toast(`Your last ranked match didn’t finish — it counts as a loss (${this.local.settled.to - this.local.settled.from} RP).`, 'bad'), 1500);
     const base = settings.server || (location.protocol.startsWith('http') ? location.origin : '');
     if (base && settings.mode !== 'offline') {
       this.ui.boot(0.55, 'Looking for the CranGuys server…');
@@ -8705,16 +9395,29 @@ class App {
       }
     }
   }
-  // Ranked: find a public room of the same kind (duels prefer someone near your RP), or open one and wait
+  // Ranked: find a public room of the same kind (duels take anyone, whatever their rank), or open one and wait
   async rankedPlay() {
     const kind = this.rankKind, token = (this.searchToken = {});
-    this.state = 'searching'; this.ui.setSearching(true, kind === 'duel' ? 'Looking for an opponent near your rank…' : 'Looking for a ranked show…');
+    this.state = 'searching'; this.ui.setSearching(true, kind === 'duel' ? 'Looking for an opponent — anyone, any rank…' : 'Looking for a ranked show…');
     try {
       const room = await findPublicRoom(2600, kind, this.local.profile.rp | 0);
       if (this.searchToken !== token) return;
       if (room) { try { await this.joinRoom(room.code, true); return; } catch (e) { if (this.searchToken !== token) return; } }
       await this.hostRoom(true, kind);
     } catch (e) { if (this.searchToken === token) this.p2pFail(e); }
+  }
+  // CranPass: claim every level reached since the last claim
+  async claimPass() {
+    if (this.claiming) return; this.claiming = true;
+    try {
+      const r = await this.backend.passClaim();
+      this.backend.profile = r.profile; if (this.backend.setProfile) this.backend.setProfile(r.profile);
+      this.ui.setProfile(r.profile); this.refreshBean();
+      const c = r.claim || {}, items = (c.items || []).map((id) => itemById(id)).filter(Boolean);
+      this.sound.play('buy'); this.fx.confetti([0, 2.2, 0], 70, 8); this.fx.sparkle([0, 1.2, 0], 18, [1, 0.9, 0.4, 1]);
+      this.ui.toast(`CranPass: +${c.berries | 0} Cranberries${c.crowns ? ` · +${c.crowns} Crown${c.crowns > 1 ? 's' : ''}` : ''}${items.length ? ' · ' + items.map((i) => i.name).join(', ') : ''}!`, 'good');
+    } catch (e) { this.sound.play('error'); this.ui.toast(e.message || 'Couldn’t claim right now.', 'bad'); }
+    finally { this.claiming = false; }
   }
   // promo codes: unlock whatever the code gives, on whichever backend this mode uses
   async redeem(code) {
@@ -8747,15 +9450,17 @@ class App {
     this.ui.setMode(this.mode, this.onlineOK || this.p2pOK, this.rankKind); this.ui.setStatus(this.idleStatus());
   }
   leaderboard() { return lbFetch(); }
-  // Unreal beans keep one (anonymous) entry on the global leaderboard; dropping out of Unreal removes it
+  // Every bean with at least one crown keeps one (anonymous) entry on the global leaderboard: most crowns wins.
+  // Only republished when something on it changes (name, crowns, rank, colour).
   syncLeaderboard() {
     const p = this.local.profile; if (!p || !this.p2pOK) return;
-    const un = isUnreal(p.rp | 0);
-    if (!un && !p.lbOn) return;
-    const id = this.local.lbId(), look = beanLook(p.loadout);
-    lbPublish(id, un ? { n: p.name, rp: p.rp | 0, c: String(look.css).startsWith('#') ? look.css : '#ff7af6' } : null)
-      .then(() => { const q = this.local.load(); q.lbOn = un; this.local.save(q); })
-      .catch(() => {});
+    const w = p.wins | 0, look = beanLook(p.loadout), c = String(look.css).startsWith('#') ? look.css : '#ff7af6';
+    const sig = w > 0 ? [p.name, w, rankOf(p.rp | 0).idx, c, p.level].join('|') : '';
+    if (sig === (p.lbSig || '') || this.lbBusy) return;
+    this.lbBusy = true;
+    lbPublish(this.local.lbId(), w > 0 ? { n: p.name, w, rp: p.rp | 0, lv: p.level, c } : null)
+      .then(() => { const q = this.local.load(); q.lbSig = sig; q.lbOn = w > 0; this.local.save(q); })
+      .catch(() => {}).finally(() => { this.lbBusy = false; });
   }
   p2pFail(e) {
     this.closeConn(); this.searchToken = null;
@@ -8842,7 +9547,7 @@ class App {
       case 'left': if (this.state === 'show') this.endShow(); return;
       case 'reward':
         this.pendingReward = m;
-        if (m.reward && m.reward.rank) { this.ui.rankCard(); this.syncLeaderboard(); }
+        if (m.reward) { this.ui.rankCard(); this.syncLeaderboard(); }
         if (m.profile) { this.backend.profile = m.profile; if (this.backend.setProfile) this.backend.setProfile(m.profile); this.ui.setProfile(m.profile); this.refreshBean(); }
         if (this.state !== 'show' && this.state !== 'podium') { this.ui.rewards(m, this.backend.profile); this.pendingReward = null; }
         return;
@@ -8937,7 +9642,7 @@ class App {
       } catch (e) { this.sound.play('error'); this.ui.toast(e.message, 'bad'); }
     });
   }
-  async rename(n) { const p = await this.backend.rename(n); this.ui.setProfile(p); }
+  async rename(n) { const p = await this.backend.rename(n); this.ui.setProfile(p); if (this.backend !== this.local) await this.local.rename(n).catch(() => {}); this.syncLeaderboard(); }
   async account(kind, u, pw) {
     const p = kind === 'register' ? await this.remote.register(u, pw) : kind === 'login' ? await this.remote.login(u, pw) : await this.remote.logout();
     this.ui.setProfile(p); this.refreshBean(); this.connect();
@@ -8955,12 +9660,22 @@ class App {
   }
   onRound(m) {
     const g = this.game;
+    this.bookRanked();
     this.ui.show('hud'); this.ui.hudRound(g); this.ui.hideOverlay('results'); this.ui.clearBanner();
     this.ui.intro(m, g.level);
     this.setControls(false); this.blurUI();
     this.sound.music(g.isFinal ? 'final' : 'round'); this.sound.play('whoosh');
-    this.ballRot.clear(); this.remoteFx.clear(); this.spectate = -1; this.myResult = null;
+    this.ballRot.clear(); this.remoteFx.clear(); this.spectate = -1; this.myResult = null; this.cannonQ = [];
     $('#nametags').innerHTML = ''; this.ui.tags = [];
+  }
+  // ranked: once a match really starts, this device books it as a loss until the real result comes in, so
+  // closing or refreshing the page mid-match can't dodge a defeat (see rankedBook in shared/ranks.js)
+  bookRanked() {
+    const g = this.game; if (!g || !g.kind || !g.mid || this.conn instanceof RemoteConn) return;
+    const me = g.roster.get(g.you); if (!me || me.status === 'x') return;
+    const others = [...g.roster.values()].filter((r) => !r.bot && r.slot !== g.you && r.status !== 'gone');
+    const opp = others.length ? Math.round(others.reduce((a, r) => a + (r.rp | 0), 0) / others.length) : this.local.profile.rp | 0;
+    this.local.rankBook(g.mid, g.kind, opp);
   }
   onSpawn(me) { if (this.game && this.game.phase !== PHASE.PLAY) this.cam.reset(me.yaw, me.p); }
   onPhase(p, m) {
@@ -8989,7 +9704,7 @@ class App {
     if (this.game.meActive) this.setControls(true);
     const L = this.game.level;
     const fin = this.game.isFinal;
-    this.ui.objective(L.type === 'race' ? (fin ? 'First to the finish wins!' : 'Reach the finish line!') : L.type === 'survival' ? (fin ? 'Be the last bean standing!' : 'Don’t fall!') : L.goal || 'Grab the crown at the summit!');
+    this.ui.objective(L.rl ? 'Run on GREEN · freeze on RED!' : L.rope ? 'Jump the rope · don’t fall off!' : L.type === 'race' ? (fin ? 'First to the finish wins!' : 'Reach the finish line!') : L.type === 'survival' ? (fin ? 'Be the last bean standing!' : 'Don’t fall!') : L.goal || 'Grab the crown at the summit!');
     setTimeout(() => this.ui.objective(''), 3500);
   }
   onRoundWin(slot) { // duels: who took the round
@@ -9031,6 +9746,23 @@ class App {
       this.sound.play(h.v >= 5 ? 'buy' : 'cp'); this.fx.sparkle(h.p, h.v >= 5 ? 26 : 12, h.v >= 5 ? [1, 0.85, 0.3, 1] : [0.6, 1, 0.8, 1]); this.fx.ring(h.p, [1, 1, 1, 0.9]);
       this.ui.feed(h.v >= 5 ? `+${h.v} GOLD HOOP! ✨` : `+${h.v} point${h.v > 1 ? 's' : ''}`, 'good');
     } else { this.fx.sparkle(h.p, 6); this.fx.near(h.p, 'pop', 0.4); }
+  }
+  // Crown Peak: a cannon will fire at server tick `at` — queue two flashes (0.9 s and 0.45 s before)
+  onCannonWarn(i, at) { (this.cannonQ || (this.cannonQ = [])).push({ i, at, n: 0 }); }
+  cannonFlashes() {
+    const g = this.game, q = this.cannonQ, B = g && g.level.boulders; if (!q || !q.length || !B || !B.xs) return;
+    const now = g.serverTick() - INTERP_TICKS;
+    for (let k = q.length - 1; k >= 0; k--) {
+      const w = q[k], due = w.at - (w.n === 0 ? 0.9 : 0.45) * TICK_HZ;
+      if (w.at < now - 30) { q.splice(k, 1); continue; }
+      if (now < due) continue;
+      w.n++; if (w.n >= 2) q.splice(k, 1);
+      const p = [B.xs[w.i], B.y + 0.1, B.z + 2.55]; // the muzzle
+      this.fx.add({ p, v: [0, 0, 0], life: 0.26, size: 1.3, grow: 3.2, col: [1, 0.36, 0.14, 1], cell: 0, add: true });
+      this.fx.add({ p, v: [0, 0, 0], life: 0.2, size: 0.8, grow: 1.5, col: [1, 0.95, 0.6, 1], cell: 0, add: true });
+      this.fx.ring([p[0], p[1] - 0.3, p[2]], [1, 0.5, 0.2, 0.9]);
+      this.fx.near(p, 'warn', 0.9);
+    }
   }
   onBoom(i) { // Boulder Bash: a cannon fires
     const g = this.game, B = g && g.level.boulders; if (!B || !B.cannons || !B.cannons[i]) return;
@@ -9098,6 +9830,83 @@ class App {
   }
 
   // Wall Rush: solid blocks in the slot's colour, low (jump) blocks green, raised (dive) bars bright yellow
+  // ---------- Rope Rumble & Red Light Rush ----------
+  // The giant mascots: beans scaled way up, posed by the map (cranking the rope / turning to look).
+  mascots(L, t, dt, now) {
+    if (this._mascotFor !== L) {
+      this._mascotFor = L;
+      const looks = L.rope
+        ? [beanLook({ color: 'c_tangerine', color2: 'c_sunny', pattern: 'p_stripes', face: 'f_happy', hat: 'h_party' }), beanLook({ color: 'c_sky', color2: 'c_cloud', pattern: 'p_polka', face: 'f_wink', hat: 'h_propeller' })]
+        : [beanLook({ color: 'c_tangerine', color2: 'c_sunny', pattern: 'p_split', face: 'f_classic', hat: 'h_flower' })];
+      this._mascots = looks.map((look) => { const vis = new BeanVis(look); vis.scale = L.rope ? 8.5 : 7.5; return { vis, look }; });
+    }
+    const out = [];
+    if (L.rope) {
+      const a = ropeAngle(L.rope.plan, t);
+      L.rope.mascots.forEach(([x, y, z, yaw], i) => {
+        const m = this._mascots[i], sc = m.vis.scale, p = [x, y + 0.78 * sc, z];
+        const sw = 1.55 - Math.cos(a) * 0.9, sp = 0.35 + Math.sin(a) * (i ? -0.25 : 0.25); // hands go round with the crank
+        m.vis.update(dt, { p, v: [0, 0, 0], yaw, mode: MODE.NORMAL, gr: true, mt: 0 }, now, { pose: [sw, sp, sw, sp, Math.sin(a) * 0.12, -Math.sin(a) * 0.12] });
+        out.push({ vis: m.vis, look: m.look, p, st: { mode: MODE.NORMAL } });
+      });
+    } else {
+      const m = this._mascots[0], sc = m.vis.scale, [x, y, z] = L.rl.mascot, p = [x, y + 0.78 * sc, z], st = rlState(L.rl.plan, t);
+      // facing away (yaw 0) on green; whips round to face the field (π) for red; a little twitch just before
+      let yaw = 0;
+      if (st.phase === 'wait') yaw = Math.PI;
+      else if (st.phase === 'turn') yaw = Math.PI * Math.min(1, st.u / (L.rl.turn * 0.55));
+      else if (st.phase === 'scan') yaw = Math.PI;
+      else if (st.u < 0.35) yaw = Math.PI * (1 - st.u / 0.35);
+      else if (st.left < 0.4) yaw = Math.sin(now * 40) * 0.12;
+      const look = st.phase === 'scan' || st.phase === 'wait';
+      m.vis.update(dt, { p, v: [0, 0, 0], yaw, mode: MODE.NORMAL, gr: true, mt: 0 }, now, { pose: look ? [0.2, 0.3, 0.2, 0.3, 0, 0] : [Math.sin(now * 6) * 0.5, 0.5, -Math.sin(now * 6) * 0.5, 0.5, 0, 0], expr: st.phase === 'scan' ? 3 : undefined });
+      out.push({ vis: m.vis, look: m.look, p, st: { mode: MODE.NORMAL } });
+    }
+    return out;
+  }
+  // the rope glows (hotter when it's whipping down after a fake-out); its shadow darkens as it drops
+  ropeTinter(L, t) {
+    const R = L.rope, i = ropeSeg(R.plan, t), seg = i >= 0 ? R.plan[i] : null, a = ropeAngle(R.plan, t), low = Math.max(0, Math.cos(a));
+    const hot = seg && seg.kind === 'whip', stall = seg && seg.kind === 'stall', pulse = 0.85 + 0.15 * Math.sin(performance.now() / 60);
+    const rope = hot ? [1.25, 0.55 * pulse, 0.5, 1] : stall ? [1.2 * pulse, 1.1 * pulse, 0.7, 1] : [1.1, 1.05, 0.85, 1];
+    const shadow = [0.55 + low * 0.5, 0.45 - low * 0.25, 0.75 - low * 0.35, 1];
+    return (c) => (c.vis.tk === 'rope' ? rope : shadow);
+  }
+  ropeTick(L, t) {
+    const a = ropeAngle(L.rope.plan, t), turn = Math.floor((a + Math.PI) / (Math.PI * 2)); // +1 each time the rope passes the bottom
+    if (this._ropeTurn !== undefined && turn > this._ropeTurn) { this.sound.play('rope', 0.9); this.cam.shake(0.08, 0.15); }
+    this._ropeTurn = turn;
+    const i = ropeSeg(L.rope.plan, t), stall = i >= 0 && L.rope.plan[i].kind === 'stall';
+    if (stall && !this._ropeStall) this.sound.play('tease');
+    this._ropeStall = stall;
+  }
+  // Red Light Rush: the spotlight bar is pure light
+  rlTinter() { const f = 0.9 + 0.1 * Math.sin(performance.now() / 50); return () => [1.4 * f, 1.35 * f, 0.9, 1]; }
+  redLightTick(L, t, beans, ph) {
+    const st = rlState(L.rl.plan, t), g = this.game, prev = this._rl;
+    this._rl = st.phase;
+    if (ph === PHASE.PLAY) {
+      if (st.phase === 'green' && prev !== 'green') { this.sound.music('rlgl'); if (prev) this.sound.play('go', 0.6); }
+      if (st.phase === 'turn' && prev === 'green') { this.sound.music(null); this.sound.play('scratch'); }
+      if (st.phase === 'scan' && prev === 'turn') this.sound.play('scan');
+      this.ui.lightHud(st.phase, st.left);
+    } else this.ui.lightHud(null);
+    // everyone frozen on the field glows green while the mascot looks
+    const scan = st.phase === 'scan' && ph === PHASE.PLAY;
+    for (const b of beans) {
+      const on = scan && b.p[2] > L.rl.z0 + 1 && b.p[2] < L.rl.line;
+      b.vis.params.tint = on ? (Math.sin(performance.now() / 90) > -0.3 ? GLOW_GREEN : GLOW_GREEN2) : NO_TINT;
+    }
+  }
+  redLightOff() { this._rl = null; this.ui.lightHud(null); if (this.game) for (const r of this.game.roster.values()) r.vis.params.tint = NO_TINT; }
+  onRedLight(slot, x, y, z) { // someone moved while the mascot was looking
+    const g = this.game, p = [x / 10, y / 10, z / 10], r = g && g.roster.get(slot);
+    for (let i = 0; i < 3; i++) this.fx.ring([p[0], p[1] - 0.6 + i * 0.5, p[2]], [1, 0.15, 0.2, 0.95]);
+    this.fx.sparkle(p, 22, [1, 0.2, 0.25, 1]); this.fx.dust([p[0], p[1] - 0.7, p[2]], 10, [1, 0.3, 0.35, 0.9], 3);
+    this.fx.near(p, 'buzzer', 0.8);
+    if (slot === g.you) { this.sound.play('buzzer'); this.cam.shake(0.3, 0.35); this.ui.banner('YOU MOVED!', 'bad', 'Back to the start line…'); }
+    else if (r && !r.bot) this.ui.feed(`${r.name} moved — back to the start!`, 'bad');
+  }
   wallTinter(L, t) {
     const plan = L.wall.plan, cols = [[1, 0.37, 0.64, 1], [1, 0.55, 0.25, 1], [0.6, 0.38, 1, 1], [0.25, 0.7, 1, 1], [1, 0.3, 0.45, 1], [0.85, 0.4, 0.95, 1]];
     return (c) => {
@@ -9179,12 +9988,13 @@ class App {
     });
     if (Math.random() < dt * 1.6) this.fx.confetti([(Math.random() - 0.5) * 6, 6, (Math.random() - 0.5) * 3], 30, 4);
     this.cam.fixed([Math.sin(t * 0.25) * 2.2, 3.2, 8.6], [0, 1.9, 0], 0.78);
-    this.scene.renderStage(this.cam, dt, beans, { podium: true, crownAt: beans.length ? [0, spots[0][1] + 1.75 + Math.sin(t * 3) * 0.1, 0] : null });
+    this.scene.renderStage(this.cam, dt, beans, { podium: true, crownAt: beans.length && !g.duel ? [0, spots[0][1] + 1.75 + Math.sin(t * 3) * 0.1, 0] : null });
   }
 
   renderShow(dt, inp) {
     const g = this.game, t = performance.now() / 1000;
     g.update(dt, inp);
+    this.cannonFlashes();
     const worldTick = g.meActive && g.predTick !== null ? g.predTick - 1 + g.alpha : g.serverTick() - INTERP_TICKS;
     const worldTime = Math.max(0, worldTick * DT);
     const beans = [];
@@ -9245,6 +10055,7 @@ class App {
       this.cam.follow(dt, tgt.p, tgt.v, g.world, inp, Math.floor(worldTick));
       this.ui.touch(false);
     }
+    if (window.CG_CAM) this.cam.fixed(window.CG_CAM.e, window.CG_CAM.l, 0.8); // debug / screenshot hook
     // ---- crown ----
     let crown = null;
     if (g.level.type !== 'final' && g.isFinal && g.winner >= 0) { const w = beans.find((b) => b.slot === g.winner); if (w) crown = [w.p[0], w.p[1] + 1.55, w.p[2]]; }
@@ -9256,14 +10067,17 @@ class App {
     const L = g.level, rise = L.rules && L.rules.rise;
     const hoops = L.type === 'hunt' ? g.liveHoops(Math.floor(worldTick)) : null;
     if (hoops && Math.random() < dt * 8) for (const o of hoops) if (o.h.v >= 5) this.fx.sparkle(o.h.p, 1, [1, 0.85, 0.3, 1]);
-    const kinTint = L.cm ? this.cmTinter(L, worldTime) : L.wall ? this.wallTinter(L, worldTime) : null;
+    const kinTint = L.cm ? this.cmTinter(L, worldTime) : L.wall ? this.wallTinter(L, worldTime) : L.rope ? this.ropeTinter(L, worldTime) : L.rl ? this.rlTinter() : null;
+    const mascots = L.rope || L.rl ? this.mascots(L, worldTime, dt, t) : null;
+    if (L.rl) this.redLightTick(L, worldTime, beans, ph); else if (this._rl) this.redLightOff();
+    if (L.rope && ph === PHASE.PLAY) this.ropeTick(L, worldTime);
     if (L.wall && ph === PHASE.PLAY) { // Wall Rush: shout when the walls step up a gear
       const st = L.wall.stages.filter((x) => worldTime >= x).length;
       if (this._wallStage !== undefined && st > this._wallStage) { this.ui.banner(st === 1 ? 'FASTER!' : 'MAXIMUM SPEED!', 'bad', st === 1 ? 'Single gaps · dive under the raised bars' : 'Walls back to back — good luck!'); this.sound.play('whistle'); }
       this._wallStage = st;
     } else this._wallStage = undefined;
     this.scene.renderGame(this.cam, dt, { worldTime, beans, balls, crown, debris: g.debris, tileStates: (d) => g.tileStates(d), doorStates: (d) => g.doorStates(d), focus: own ? own.p : this.cam.look,
-      slimeY: rise ? slimeAt(rise, worldTime) : undefined, hoops, kinTint });
+      slimeY: rise ? slimeAt(rise, worldTime) : undefined, hoops, kinTint, mascots });
     // ---- nametags ----
     const tags = [];
     if (settings.nametags && ph !== PHASE.INTRO) {
